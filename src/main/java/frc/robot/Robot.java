@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
+ * The VM is configured to automatically run this class, and to call the fwunctions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
@@ -56,6 +56,9 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    System.out.println("RUNNING ROBOT PERIODIC");
+    System.out.println("FETCHING TAG ID" + aprilTagFinder.getTagID());
+    System.out.println("FETCHING POSE (TRANSFORM 3D" +aprilTagFinder.getPose());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -116,12 +119,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {
-  // print out the tag information every 5 seconds
-    if (timer.get() > 3.0) {
-      System.out.println(aprilTagFinder.getTagID());
-      //System.out.println(aprilTagFinder.getPose());
-      timer.reset();
-    }
-  
+    
   }
 }
