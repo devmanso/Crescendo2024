@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.hyperdrive.hyperlib.AprilTagFinder;
 
+import edu.wpi.first.apriltag.AprilTagPoseEstimate;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,12 +20,20 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  public double determineDistance(double tagHeight, double cameraHeight, double cameraAngle) {
+    // convert angle to radians
+    double angleRadians = Math.toRadians(cameraAngle);
+    double distance = (tagHeight - cameraHeight) / Math.tan(angleRadians);
+    return distance;
+  }
+
   
   private Command m_autonomousCommand;
   // congig data for c920 pro (I think)
   AprilTagPoseEstimator.Config config = new AprilTagPoseEstimator.Config( 0.15240, 
   1394.6027293299926, 1394.6027293299926,995.588675691456, 599.3212928484164);
-  AprilTagFinder aprilTagFinder = new AprilTagFinder(1, 640, 480, 30, "tag36h11", config);
+  AprilTagFinder aprilTagFinder = new AprilTagFinder(0, 640, 480, 30, "tag36h11", config, false);
   Timer timer = new Timer();
   private RobotContainer m_robotContainer;
 
@@ -39,7 +48,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     //AprilTagDetectorSimulation detectorSimulation = new AprilTagDetectorSimulation();
     //detectorSimulation.startDetection();
-    
+    aprilTagFinder.startDetection();
+    aprilTagFinder.startThread();
   }
 
   /**
@@ -56,9 +66,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    System.out.println("RUNNING ROBOT PERIODIC");
-    System.out.println("FETCHING TAG ID" + aprilTagFinder.getTagID());
-    System.out.println("FETCHING POSE (TRANSFORM 3D" +aprilTagFinder.getPose());
+    //System.out.println(aprilTagFinder.getTagID());
+    System.out.println(determineDistance(32, 32, 0));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -111,8 +120,6 @@ public class Robot extends TimedRobot {
   /** This function is called once when the robot is first started up. */
   @Override
   public void simulationInit() {
-    
-    aprilTagFinder.startDetection();
     timer.start();
   }
 
