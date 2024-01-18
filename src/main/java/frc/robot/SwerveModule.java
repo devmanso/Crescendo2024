@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -23,8 +25,7 @@ public class SwerveModule {
     private final RelativeEncoder turningEncoder;
 
     private final PIDController turningPidController;
-
-    private final AnalogInput absoluteEncoder;
+    private final CoreCANcoder absoluteEncoder;
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
 
@@ -33,7 +34,7 @@ public class SwerveModule {
 
         this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
-        absoluteEncoder = new AnalogInput(absoluteEncoderId);
+        absoluteEncoder = new CANcoder(absoluteEncoderId);
 
         driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
         turningMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
@@ -72,15 +73,22 @@ public class SwerveModule {
     }
 
     public double getAbsoluteEncoderRad() {
-        double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
+        double angle = absoluteEncoder.getSupplyVoltage().getValueAsDouble() / RobotController.getVoltage5V();
         angle *= 2.0 * Math.PI;
         angle -= absoluteEncoderOffsetRad;
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
     }
 
+    // fucking dirty hack
+    public double getAbsoluteEncoderPosition() {
+        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+    }
+
+    // uh, maybe try using getAbsoluteEncoderPosition() instead of getAbsoluteEncoderRad()?? idfk
     public void resetEncoders() {
         driveEncoder.setPosition(0);
-        turningEncoder.setPosition(getAbsoluteEncoderRad());
+        //turningEncoder.setPosition(getAbsoluteEncoderRad());
+        turningEncoder.setPosition(getAbsoluteEncoderPosition());
     }
 
     public SwerveModuleState getState() {
@@ -95,7 +103,7 @@ public class SwerveModule {
         state = SwerveModuleState.optimize(state, getState().angle);
         driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
         turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
-        SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
+        SmartDashboard.putString("Swerve[" + absoluteEncoder.getDeviceID() + "] state", state.toString());
     }
 
     public void stop() {
