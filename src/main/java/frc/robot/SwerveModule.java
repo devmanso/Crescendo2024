@@ -79,12 +79,12 @@ public class SwerveModule {
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
     }
 
-    // fucking dirty hack
+    // dirty hack
     public double getAbsoluteEncoderPosition() {
         return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
     }
 
-    // uh, maybe try using getAbsoluteEncoderPosition() instead of getAbsoluteEncoderRad()?? idfk
+    // uh, maybe try using getAbsoluteEncoderPosition() instead of getAbsoluteEncoderRad()??
     public void resetEncoders() {
         driveEncoder.setPosition(0);
         //turningEncoder.setPosition(getAbsoluteEncoderRad());
