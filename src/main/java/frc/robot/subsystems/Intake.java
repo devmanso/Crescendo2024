@@ -17,6 +17,13 @@ public class Intake extends SubsystemBase {
   
   // write a function here that returns true if the limit switch (noteChecker) is clicked or pressed
   // and false if it is not
+  
+  /**
+   * Returns true if note stuck in intake
+   */
+  public boolean stuckNote() {
+    return noteChecker.get();
+    }
 
   /**
    * sets motors to 50 percent
