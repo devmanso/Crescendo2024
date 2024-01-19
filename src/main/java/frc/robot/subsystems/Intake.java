@@ -15,15 +15,12 @@ public class Intake extends SubsystemBase {
   private TalonFX topMotor = new TalonFX(11);
   private DigitalInput noteChecker = new DigitalInput(0);
   
-  // write a function here that returns true if the limit switch (noteChecker) is clicked or pressed
-  // and false if it is not
-  
   /**
    * Returns true if note stuck in intake
    */
   public boolean stuckNote() {
     return noteChecker.get();
-    }
+  }
 
   /**
    * sets motors to 50 percent
@@ -39,6 +36,11 @@ public class Intake extends SubsystemBase {
   public void spitNote() {
     bottomMotor.set(-.5);
     topMotor.set(-.5);
+  }
+
+  public void stop() {
+    bottomMotor.set(0);
+    topMotor.set(0);
   }
 
   /** Creates a new Intake. */
