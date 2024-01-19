@@ -58,6 +58,7 @@ public final class Constants {
 
         // TODO: all turning encoders are reversed
         // TODO: front and back right drive encoders are NOT reversed
+        // ask mechanical about these
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;
         public static final boolean kFrontRightTurningEncoderReversed = true;
@@ -68,21 +69,26 @@ public final class Constants {
         public static final boolean kFrontRightDriveEncoderReversed = false;
         public static final boolean kBackRightDriveEncoderReversed = false;
 
+        // TODO: ask mechanical about these
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 2;
         public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
         public static final int kBackRightDriveAbsoluteEncoderPort = 3;
 
+        // TODO: Use SmartDashboard to find the right value for these
         public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackLeftDriveAbsoluteEncoderReversed = false;
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
+        // TODO: if you dont know, ask mechanical or something, try to have them align it perfectly as possible
+        // if this is all to difficult, then just set it to 0 and pray to Allah the code works
         public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -0.254;
         public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.252;
         public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.816;
         public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -4.811;
 
+        // if robot drives too slow, try increasing this
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
