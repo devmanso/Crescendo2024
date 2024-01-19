@@ -27,7 +27,7 @@ public class IntakeNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // grab the note in
+    intake.grabNote();
   }
 
   // Called once the command ends or is interrupted.
