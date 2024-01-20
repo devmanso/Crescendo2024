@@ -18,10 +18,17 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  // all motor id's are placeholders and are subject to change
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
 
+  public static class ShooterAndFeeder {
+        public static final int SHOOTER_ID = 12;
+        public static final int FEEDER_ID = 13;
+  }
+  
   public static final class ModuleConstants {
         // TODO: ask mechanical about these
         public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
