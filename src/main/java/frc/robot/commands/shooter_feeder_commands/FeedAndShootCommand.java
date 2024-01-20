@@ -5,22 +5,26 @@
 package frc.robot.commands.shooter_feeder_commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 
 
-public class ShootCommand extends Command {
+public class FeedAndShootCommand extends Command {
 
   private Shooter shooter;
-  private double speed;
-
-  
+  private Feeder feeder;
+  private double shooterSpeed;
+  private double feederSpeed;
 
   /** Creates a new ShootCommand. */
-  public ShootCommand(Shooter shooter, double speed) {
-    this.shooter = shooter;
-    this.speed = speed;
+  public FeedAndShootCommand(Shooter shooter, Feeder feeder, double shooterSpeed, double feederSpeed) {
 
-    addRequirements(shooter);
+    this.shooter = shooter;
+    this.feeder = feeder;
+    this.shooterSpeed = shooterSpeed;
+    this.feederSpeed = feederSpeed;
+
+    addRequirements(shooter, feeder);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -31,13 +35,15 @@ public class ShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.shoot(speed);
+    shooter.shoot(shooterSpeed);
+    feeder.feed(feederSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopShooter();
+    shooter.shooterStop();
+    feeder.feederStop();
   }
 
   // Returns true when the command should end.

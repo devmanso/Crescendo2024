@@ -2,18 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.shooter_feeder_commands;
+package frc.robot.commands.shooterCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class FeedShooterCommand extends Command {
+public class ShooterCommand extends Command {
 
-  public Shooter shooter;
+  private Shooter shooter;
   private double speed;
 
-  /** Creates a new FeedShooterCommand. */
-  public FeedShooterCommand(Shooter shooter, double speed) {
+  /** Creates a new ShooterCommand. */
+  public ShooterCommand(Shooter shooter, double speed) {
+
     this.shooter = shooter;
     this.speed = speed;
 
@@ -28,13 +29,13 @@ public class FeedShooterCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.feed(speed);
+    shooter.shoot(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopFeeder();
+    shooter.shooterStop();
   }
 
   // Returns true when the command should end.
@@ -43,3 +44,4 @@ public class FeedShooterCommand extends Command {
     return false;
   }
 }
+

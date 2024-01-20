@@ -8,8 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.shooter_feeder_commands.ShootCommand;
+import frc.robot.commands.shooter_feeder_commands.FeedAndShootCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
 import edu.wpi.first.wpilibj.Joystick;
@@ -37,12 +38,17 @@ public class RobotContainer {
   private final XboxController controller = new XboxController(0);
   private final SwerveDrive swerveDrive = new SwerveDrive();
   private final Shooter shooter = new Shooter();
+  private final Feeder feeder = new Feeder();
 
   private final Joystick xboxController = new Joystick(0);
 
+  // private final JoystickButton a;
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+
+    // a = new JoystickButton(xboxController, 0);
 
     configureBindings();
     swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
@@ -63,6 +69,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
+    // a.onFalse(new FeedAndShootCommand(shooter, feeder, 0, 0));
+
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
