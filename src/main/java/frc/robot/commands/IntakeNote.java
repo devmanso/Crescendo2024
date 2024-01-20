@@ -27,13 +27,19 @@ public class IntakeNote extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.grabNote();
+    // check if the note is inside, if it is, then stop the intake motors
+    // if its not inside keep running the intake
+    if(intake.stuckNote()) { intake.grabNote();}
+    else {
+      System.out.println("NOTE IS INSIDE THE ROBOT");
+      intake.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // stop the intake
+    intake.stop();
   }
 
   // Returns true when the command should end.
