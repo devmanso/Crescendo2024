@@ -29,8 +29,17 @@ public class Shooter extends SubsystemBase {
     // feederMotor.set(speed * reductionSpeed);
   }
 
-  /*
+  /**
+   * spins only the feeder's motor in order to feed to feed the note to the shooter
+   * @param speed
+   */
+  public void feed(double speed) {
+    feederMotor.set(speed);
+  }
+
+  /**
    * reverses the feeder motor
+   * @param speed
    */
   public void feederReverse(double speed) {
     feederMotor.set(-speed);
@@ -44,8 +53,14 @@ public class Shooter extends SubsystemBase {
     feederMotor.stopMotor();
   }
 
+  
+  public void stopFeeder() {
+    feederMotor.stopMotor();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 }
