@@ -12,7 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.SwerveXDrive;
+import frc.robot.subsystems.swerve.SwerveXDrive;
 
 public class ControlSwerveX extends Command {
   
