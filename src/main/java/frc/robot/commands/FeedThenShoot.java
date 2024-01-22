@@ -39,6 +39,7 @@ public class FeedThenShoot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // TODO: this is probably bad code, fix later
     // same thing here
     new Thread(() -> {
       shooter.shoot(1);
