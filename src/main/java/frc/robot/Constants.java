@@ -20,11 +20,14 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
         // all motor id's are placeholders and are subject to change
 
+        /**
+         * These are correct now
+         */
         public static class WestCoastDriveTrain {
-                public static final int MASTER_LEFT = 1;
-                public static final int FOLLOWER_LEFT = 2;
-                public static final int MASTER_RIGHT = 3;
-                public static final int FOLLOWER_RIGHT = 4;
+                public static final int MASTER_LEFT = 0;
+                public static final int FOLLOWER_LEFT = 1;
+                public static final int MASTER_RIGHT = 2;
+                public static final int FOLLOWER_RIGHT = 3;
         }
 
         public static class OperatorConstants {
