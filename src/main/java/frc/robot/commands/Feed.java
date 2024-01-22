@@ -4,39 +4,38 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.WCPDriveTrain;
+import frc.robot.subsystems.Feeder;
 
-public class WCPTeleopDrive extends Command {
-  CommandXboxController controller;
-  WCPDriveTrain driveTrain = new WCPDriveTrain();
-  /** Creates a new WCPTeleopDrive. */
-  public WCPTeleopDrive(CommandXboxController controller, WCPDriveTrain driveTrain) {
+public class Feed extends Command {
+  Feeder feeder;
+  double startTime;
+  /** Creates a new Feed. */
+  public Feed(Feeder feeder) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.controller = controller;
-    this.driveTrain = driveTrain;
-    addRequirements(driveTrain);
+    addRequirements(feeder);
+    this.feeder = feeder;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveTrain.stop();
+    startTime = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.drive(controller.getRawAxis(1), controller.getRawAxis(4));
+    if(Timer.getFPGATimestamp() - startTime >= 2) {
+      feeder.feed();
+    } else { feeder.stopFeeder(); }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stop();
+    feeder.stopFeeder();
   }
 
   // Returns true when the command should end.

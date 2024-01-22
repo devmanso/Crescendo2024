@@ -8,8 +8,13 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Feed;
+import frc.robot.commands.SpinUpShooter;
+import frc.robot.commands.StopShooter;
 import frc.robot.commands.WCPTeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.WCPDriveTrain;
 import frc.robot.subsystems.swerve.SwerveDrive;
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,12 +36,13 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
+  private final CommandXboxController xboxController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-  private final XboxController controller = new XboxController(0);
   private final SwerveDrive swerveDrive = new SwerveDrive();
   private final WCPDriveTrain driveTrain = new WCPDriveTrain();
+  private final Shooter shooter = new Shooter();
+  private final Feeder feeder = new Feeder();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -52,7 +58,7 @@ public class RobotContainer {
         () -> true));
         */
     
-    driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
+    driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
   }
 
   /**
@@ -71,8 +77,13 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    xboxController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
+    //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
+    
+    xboxController.a().onTrue(new SpinUpShooter(shooter));
+    xboxController.b().onTrue(new Feed(feeder));
+
     // TODO: UNCOMMENT ME FOR SWERVE
     /* 
     new JoystickButton(controller, 1)
