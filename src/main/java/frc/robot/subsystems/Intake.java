@@ -11,36 +11,33 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private TalonFX bottomMotor = new TalonFX(10);
-  private TalonFX topMotor = new TalonFX(11);
-  private DigitalInput noteChecker = new DigitalInput(0);
-  
+  private TalonFX intakeMotor = new TalonFX(10);
+  private DigitalInput noteSwitch = new DigitalInput(0);
+
   /**
-   * Returns true if note stuck in intake
+   * returns the state of the limit switch
+   * @return
    */
-  public boolean stuckNote() {
-    return noteChecker.get();
+  public boolean getNoteSwitch() {
+    return noteSwitch.get();
   }
 
   /**
    * sets motors to 50 percent
    */
   public void grabNote() {
-    bottomMotor.set(.5); // 50 percent
-    topMotor.set(.5);
+    intakeMotor.set(.5); // 50 percent
   }
 
   /**
    * sets motors to -50 percent
    */
   public void spitNote() {
-    bottomMotor.set(-.5);
-    topMotor.set(-.5);
+    intakeMotor.set(-.5);
   }
 
   public void stop() {
-    bottomMotor.set(0);
-    topMotor.set(0);
+    intakeMotor.set(0);
   }
 
   /** Creates a new Intake. */

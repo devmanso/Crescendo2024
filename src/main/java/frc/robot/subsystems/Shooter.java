@@ -14,8 +14,6 @@ public class Shooter extends SubsystemBase {
   // private WPI_TalonFX shooterMotor = new WPI_TalonFX(); Falcon500 is no longer WPI_TalonFX
 
   private TalonFX shooterMotor = new TalonFX(ShooterAndFeeder.SHOOTER_ID);
-  private TalonFX feederMotor = new TalonFX(ShooterAndFeeder.FEEDER_ID);
-  
 
   public Shooter() {}
 
@@ -25,15 +23,6 @@ public class Shooter extends SubsystemBase {
    */
   public void shoot(double speed) {
     shooterMotor.set(speed);
-    feederMotor.set(speed * 0.25);
-    // feederMotor.set(speed * reductionSpeed);
-  }
-
-  /*
-   * reverses the feeder motor
-   */
-  public void feederReverse(double speed) {
-    feederMotor.set(-speed);
   }
 
   /**
@@ -41,7 +30,6 @@ public class Shooter extends SubsystemBase {
    */
   public void stopShooter() {
     shooterMotor.stopMotor();
-    feederMotor.stopMotor();
   }
 
   @Override

@@ -32,8 +32,13 @@ public final class Constants {
         }
 
         public static class ShooterAndFeeder {
-                public static final int SHOOTER_ID = 12;
-                public static final int FEEDER_ID = 13;
+                public static final int SHOOTER_ID = 22;
+                public static final int FEEDER_ID = 22;
+        }
+
+        public static class IntakeConstants {
+                public static final int INTAKE_ID = 20;
+                public static final int LIMITSWITCH_ID = 0;
         }
 
         public static final class ModuleConstants {
