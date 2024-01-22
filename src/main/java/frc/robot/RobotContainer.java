@@ -8,7 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.WCPTeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.WCPDriveTrain;
 import frc.robot.subsystems.swerve.SwerveDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,16 +36,23 @@ public class RobotContainer {
   
   private final XboxController controller = new XboxController(0);
   private final SwerveDrive swerveDrive = new SwerveDrive();
+  private final WCPDriveTrain driveTrain = new WCPDriveTrain();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    
+    // TODO: UNCOMMENT ME FOR SWERVE
+    /* 
     swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
      () -> controller.getRawAxis(1),
       () -> controller.getRawAxis(2),
        () -> controller.getRawAxis(4),
         () -> true));
+        */
+    
+    driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
   }
 
   /**
@@ -63,8 +72,12 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    
+    // TODO: UNCOMMENT ME FOR SWERVE
+    /* 
     new JoystickButton(controller, 1)
     .onTrue(new InstantCommand(() -> swerveDrive.zeroHeading()));
+    */
   }
 
   /**
