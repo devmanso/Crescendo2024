@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.hyperdrive.hyperlib.AprilTagFinder;
 
 import edu.wpi.first.apriltag.AprilTagPoseEstimate;
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
     return distance;
   }
 
+  //TalonFX testingMotor = new TalonFX(3);
   
   private Command m_autonomousCommand;
   // congig data for c920 pro (I think)
@@ -61,6 +63,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    //testingMotor.set(.5);
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
