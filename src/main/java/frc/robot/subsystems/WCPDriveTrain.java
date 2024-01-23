@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -12,10 +15,10 @@ import frc.robot.Constants.WestCoastDriveTrain;
 
 public class WCPDriveTrain extends SubsystemBase {
 
-  Spark leftMaster = new Spark(WestCoastDriveTrain.MASTER_LEFT);
-  Spark leftFollower = new Spark(WestCoastDriveTrain.FOLLOWER_LEFT);
-  Spark rightMaster = new Spark(WestCoastDriveTrain.MASTER_RIGHT);
-  Spark rightFollower = new Spark(WestCoastDriveTrain.FOLLOWER_RIGHT);
+  TalonFX leftMaster = new TalonFX(WestCoastDriveTrain.MASTER_LEFT);
+  TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
+  TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
+  TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
 
   DifferentialDrive drive = new DifferentialDrive(leftMaster, rightMaster);
   // over here we'd tupically use MotorControllerGroup, but it's been deprecated
@@ -23,8 +26,9 @@ public class WCPDriveTrain extends SubsystemBase {
 
   /** Creates a new WCPDriveTrain. */
   public WCPDriveTrain() {
-    leftMaster.addFollower(leftFollower);
-    rightMaster.addFollower(rightFollower);
+    // Ensure follower motors mimic master motors
+    leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
+    rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));
     
     // set the right motors to be inverted
     rightMaster.setInverted(true);

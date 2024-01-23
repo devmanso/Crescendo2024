@@ -12,7 +12,7 @@ import frc.robot.subsystems.WCPDriveTrain;
 
 public class WCPTeleopDrive extends Command {
   CommandXboxController controller;
-  WCPDriveTrain driveTrain = new WCPDriveTrain();
+  WCPDriveTrain driveTrain;
   /** Creates a new WCPTeleopDrive. */
   public WCPTeleopDrive(CommandXboxController controller, WCPDriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.

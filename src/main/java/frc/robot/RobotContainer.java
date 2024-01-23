@@ -39,10 +39,11 @@ public class RobotContainer {
   private final CommandXboxController xboxController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-  private final SwerveDrive swerveDrive = new SwerveDrive();
+  //private final SwerveDrive swerveDrive = new SwerveDrive();
   private final WCPDriveTrain driveTrain = new WCPDriveTrain();
-  private final Shooter shooter = new Shooter();
-  private final Feeder feeder = new Feeder();
+  
+  //private final Shooter shooter = new Shooter();
+  //private final Feeder feeder = new Feeder();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -81,8 +82,8 @@ public class RobotContainer {
     
     //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
     
-    xboxController.a().onTrue(new SpinUpShooter(shooter));
-    xboxController.b().onTrue(new Feed(feeder));
+    //xboxController.a().onTrue(new SpinUpShooter(shooter));
+    //xboxController.b().onTrue(new Feed(feeder));
 
     // TODO: UNCOMMENT ME FOR SWERVE
     /* 
