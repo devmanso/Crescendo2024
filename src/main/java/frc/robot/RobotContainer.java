@@ -12,6 +12,7 @@ import frc.robot.commands.Feed;
 import frc.robot.commands.SpinUpShooter;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.WCPTeleopDrive;
+import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
@@ -41,6 +42,7 @@ public class RobotContainer {
   
   //private final SwerveDrive swerveDrive = new SwerveDrive();
   private final WCPDriveTrain driveTrain = new WCPDriveTrain();
+  //private final AirCompressor andyMarkCompressor = new AirCompressor();
   
   //private final Shooter shooter = new Shooter();
   //private final Feeder feeder = new Feeder();
@@ -58,7 +60,7 @@ public class RobotContainer {
        () -> controller.getRawAxis(4),
         () -> true));
         */
-    
+    //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
   }
 

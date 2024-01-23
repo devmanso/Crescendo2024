@@ -10,15 +10,23 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.WestCoastDriveTrain;
 
 public class WCPDriveTrain extends SubsystemBase {
 
-  TalonFX leftMaster = new TalonFX(WestCoastDriveTrain.MASTER_LEFT);
-  TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
-  TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
-  TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
+  // TalonFX leftMaster = new TalonFX(WestCoastDriveTrain.MASTER_LEFT);
+  // TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
+  // TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
+  // TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
+
+  // if you are using Spark uncomment this code and comment the code above
+  
+  Spark leftMaster = new Spark(0);
+  Spark leftFollower = new Spark(1);
+  Spark rightMaster = new Spark(2);
+  Spark rightFollower = new Spark(3);
 
   DifferentialDrive drive = new DifferentialDrive(leftMaster, rightMaster);
   // over here we'd tupically use MotorControllerGroup, but it's been deprecated
@@ -27,9 +35,12 @@ public class WCPDriveTrain extends SubsystemBase {
   /** Creates a new WCPDriveTrain. */
   public WCPDriveTrain() {
     // Ensure follower motors mimic master motors
-    leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
-    rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));
+    //leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
+    //rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));
     
+    rightMaster.addFollower(rightFollower);
+    leftMaster.addFollower(leftFollower);
+
     // set the right motors to be inverted
     rightMaster.setInverted(true);
     rightFollower.setInverted(true);
@@ -75,6 +86,20 @@ public class WCPDriveTrain extends SubsystemBase {
   public void drive(double speed, double rotation) {
     drive.arcadeDrive(speed, rotation);
   }
+
+  // public void displayDriveTrainData() {
+  //   Shuffleboard.getTab("DriveTrain")
+  //   .addNumber("LM_VOLT", () -> leftMaster.getMotorVoltage().getValueAsDouble());
+
+  //   Shuffleboard.getTab("DriveTrain")
+  //   .addNumber("LF_VOLT", () -> leftFollower.getMotorVoltage().getValueAsDouble());
+
+  //   Shuffleboard.getTab("DriveTrain")
+  //   .addNumber("RM_VOLT", () -> rightMaster.getMotorVoltage().getValueAsDouble());
+
+  //   Shuffleboard.getTab("DriveTrain")
+  //   .addNumber("RF_VOLT", () -> rightFollower.getMotorVoltage().getValueAsDouble());
+  // }
 
   @Override
   public void periodic() {
