@@ -42,7 +42,7 @@ public class RobotContainer {
   
   //private final SwerveDrive swerveDrive = new SwerveDrive();
   private final WCPDriveTrain driveTrain = new WCPDriveTrain();
-  //private final AirCompressor andyMarkCompressor = new AirCompressor();
+  private final AirCompressor andyMarkCompressor = new AirCompressor();
   
   //private final Shooter shooter = new Shooter();
   //private final Feeder feeder = new Feeder();
@@ -61,7 +61,7 @@ public class RobotContainer {
         () -> true));
         
         */
-    //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
+    andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
   }
 

@@ -11,6 +11,7 @@ import edu.wpi.first.apriltag.AprilTagPoseEstimate;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -53,6 +54,7 @@ public class Robot extends TimedRobot {
     aprilTagFinder.startDetection();
     aprilTagFinder.startThread();
   }
+
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics

@@ -23,10 +23,27 @@ public class WCPDriveTrain extends SubsystemBase {
 
   // if you are using Spark uncomment this code and comment the code above
   
-  Spark leftMaster = new Spark(0);
-  Spark leftFollower = new Spark(1);
-  Spark rightMaster = new Spark(2);
-  Spark rightFollower = new Spark(3);
+  Spark leftMaster = new Spark(2);
+  Spark leftFollower = new Spark(3);
+  Spark rightMaster = new Spark(0);
+  Spark rightFollower = new Spark(1);
+
+  public void testMotor(int motorID) {
+    switch (motorID) {
+      case 0:
+        rightMaster.set(1);
+      case 1:
+        rightFollower.set(1);
+        break;
+      case 2:
+        leftMaster.set(1);
+        break;
+      case 3:
+        leftFollower.set(1);
+      default:
+        break;
+    }
+  }
 
   DifferentialDrive drive = new DifferentialDrive(leftMaster, rightMaster);
   // over here we'd tupically use MotorControllerGroup, but it's been deprecated
@@ -43,7 +60,8 @@ public class WCPDriveTrain extends SubsystemBase {
 
     // set the right motors to be inverted
     rightMaster.setInverted(true);
-    rightFollower.setInverted(true);
+    rightFollower.setInverted(false); // technician wired this wierdly, this quick hack
+    // should fix this ^^ - Mansour Quddus
 
     // ensure left motors are not inverted
     leftMaster.setInverted(false);
