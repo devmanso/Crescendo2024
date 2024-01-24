@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 
+import javax.sound.midi.Instrument;
+
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -20,13 +22,19 @@ import frc.robot.Constants.WestCoastDriveTrain;
 
 public class WCPDriveTrain extends SubsystemBase {
 
-  ArrayList<TalonFX> instruments = new ArrayList<>();
   Orchestra orchestra = new Orchestra();
 
   TalonFX leftMaster = new TalonFX(WestCoastDriveTrain.MASTER_LEFT);
   TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
   TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
   TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
+
+  public void setupInstruments() {
+    orchestra.addInstrument(leftMaster);
+    orchestra.addInstrument(leftFollower);
+    orchestra.addInstrument(rightMaster);
+    orchestra.addInstrument(rightFollower);
+  }
 
   // if you are using Spark uncomment this code and comment the code above
   
@@ -87,6 +95,12 @@ public class WCPDriveTrain extends SubsystemBase {
     // ensure left motors are not inverted
     leftMaster.setInverted(false);
     leftFollower.setInverted(false);
+
+    // please work it would be so funny
+
+    setupInstruments();
+    loadSong("ninmusic.chrp");
+    playSong();
   }
 
   /**

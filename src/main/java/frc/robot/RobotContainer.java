@@ -42,7 +42,7 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
   //private final SwerveDrive swerveDrive = new SwerveDrive();
-  private final WCPDriveTrain driveTrain = new WCPDriveTrain();
+  WCPDriveTrain driveTrain = new WCPDriveTrain();
   //private final AirCompressor andyMarkCompressor = new AirCompressor();
   
   //private final Shooter shooter = new Shooter();
@@ -52,6 +52,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    // driveTrain.setupInstruments();
+    // driveTrain.loadSong("CRANK_DAT");
+    // driveTrain.playSong();
     
     // TODO: UNCOMMENT ME FOR SWERVE
     /* 
