@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+
+import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -17,6 +20,9 @@ import frc.robot.Constants.WestCoastDriveTrain;
 
 public class WCPDriveTrain extends SubsystemBase {
 
+  ArrayList<TalonFX> instruments = new ArrayList<>();
+  Orchestra orchestra = new Orchestra();
+
   TalonFX leftMaster = new TalonFX(WestCoastDriveTrain.MASTER_LEFT);
   TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
   TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
@@ -28,6 +34,20 @@ public class WCPDriveTrain extends SubsystemBase {
   // Spark leftFollower = new Spark(3);
   // Spark rightMaster = new Spark(0);
   // Spark rightFollower = new Spark(1);
+
+  /*
+   * be sure to have a .chrp file in the deploy directory, then insert the file name in the param
+   */
+  public void loadSong(String chrpFile) {
+    orchestra.loadMusic(chrpFile);
+  }
+
+  /**
+   * plays song loaded on Orchestra object
+   */
+  public void playSong() {
+    orchestra.play();
+  } 
 
   public void testMotor(int motorID) {
     switch (motorID) {
