@@ -20,6 +20,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
         // all motor id's are placeholders and are subject to change
 
+        public static final int COMPRESSOR_ID = 20;
         /**
          * These are correct now
          */
