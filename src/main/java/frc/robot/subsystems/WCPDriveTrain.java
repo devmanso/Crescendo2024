@@ -10,23 +10,24 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.WestCoastDriveTrain;
 
 public class WCPDriveTrain extends SubsystemBase {
 
-  // TalonFX leftMaster = new TalonFX(WestCoastDriveTrain.MASTER_LEFT);
-  // TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
-  // TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
-  // TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
+  TalonFX leftMaster = new TalonFX(WestCoastDriveTrain.MASTER_LEFT);
+  TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
+  TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
+  TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
 
   // if you are using Spark uncomment this code and comment the code above
   
-  Spark leftMaster = new Spark(2);
-  Spark leftFollower = new Spark(3);
-  Spark rightMaster = new Spark(0);
-  Spark rightFollower = new Spark(1);
+  // Spark leftMaster = new Spark(2);
+  // Spark leftFollower = new Spark(3);
+  // Spark rightMaster = new Spark(0);
+  // Spark rightFollower = new Spark(1);
 
   public void testMotor(int motorID) {
     switch (motorID) {
@@ -52,17 +53,17 @@ public class WCPDriveTrain extends SubsystemBase {
   /** Creates a new WCPDriveTrain. */
   public WCPDriveTrain() {
     // Ensure follower motors mimic master motors
-    //leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
-    //rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));
+    leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
+    rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));
     
-    rightMaster.addFollower(rightFollower);
-    leftMaster.addFollower(leftFollower);
+    //rightMaster.addFollower(rightFollower);
+    //leftMaster.addFollower(leftFollower);
 
     // set the right motors to be inverted
     rightMaster.setInverted(true);
-    rightFollower.setInverted(false); // technician wired this wierdly, this quick hack
-    // should fix this ^^ - Mansour Quddus
-
+    //rightFollower.setInverted(false); // technician wired this wierdly, this quick hack
+    // should fix this ^^ - Mansour Quddus, if your going w/ TalonFX's then invert the right again
+    rightFollower.setInverted(true);
     // ensure left motors are not inverted
     leftMaster.setInverted(false);
     leftFollower.setInverted(false);

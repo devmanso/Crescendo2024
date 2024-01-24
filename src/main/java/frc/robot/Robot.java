@@ -9,6 +9,8 @@ import com.hyperdrive.hyperlib.AprilTagFinder;
 
 import edu.wpi.first.apriltag.AprilTagPoseEstimate;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  Compressor testCompressor = new Compressor(PneumaticsModuleType.REVPH);
 
   public double determineDistance(double tagHeight, double cameraHeight, double cameraAngle) {
     // convert angle to radians
@@ -46,6 +49,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    testCompressor.enableDigital();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
