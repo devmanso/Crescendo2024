@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.swerve;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -37,14 +38,18 @@ public class SwerveXDriveTheory extends SubsystemBase {
     backRight.stop();
   }
 
-  private AHRS gyro = new AHRS(SPI.Port.kMXP);
+  private AHRS gyro = new AHRS(SPI.Port.kMXP); 
+  private Pigeon2 pigeon = new Pigeon2(0, getName());
 
   public void zeroHeading() {
     gyro.reset();
   }
 
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getAngle(), 360);
+    double pigeonHeading = Math.IEEEremainder(pigeon.getAngle(), 360);
+    double navXHeading = Math.IEEEremainder(gyro.getAngle(), 360);
+
+    return navXHeading;
   }
 
   public Rotation2d getRotation2d() {

@@ -8,14 +8,12 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Feed;
-import frc.robot.commands.RunCompressor;
-import frc.robot.commands.SpinUpShooter;
-import frc.robot.commands.StopShooter;
+import frc.robot.commands.IntakeAndFeederThenShoot;
 import frc.robot.commands.WCPTeleopDrive;
 import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.WCPDriveTrain;
 import frc.robot.subsystems.swerve.SwerveDrive;
@@ -26,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.StopAllCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -37,9 +36,19 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+  private final SwerveDrive swerve = new SwerveDrive();
+
+  private final Intake intake = new Intake();
+  private final Feeder feeder = new Feeder();
+  private final Shooter shooter = new Shooter();
+
+  
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController xboxController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+  private final JoystickButton xboxA, xboxB, xboxY, xboxX;
   
   //private final SwerveDrive swerveDrive = new SwerveDrive();
   WCPDriveTrain driveTrain = new WCPDriveTrain();
@@ -53,6 +62,12 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
+    // update later on, make class in Constants file
+    xboxA = new JoystickButton(null, 0);
+    xboxB = new JoystickButton(null, 0);
+    xboxY = new JoystickButton(null, 0);
+    xboxX = new JoystickButton(null, 0);
+    
     // driveTrain.setupInstruments();
     // driveTrain.loadSong("CRANK_DAT");
     // driveTrain.playSong();
@@ -88,7 +103,9 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     xboxController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    
+
+    xboxA.onTrue(new IntakeAndFeederThenShoot(intake, feeder, shooter, 0.2, 0.1, 1));
+    xboxB.onTrue(new StopAllCommand(intake, feeder, shooter));
     //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
     
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
