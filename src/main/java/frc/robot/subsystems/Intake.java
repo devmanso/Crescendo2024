@@ -6,13 +6,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private TalonFX intakeMotor = new TalonFX(10);
-  private DigitalInput noteSwitch = new DigitalInput(0);
+  private TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_ID);
+  private DigitalInput noteSwitch = new DigitalInput(IntakeConstants.LIMITSWITCH_ID);
 
   /**
    * returns the state of the limit switch
@@ -25,15 +26,15 @@ public class Intake extends SubsystemBase {
   /**
    * sets motors to 50 percent
    */
-  public void grabNote() {
-    intakeMotor.set(.5); // 50 percent
+  public void grabNote(double speed) {
+    intakeMotor.set(speed); // 50 percent
   }
 
   /**
    * sets motors to -50 percent
    */
-  public void spitNote() {
-    intakeMotor.set(-.5);
+  public void spitNote(double speed) {
+    intakeMotor.set(-speed);
   }
 
   public void stop() {

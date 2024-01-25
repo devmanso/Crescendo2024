@@ -8,14 +8,16 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Feed;
+import frc.robot.commands.IntakeFeederShooter;
 import frc.robot.commands.RunCompressor;
-import frc.robot.commands.SpinUpShooter;
-import frc.robot.commands.StopShooter;
 import frc.robot.commands.WCPTeleopDrive;
+import frc.robot.commands.intake_feeder_shooter_commands.Feed;
+import frc.robot.commands.intake_feeder_shooter_commands.SpinUpShooter;
+import frc.robot.commands.intake_feeder_shooter_commands.StopShooter;
 import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.WCPDriveTrain;
 import frc.robot.subsystems.swerve.SwerveDrive;
@@ -40,13 +42,20 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController xboxController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final JoystickButton XBoxA, XBoxB, XBoxY, XBoxX;
   
+  // intake, feeder, shooter
+  private final Intake intake = new Intake();
+  private final Feeder feeder = new Feeder();
+  private final Shooter shooter = new Shooter();
+
   //private final SwerveDrive swerveDrive = new SwerveDrive();
-  WCPDriveTrain driveTrain = new WCPDriveTrain();
+  private final WCPDriveTrain driveTrain = new WCPDriveTrain();
   //private final AirCompressor andyMarkCompressor = new AirCompressor();
   
   //private final Shooter shooter = new Shooter();
   //private final Feeder feeder = new Feeder();
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,6 +77,12 @@ public class RobotContainer {
         */
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     //andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
+
+    XBoxA = new JoystickButton(null, 0);
+    XBoxB = new JoystickButton(null, 0);
+    XBoxY = new JoystickButton(null, 0);
+    XBoxX = new JoystickButton(null, 0);
+
     driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
   }
 
@@ -88,7 +103,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     xboxController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    
+    xboxController.a().onTrue(new IntakeFeederShooter(intake, feeder, shooter, .5, .4, 1));
     //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
     
     //xboxController.a().onTrue(new SpinUpShooter(shooter));

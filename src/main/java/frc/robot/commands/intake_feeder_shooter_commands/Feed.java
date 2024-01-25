@@ -2,20 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.intake_feeder_shooter_commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Feeder;
 
-public class SpinUpShooter extends Command {
-  Shooter shooter;
-  double startTime;
-  /** Creates a new SpinUpShooter. */
-  public SpinUpShooter(Shooter shooter) {
+public class Feed extends Command {
+  Feeder feeder;
+  double startTime, feederSpeed;
+
+  /** Creates a new Feed. */
+  public Feed(Feeder feeder) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
-    this.shooter = shooter;
+    addRequirements(feeder);
+    this.feeder = feeder;
   }
 
   // Called when the command is initially scheduled.
@@ -27,17 +28,15 @@ public class SpinUpShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     if(Timer.getFPGATimestamp() - startTime >= 2) {
-      shooter.shoot(0);
-    } else { shooter.shoot(1); }
-
+      feeder.feed(feederSpeed);
+    } else { feeder.stopFeeder(); }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopShooter();
+    feeder.stopFeeder();
   }
 
   // Returns true when the command should end.

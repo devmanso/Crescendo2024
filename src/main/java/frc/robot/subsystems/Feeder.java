@@ -22,8 +22,8 @@ public class Feeder extends SubsystemBase {
   /**
    * sets feeder motor to 100% speed
    */
-  public void feed() {
-    feederMotor.set(1);
+  public void feed(double speed) {
+    feederMotor.set(speed);
   }
 
   /**
@@ -37,9 +37,6 @@ public class Feeder extends SubsystemBase {
    * use when you want to set feeder motor to specific speed
    * @param speed
    */
-  public void setFeederSpeed(double speed) {
-    feederMotor.set(speed);
-  }
 
   @Override
   public void periodic() {

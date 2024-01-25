@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.intake_feeder_shooter_commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,7 +15,7 @@ import frc.robot.subsystems.Shooter;
 public class FeedThenShoot extends Command {
   Shooter shooter = new Shooter();
   Feeder feeder = new Feeder();
-  double startTime;
+  double startTime, feederSpeed, shooterSpeed;
 
   /** Creates a new FeedThenShoot. */
   public FeedThenShoot(Shooter shooter, Feeder feeder) {
@@ -53,9 +53,9 @@ public class FeedThenShoot extends Command {
   @Override
   public void execute() {
 
-    shooter.shoot(1);
+    shooter.shoot(shooterSpeed);
     if(Timer.getFPGATimestamp() - startTime >= 2) {
-      feeder.feed();
+      feeder.feed(feederSpeed);
     }
 
     // if (Timer.getFPGATimestamp() - startTime >= 2) {
