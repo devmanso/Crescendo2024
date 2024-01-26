@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
-  private CANSparkMax intakeMotor = new CANSparkMax(10, MotorType.kBrushless);
+  private CANSparkMax intakeMotor = new CANSparkMax(1, MotorType.kBrushless);
   private DigitalInput noteSwitch = new DigitalInput(0);
 
   /**
@@ -29,14 +29,14 @@ public class Intake extends SubsystemBase {
    * sets motors to 50 percent
    */
   public void grabNote() {
-    intakeMotor.set(1); // 50 percent
+    intakeMotor.set(-0.75); // 50 percent
   }
 
   /**
    * sets motors to -50 percent
    */
   public void spitNote() {
-    intakeMotor.set(-.5);
+    intakeMotor.set(0.5);
   }
 
   public void stop() {
