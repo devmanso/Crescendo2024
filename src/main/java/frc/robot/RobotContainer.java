@@ -8,7 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RunIntake;
 import frc.robot.commands.RunIntakeAndFeeder;
+import frc.robot.commands.SparkDrive;
 import frc.robot.commands.WCPTeleopDrive;
 import frc.robot.commands.feeder.Feed;
 import frc.robot.commands.pneumatics.RunCompressor;
@@ -19,6 +21,7 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.SparkDriveTrain;
 import frc.robot.subsystems.WCPDriveTrain;
 import frc.robot.subsystems.swerve.SwerveDrive;
 import edu.wpi.first.wpilibj.Joystick;
@@ -44,7 +47,8 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
   //private final SwerveDrive swerveDrive = new SwerveDrive();
-  private final WCPDriveTrain driveTrain = new WCPDriveTrain();
+  //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
+  private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final Feeder feeder = new Feeder();
@@ -74,7 +78,9 @@ public class RobotContainer {
         */
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
-    driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
+    // driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
+    sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, xboxController));
+
   }
 
   /**
@@ -99,17 +105,16 @@ public class RobotContainer {
     //.until( () -> intake.getNoteSwitch() ) ); // if .until doesn't work, try inversing it with !
     // or use .unless
 
-    xboxController.x().onTrue(new InstantCommand( () -> driveTrain.highGear()));
-    xboxController.b().onTrue(new InstantCommand( () -> driveTrain.lowGear()));
-    xboxController.a().onTrue(new InstantCommand( () -> driveTrain.shifterOff()));
-
+    //xboxController.x().onTrue(new InstantCommand( () -> driveTrain.highGear()));
+    //xboxController.b().onTrue(new InstantCommand( () -> driveTrain.lowGear()));
+    //xboxController.a().onTrue(new InstantCommand( () -> driveTrain.shifterOff()));
     // TODO: implement shooting w/ feeder command. PLS USE COMMMAND COMPOSITION!!!
 
     //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
     
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
     //xboxController.b().onTrue(new Feed(feeder));
-
+    xboxController.b().onTrue(new RunIntake(intake));
     // TODO: UNCOMMENT ME FOR SWERVE
     /* 
     new JoystickButton(controller, 1)
