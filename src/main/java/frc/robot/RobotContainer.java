@@ -11,6 +11,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunIntakeAndFeeder;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.SparkDrive;
+import frc.robot.commands.driveTrains.SparkDriveSmooth;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
 import frc.robot.commands.feeder.Feed;
 import frc.robot.commands.intake.ReverseIntake;
@@ -49,9 +50,9 @@ public class RobotContainer {
   private final CommandXboxController xboxController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-  //private final SwerveDrive swerveDrive = new SwerveDrive();
+  private final SwerveDrive swerveDrive = new SwerveDrive();
   //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
-  private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
+  //private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final Feeder feeder = new Feeder();
@@ -77,13 +78,19 @@ public class RobotContainer {
       () -> controller.getRawAxis(2),
        () -> controller.getRawAxis(4),
         () -> true));
-        
         */
+    
+    swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
+     () -> xboxController.getRawAxis(1), 
+     () -> xboxController.getRawAxis(2), 
+     () -> xboxController.getRawAxis(4),
+      () -> true)); // if field oriented drive dont work, try making this false
+    
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
     // driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
-    sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, xboxController));
-
+    //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, xboxController));
+    //sparkDriveTrain.setDefaultCommand(new SparkDriveSmooth(sparkDriveTrain, xboxController));
   }
 
   /**

@@ -29,14 +29,14 @@ public class Intake extends SubsystemBase {
    * sets motors to 50 percent
    */
   public void grabNote() {
-    intakeMotor.set(-0.75); // 50 percent
+    intakeMotor.set(-.85); // 50 percent
   }
 
   /**
    * sets motors to -50 percent
    */
   public void spitNote() {
-    intakeMotor.set(0.5);
+    intakeMotor.set(1);
   }
 
   public void stop() {
