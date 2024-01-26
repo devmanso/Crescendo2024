@@ -8,11 +8,14 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.RunIntake;
 import frc.robot.commands.RunIntakeAndFeeder;
-import frc.robot.commands.SparkDrive;
-import frc.robot.commands.WCPTeleopDrive;
+import frc.robot.commands.driveTrains.HighGear;
+import frc.robot.commands.driveTrains.SparkDrive;
+import frc.robot.commands.driveTrains.WCPTeleopDrive;
 import frc.robot.commands.feeder.Feed;
+import frc.robot.commands.intake.ReverseIntake;
+import frc.robot.commands.intake.RunIntake;
+import frc.robot.commands.intake.StopIntake;
 import frc.robot.commands.pneumatics.RunCompressor;
 import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.subsystems.AirCompressor;
@@ -114,7 +117,12 @@ public class RobotContainer {
     
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
     //xboxController.b().onTrue(new Feed(feeder));
+  
     xboxController.b().onTrue(new RunIntake(intake));
+    xboxController.a().onTrue(new StopIntake(intake));
+    xboxController.y().onTrue(new ReverseIntake(intake));
+
+    // xboxController.rightBumper().onTrue(new HighGear(driveTrain));
     // TODO: UNCOMMENT ME FOR SWERVE
     /* 
     new JoystickButton(controller, 1)

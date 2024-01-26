@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase {
    * sets motors to 50 percent
    */
   public void grabNote() {
-    intakeMotor.set(1); // 50 percent
+    intakeMotor.set(0.5); // 50 percent
   }
 
   /**

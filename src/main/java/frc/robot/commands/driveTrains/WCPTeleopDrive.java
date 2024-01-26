@@ -2,41 +2,41 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.driveTrains;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.SparkDriveTrain;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.WCPDriveTrain;
 
-public class SparkDrive extends Command {
-  /** Creates a new SparkDrive. */
-  private SparkDriveTrain driveTrain;
-  private CommandXboxController xbox;
-
-
-  public SparkDrive(SparkDriveTrain driveTrain, CommandXboxController xbox) {
-    this.driveTrain = driveTrain;
-    this.xbox = xbox;
-
-    addRequirements(driveTrain);
+public class WCPTeleopDrive extends Command {
+  CommandXboxController controller;
+  WCPDriveTrain driveTrain;
+  /** Creates a new WCPTeleopDrive. */
+  public WCPTeleopDrive(CommandXboxController controller, WCPDriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.controller = controller;
+    this.driveTrain = driveTrain;
+    addRequirements(driveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    driveTrain.stop();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.arcadeDrive(-xbox.getRawAxis(1), xbox.getRawAxis(4));
+    driveTrain.drive(controller.getRawAxis(1), controller.getRawAxis(4));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stopDriveTrain();
+    driveTrain.stop();
   }
 
   // Returns true when the command should end.
