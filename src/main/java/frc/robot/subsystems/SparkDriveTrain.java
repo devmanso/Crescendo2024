@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SparkDriveTrain extends SubsystemBase {
-  private Spark leftMaster = new Spark(0);
-  private Spark rightMaster = new Spark(1);
-  private Spark leftFollower = new Spark(2);
-  private Spark rightFollower = new Spark(3);
+  private Spark leftMaster = new Spark(2);
+  private Spark rightMaster = new Spark(0);
+  private Spark leftFollower = new Spark(3);
+  private Spark rightFollower = new Spark(1);
 
   private DifferentialDrive diffDrive = new DifferentialDrive(rightMaster, leftMaster);
 
@@ -29,8 +29,12 @@ public class SparkDriveTrain extends SubsystemBase {
   
   }
 
+  // public double driveFilter(double startSpeed){
+
+  // }
+
   public void arcadeDrive(double xSpd, double ySpd) {
-    diffDrive.arcadeDrive(xSpd, ySpd);
+    diffDrive.arcadeDrive(xSpd * 0.75, ySpd * 0.75);
   } 
 
   public void stopDriveTrain() {

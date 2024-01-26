@@ -118,9 +118,9 @@ public class RobotContainer {
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
     //xboxController.b().onTrue(new Feed(feeder));
   
-    xboxController.b().onTrue(new RunIntake(intake));
-    xboxController.a().onTrue(new StopIntake(intake));
-    xboxController.y().onTrue(new ReverseIntake(intake));
+    xboxController.a().onTrue(new RunIntake(intake));
+    xboxController.b().onTrue(new StopIntake(intake));
+    xboxController.y().onTrue(new ReverseIntake(intake));// make oppsite
 
     // xboxController.rightBumper().onTrue(new HighGear(driveTrain));
     // TODO: UNCOMMENT ME FOR SWERVE
