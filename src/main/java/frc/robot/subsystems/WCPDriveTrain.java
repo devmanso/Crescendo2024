@@ -32,7 +32,7 @@ public class WCPDriveTrain extends SubsystemBase {
   TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
   TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
 
-  DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 6, 7);
+  DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 7, 6);
 
   public void highGear() {
     shifter.set(Value.kForward);
