@@ -23,7 +23,7 @@ public class Feeder extends SubsystemBase {
    * sets feeder motor to 100% speed
    */
   public void feed() {
-    feederMotor.set(1);
+    feederMotor.set(.5);
   }
 
   /**

@@ -6,12 +6,53 @@ package frc.robot.subsystems;
 
 import com.hyperdrive.hyperlib.LimeLight;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimeLightCamera extends SubsystemBase {
   /** Creates a new LimeLightCamera. */
   public LimeLightCamera() {}
+
+  public double getDistanceFromAprilTag(double limelightMountAngleDegrees, 
+  double goalHeightInches, double limelightLensHeightInches) {
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry ty = table.getEntry("ty");
+    double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+
+    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+    //calculate distance
+    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) 
+    / Math.tan(angleToGoalRadians);
+    return distanceFromLimelightToGoalInches;
+  }
+
+  public double autoEstimateDistance() {
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry ty = table.getEntry("ty");
+    double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+
+    // how many degrees back is your limelight rotated from perfectly vertical?
+    double limelightMountAngleDegrees = 0.0; 
+
+    // distance from the center of the Limelight lens to the floor
+    double limelightLensHeightInches = 8.5; 
+
+    // distance from the target to the floor
+    double goalHeightInches = 32; 
+
+    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+    //calculate distance
+    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)
+     / Math.tan(angleToGoalRadians);
+    return distanceFromLimelightToGoalInches;
+  }
+
 
   /**
    * 
@@ -70,5 +111,11 @@ public class LimeLightCamera extends SubsystemBase {
   @Override
   public void periodic() {
     
+    if(hasValidTargets() == 1) {
+      System.out.println(
+        autoEstimateDistance()
+      );
+      
+    }
   }
 }

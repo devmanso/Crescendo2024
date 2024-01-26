@@ -12,6 +12,9 @@ import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -28,6 +31,20 @@ public class WCPDriveTrain extends SubsystemBase {
   TalonFX leftFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_LEFT);
   TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
   TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
+
+  DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 6, 7);
+
+  public void highGear() {
+    shifter.set(Value.kForward);
+  }
+
+  public void lowGear() {
+    shifter.set(Value.kReverse);
+  }
+
+  public void shifterOff() {
+    shifter.set(Value.kOff);
+  }
 
   public void setupInstruments() {
     orchestra.addInstrument(leftMaster);
@@ -98,9 +115,9 @@ public class WCPDriveTrain extends SubsystemBase {
 
     // please work it would be so funny
 
-    setupInstruments();
-    loadSong("ninmusic.chrp");
-    playSong();
+    //setupInstruments();
+    //loadSong("ninmusic.chrp");
+    //playSong();
   }
 
   /**

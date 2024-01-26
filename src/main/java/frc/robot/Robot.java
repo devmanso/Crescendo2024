@@ -25,22 +25,11 @@ import frc.robot.subsystems.WCPDriveTrain;
  * project.
  */
 public class Robot extends TimedRobot {
-  Compressor testCompressor = new Compressor(20, PneumaticsModuleType.REVPH);
-
-  public double determineDistance(double tagHeight, double cameraHeight, double cameraAngle) {
-    // convert angle to radians
-    double angleRadians = Math.toRadians(cameraAngle);
-    double distance = (tagHeight - cameraHeight) / Math.tan(angleRadians);
-    return distance;
-  }
 
   //TalonFX testingMotor = new TalonFX(3);
   
   private Command m_autonomousCommand;
-  // congig data for c920 pro (I think)
-  AprilTagPoseEstimator.Config config = new AprilTagPoseEstimator.Config( 0.15240, 
-  1394.6027293299926, 1394.6027293299926,995.588675691456, 599.3212928484164);
-  AprilTagFinder aprilTagFinder = new AprilTagFinder(0, 640, 480, 30, "tag36h11", config, false);
+  
   Timer timer = new Timer();
   private RobotContainer m_robotContainer;
 
@@ -50,14 +39,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    testCompressor.disable();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //AprilTagDetectorSimulation detectorSimulation = new AprilTagDetectorSimulation();
     //detectorSimulation.startDetection();
-    aprilTagFinder.startDetection();
-    aprilTagFinder.startThread();
   }
 
 
@@ -77,7 +63,6 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     //System.out.println(aprilTagFinder.getTagID());
-    System.out.println(determineDistance(32, 32, 0));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

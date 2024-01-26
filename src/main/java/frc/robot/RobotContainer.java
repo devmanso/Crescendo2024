@@ -8,14 +8,16 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Feed;
-import frc.robot.commands.RunCompressor;
-import frc.robot.commands.SpinUpShooter;
-import frc.robot.commands.StopShooter;
+import frc.robot.commands.RunIntakeAndFeeder;
 import frc.robot.commands.WCPTeleopDrive;
+import frc.robot.commands.feeder.Feed;
+import frc.robot.commands.pneumatics.RunCompressor;
+import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.WCPDriveTrain;
 import frc.robot.subsystems.swerve.SwerveDrive;
@@ -42,8 +44,12 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
   //private final SwerveDrive swerveDrive = new SwerveDrive();
-  WCPDriveTrain driveTrain = new WCPDriveTrain();
-  //private final AirCompressor andyMarkCompressor = new AirCompressor();
+  private final WCPDriveTrain driveTrain = new WCPDriveTrain();
+  private final Intake intake = new Intake();
+  private final Shooter shooter = new Shooter();
+  private final Feeder feeder = new Feeder();
+  private final LimeLightCamera camera = new LimeLightCamera();
+  private final AirCompressor andyMarkCompressor = new AirCompressor();
   
   //private final Shooter shooter = new Shooter();
   //private final Feeder feeder = new Feeder();
@@ -67,7 +73,7 @@ public class RobotContainer {
         
         */
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
-    //andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
+    andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
     driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
   }
 
@@ -87,8 +93,18 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    xboxController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    //xboxController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     
+    //xboxController.a().onTrue(new RunIntakeAndFeeder(intake, feeder)
+    //.until( () -> intake.getNoteSwitch() ) ); // if .until doesn't work, try inversing it with !
+    // or use .unless
+
+    xboxController.x().onTrue(new InstantCommand( () -> driveTrain.highGear()));
+    xboxController.b().onTrue(new InstantCommand( () -> driveTrain.lowGear()));
+    xboxController.a().onTrue(new InstantCommand( () -> driveTrain.shifterOff()));
+
+    // TODO: implement shooting w/ feeder command. PLS USE COMMMAND COMPOSITION!!!
+
     //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
     
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
