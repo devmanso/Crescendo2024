@@ -56,6 +56,14 @@ public class SwerveModule {
         resetEncoders();
     }
 
+    /**
+     * 
+     * @return the module ID (absolute encoder ID)
+     */
+    public double getModuleID() {
+        return (double) absoluteEncoder.getDeviceID();
+    }
+
     public double getDrivePosition() {
         return driveEncoder.getPosition();
     }

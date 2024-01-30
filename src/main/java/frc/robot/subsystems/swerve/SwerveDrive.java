@@ -97,5 +97,9 @@ public class SwerveDrive extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Robot Heading", getHeading());
+    SmartDashboard.putNumber("Front Left", frontLeft.getModuleID());
+    SmartDashboard.putNumber("Back Left", backLeft.getModuleID());
+    SmartDashboard.putNumber("Front Right", frontRight.getModuleID());
+    SmartDashboard.putNumber("Back Right", backRight.getModuleID());
   }
 }
