@@ -53,7 +53,7 @@ public class RobotContainer {
   //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
   
   //private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
-  private final Intake intake = new Intake();
+  //private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final Feeder feeder = new Feeder();
   private final LimeLightCamera camera = new LimeLightCamera();
@@ -74,11 +74,11 @@ public class RobotContainer {
     // TODO: UNCOMMENT ME FOR SWERVE
     
     swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
-     () -> controller.getRawAxis(1),
+     () -> controller.getRawAxis(1)*-1,
       () -> controller.getRawAxis(2),
        () -> controller.getRawAxis(4),
-        () -> true));
-        
+        () -> false));
+    
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
@@ -119,9 +119,9 @@ public class RobotContainer {
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
     //xboxController.b().onTrue(new Feed(feeder));
   
-    controller.a().onTrue(new RunIntake(intake));
-    controller.b().onTrue(new StopIntake(intake));
-    controller.y().onTrue(new ReverseIntake(intake));// make oppsite
+    //controller.a().onTrue(new RunIntake(intake));
+    //controller.b().onTrue(new StopIntake(intake));
+    //controller.y().onTrue(new ReverseIntake(intake));// make oppsite
 
     // xboxController.rightBumper().onTrue(new HighGear(driveTrain));
     // TODO: UNCOMMENT ME FOR SWERVE

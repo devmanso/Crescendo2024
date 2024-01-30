@@ -84,12 +84,12 @@ public final class Constants {
                 // TODO: front and back right drive encoders are NOT reversed
                 // ask mechanical about these
                 public static final boolean kFrontLeftTurningEncoderReversed = true;
-                public static final boolean kBackLeftTurningEncoderReversed = true;
+                public static final boolean kBackLeftTurningEncoderReversed = false;
                 public static final boolean kFrontRightTurningEncoderReversed = true;
                 public static final boolean kBackRightTurningEncoderReversed = true;
 
                 public static final boolean kFrontLeftDriveEncoderReversed = true;
-                public static final boolean kBackLeftDriveEncoderReversed = true;
+                public static final boolean kBackLeftDriveEncoderReversed = false;
                 public static final boolean kFrontRightDriveEncoderReversed = false;
                 public static final boolean kBackRightDriveEncoderReversed = false;
 
@@ -107,10 +107,10 @@ public final class Constants {
 
                 // TODO: if you dont know, ask mechanical or something, try to have them align it perfectly as possible
                 // if this is all to difficult, then just set it to 0 and pray to Allah the code works
-                public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -0.254;
-                public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.252;
-                public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.816;
-                public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -4.811;
+                public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0;
+                public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0;
+                public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0;
+                public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0;
 
                 // if robot drives too slow, try increasing this
                 public static final double kPhysicalMaxSpeedMetersPerSecond = 5;

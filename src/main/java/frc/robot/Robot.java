@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.hyperdrive.hyperlib.AprilTagFinder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.apriltag.AprilTagPoseEstimate;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
@@ -27,6 +29,7 @@ import frc.robot.subsystems.WCPDriveTrain;
 public class Robot extends TimedRobot {
 
   //TalonFX testingMotor = new TalonFX(3);
+  //CANSparkMax testTurn = new CANSparkMax(16, MotorType.kBrushless);
   
   private Command m_autonomousCommand;
   
@@ -89,6 +92,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    //testTurn.set(.5);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
