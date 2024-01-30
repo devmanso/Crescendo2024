@@ -46,12 +46,13 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController xboxController =
+  private final CommandXboxController controller =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-  //private final SwerveDrive swerveDrive = new SwerveDrive();
+  private final SwerveDrive swerveDrive = new SwerveDrive();
   //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
-  private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
+  
+  //private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final Feeder feeder = new Feeder();
@@ -71,18 +72,18 @@ public class RobotContainer {
     // driveTrain.playSong();
     
     // TODO: UNCOMMENT ME FOR SWERVE
-    /* 
+    
     swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
      () -> controller.getRawAxis(1),
       () -> controller.getRawAxis(2),
        () -> controller.getRawAxis(4),
         () -> true));
         
-        */
+    
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
     // driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
-    sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, xboxController));
+    //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, xboxController));
 
   }
 
@@ -118,9 +119,9 @@ public class RobotContainer {
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
     //xboxController.b().onTrue(new Feed(feeder));
   
-    xboxController.a().onTrue(new RunIntake(intake));
-    xboxController.b().onTrue(new StopIntake(intake));
-    xboxController.y().onTrue(new ReverseIntake(intake));// make oppsite
+    controller.a().onTrue(new RunIntake(intake));
+    controller.b().onTrue(new StopIntake(intake));
+    controller.y().onTrue(new ReverseIntake(intake));// make oppsite
 
     // xboxController.rightBumper().onTrue(new HighGear(driveTrain));
     // TODO: UNCOMMENT ME FOR SWERVE

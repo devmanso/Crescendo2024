@@ -70,15 +70,15 @@ public final class Constants {
                 );
 
                 // TODO: MODIFY THESE PORTS FOR THE ROBOT
-                public static final int kFrontLeftDriveMotorPort = 8;
-                public static final int kBackLeftDriveMotorPort = 2;
-                public static final int kFrontRightDriveMotorPort = 6;
-                public static final int kBackRightDriveMotorPort = 4;
+                public static final int kFrontLeftDriveMotorPort = 10;
+                public static final int kBackLeftDriveMotorPort = 9;
+                public static final int kFrontRightDriveMotorPort = 5;
+                public static final int kBackRightDriveMotorPort = 3;
 
-                public static final int kFrontLeftTurningMotorPort = 7;
-                public static final int kBackLeftTurningMotorPort = 1;
-                public static final int kFrontRightTurningMotorPort = 5;
-                public static final int kBackRightTurningMotorPort = 3;
+                public static final int kFrontLeftTurningMotorPort = 11;
+                public static final int kBackLeftTurningMotorPort = 16;
+                public static final int kFrontRightTurningMotorPort = 8;
+                public static final int kBackRightTurningMotorPort = 15;
 
                 // TODO: all turning encoders are reversed
                 // TODO: front and back right drive encoders are NOT reversed
@@ -94,10 +94,10 @@ public final class Constants {
                 public static final boolean kBackRightDriveEncoderReversed = false;
 
                 // TODO: ask mechanical about these
-                public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
-                public static final int kBackLeftDriveAbsoluteEncoderPort = 2;
-                public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
-                public static final int kBackRightDriveAbsoluteEncoderPort = 3;
+                public static final int kFrontLeftDriveAbsoluteEncoderPort = 11;
+                public static final int kBackLeftDriveAbsoluteEncoderPort = 16;
+                public static final int kFrontRightDriveAbsoluteEncoderPort = 8;
+                public static final int kBackRightDriveAbsoluteEncoderPort = 15;
 
                 // TODO: Use SmartDashboard to find the right value for these
                 public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
