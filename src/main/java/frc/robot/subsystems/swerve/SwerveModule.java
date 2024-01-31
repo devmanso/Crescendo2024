@@ -89,7 +89,8 @@ public class SwerveModule {
 
     // dirty hack
     public double getAbsoluteEncoderPosition() {
-        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+        // USED TO BE CANCoder ABS ENC
+        return turningEncoder.getPosition();
     }
 
     // uh, maybe try using getAbsoluteEncoderPosition() instead of getAbsoluteEncoderRad()??

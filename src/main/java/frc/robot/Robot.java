@@ -29,7 +29,7 @@ import frc.robot.subsystems.WCPDriveTrain;
 public class Robot extends TimedRobot {
 
   //TalonFX testingMotor = new TalonFX(3);
-  //CANSparkMax testTurn = new CANSparkMax(16, MotorType.kBrushless);
+  //CANSparkMax testTurn = new CANSparkMax(5, MotorType.kBrushless);
   
   private Command m_autonomousCommand;
   
@@ -92,7 +92,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    //testTurn.set(.5);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -104,7 +103,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
   public void testInit() {

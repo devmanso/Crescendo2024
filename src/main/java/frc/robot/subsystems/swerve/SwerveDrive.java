@@ -92,7 +92,12 @@ public class SwerveDrive extends SubsystemBase {
     backRight.setDesiredState(desiredStates[3]);
   } 
 
-
+  public void resetModuleEncoders() {
+    frontLeft.resetEncoders();
+    frontRight.resetEncoders();
+    backLeft.resetEncoders();
+    backRight.resetEncoders();
+  }
 
   @Override
   public void periodic() {
