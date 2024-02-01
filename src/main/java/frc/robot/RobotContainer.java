@@ -8,11 +8,12 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.RunIntakeAndFeeder;
+import frc.robot.commands.StopAll;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.SparkDrive;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
-import frc.robot.commands.feeder.Feed;
+import frc.robot.commands.feeder.ReverseFeeder;
+import frc.robot.commands.feeder.RunFeeder;
 import frc.robot.commands.intake.ReverseIntake;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.intake.StopIntake;
@@ -49,21 +50,40 @@ public class RobotContainer {
   private final CommandXboxController controller =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-  private final SwerveDrive swerveDrive = new SwerveDrive();
+  //private final SwerveDrive swerveDrive = new SwerveDrive();
   //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
-  
-  //private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
+  private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
+
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final Feeder feeder = new Feeder();
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
   
-  //private final Shooter shooter = new Shooter();
-  //private final Feeder feeder = new Feeder();
+
+  // Button Board
+  private Joystick buttonBoard = new Joystick(OperatorConstants.ButtonBoardPort);
+
+  // Button Board Buttons
+  private JoystickButton feedBtn, grabNoteBtn, shootBtn, 
+                        reverseFeederBtn, releaseNoteBtn, stopAllBtn,
+                        shootFeedBtn, intakeFeederBtn;
+
+  //private final Shooter shooter = new Shooter()Feederprivate final Feeder feeder = new Feeder();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    // Button Board Button Objects
+    feedBtn = new JoystickButton(buttonBoard, OperatorConstants.FeedBtn);
+    grabNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteBtn);
+    shootBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootBtn);
+    reverseFeederBtn = new JoystickButton(buttonBoard, OperatorConstants.ReverseFeederBtn);
+    releaseNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.ReleaseNoteBtn);
+    stopAllBtn = new JoystickButton(buttonBoard, OperatorConstants.StopAllBtn);
+    // intakeFeederBtn = new JoystickButton(buttonBoard, OperatorConstants.IntakeFeederBtn);
+    // shootFeedBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootFeedBtn);
+
     // Configure the trigger bindings
     configureBindings();
 
@@ -73,17 +93,17 @@ public class RobotContainer {
     
     // TODO: UNCOMMENT ME FOR SWERVE
     
-    swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
-     () -> controller.getRawAxis(1),
-      () -> controller.getRawAxis(2),
-       () -> controller.getRawAxis(4),
-        () -> true));
+    // swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
+    //  () -> controller.getRawAxis(1),
+    //   () -> controller.getRawAxis(2),
+    //    () -> controller.getRawAxis(4),
+    //     () -> true));
         
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
     // driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
-    //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, xboxController));
+    sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
 
   }
 
@@ -119,9 +139,30 @@ public class RobotContainer {
     //xboxController.a().onTrue(new SpinUpShooter(shooter));
     //xboxController.b().onTrue(new Feed(feeder));
   
-    controller.a().onTrue(new RunIntake(intake));
-    controller.b().onTrue(new StopIntake(intake));
-    controller.y().onTrue(new ReverseIntake(intake));// make oppsite
+    // Xbox controller commands
+    // controller.a().onTrue(new RunIntake(intake));
+    // controller.b().onTrue(new StopIntake(intake));
+    // controller.y().onTrue(new ReverseIntake(intake));
+
+    // Feeder
+    feedBtn.whileTrue(new RunFeeder(feeder));
+    reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
+
+    // Intake
+    //grabNoteBtn.whileTrue(new RunIntake(intake).alongWith(new RunFeeder(feeder)));
+    grabNoteBtn.whileTrue(new RunIntake(intake));
+    //releaseNoteBtn.whileTrue(new ReverseIntake(intake).alongWith(new ReverseFeeder(feeder)));
+    releaseNoteBtn.whileTrue(new ReverseIntake(intake));
+
+    // Shooter
+    shootBtn.whileTrue(new SpinUpShooter(shooter));
+
+    // Shooter and Feeder
+    //shootFeedBtn.whileTrue(new SpinUpShooter(shooter).withTimeout(0.35)
+    //                            .alongWith(new RunFeeder(feeder)));
+
+    // Stop Subsystems
+    stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
 
     // xboxController.rightBumper().onTrue(new HighGear(driveTrain));
     // TODO: UNCOMMENT ME FOR SWERVE

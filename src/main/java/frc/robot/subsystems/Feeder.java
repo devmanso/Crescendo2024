@@ -4,8 +4,8 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterAndFeeder;
 
@@ -17,13 +17,13 @@ public class Feeder extends SubsystemBase {
   /** Creates a new Feeder. */
   public Feeder() {}
 
-  private TalonFX feederMotor = new TalonFX(ShooterAndFeeder.FEEDER_ID);
+  private Spark feederMotor = new Spark(ShooterAndFeeder.FEEDER_ID);
 
   /**
-   * sets feeder motor to 100% speed
+   * sets feeder motor to 50% speed
    */
   public void feed() {
-    feederMotor.set(.5);
+    feederMotor.set(0.7);
   }
 
   /**
@@ -31,6 +31,11 @@ public class Feeder extends SubsystemBase {
    */
   public void stopFeeder() {
     feederMotor.stopMotor();
+  }
+
+  /* sets feeder motor to -35% */
+  public void reverseFeeder() {
+    feederMotor.set(-045);
   }
 
   /**

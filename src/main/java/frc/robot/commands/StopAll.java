@@ -2,42 +2,46 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.feeder;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
-public class Feed extends Command {
-  Feeder feeder;
-  /** Creates a new Feed. */
-  public Feed(Feeder feeder) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(feeder);
+public class StopAll extends Command {
+  private Shooter shooter;
+  private Feeder feeder;
+  private Intake intake;
+  
+  public StopAll(Shooter shooter, Feeder feeder, Intake intake) {
+    this.shooter = shooter;
     this.feeder = feeder;
+    this.intake = intake;
+
+    addRequirements(shooter, feeder, intake);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    feeder.feed();
+    shooter.stopShooter();
+    feeder.stopFeeder();
+    intake.stop();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    feeder.stopFeeder();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

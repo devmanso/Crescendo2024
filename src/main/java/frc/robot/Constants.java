@@ -32,12 +32,26 @@ public final class Constants {
         }
 
         public static class OperatorConstants {
+                // controllers
                 public static final int kDriverControllerPort = 0;
+                public static final int ButtonBoardPort = 1;
+
+                // joystick buttons
+                public static final int GrabNoteBtn = 1;
+                public static final int FeedBtn = 3;
+                public static final int ShootBtn = 5;
+                public static final int ReverseFeederBtn = 4;
+                public static final int ReleaseNoteBtn = 2;
+                public static final int StopAllBtn = 6;
+
+                // public static final int IntakeFeederBtn = 0;
+                // public static final int ShootFeedBtn = 0;
+
         }
 
         public static class ShooterAndFeeder {
                 public static final int SHOOTER_ID = 22;
-                public static final int FEEDER_ID = 22;
+                public static final int FEEDER_ID = 4;// Spark Motor
         }
 
         public static class IntakeConstants {
