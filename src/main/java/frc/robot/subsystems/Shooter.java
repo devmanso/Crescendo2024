@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterAndFeeder;
 
@@ -32,8 +33,19 @@ public class Shooter extends SubsystemBase {
     shooterMotor.stopMotor();
   }
 
+  public void displayShooterData() {
+    SmartDashboard.putNumber("SHOOTER ACCEL", shooterMotor.getAcceleration().getValueAsDouble());
+    SmartDashboard.putNumber("SHOOTER VEL", shooterMotor.getVelocity().getValueAsDouble());
+  }
+
+  public double rpm_velocity(double motorVelocity, double wheelRadius) {
+
+    return 0;
+  }
+
   @Override
   public void periodic() {
+    displayShooterData();
     // This method will be called once per scheduler run
   }
 }

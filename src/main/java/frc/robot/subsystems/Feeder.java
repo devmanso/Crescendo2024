@@ -20,10 +20,10 @@ public class Feeder extends SubsystemBase {
   private Spark feederMotor = new Spark(ShooterAndFeeder.FEEDER_ID);
 
   /**
-   * sets feeder motor to 50% speed
+   * sets feeder motor to -50% speed
    */
   public void feed() {
-    feederMotor.set(0.7);
+    feederMotor.set(-0.35);
   }
 
   /**
@@ -33,9 +33,9 @@ public class Feeder extends SubsystemBase {
     feederMotor.stopMotor();
   }
 
-  /* sets feeder motor to -35% */
+  /* sets feeder motor to 35% */
   public void reverseFeeder() {
-    feederMotor.set(-0.45);
+    feederMotor.set(0.45);
   }
 
   /**
