@@ -90,7 +90,7 @@ public final class Constants {
 
                 public static final boolean kFrontLeftDriveEncoderReversed = true;
                 public static final boolean kBackLeftDriveEncoderReversed = true;
-                public static final boolean kFrontRightDriveEncoderReversed = false;
+                public static final boolean kFrontRightDriveEncoderReversed = true;
                 public static final boolean kBackRightDriveEncoderReversed = true;
 
                 // TODO: ask mechanical about these
