@@ -84,7 +84,7 @@ public final class Constants {
                 // TODO: front and back right drive encoders are NOT reversed
                 // ask mechanical about these
                 public static final boolean kFrontLeftTurningEncoderReversed = true;
-                public static final boolean kBackLeftTurningEncoderReversed = false;
+                public static final boolean kBackLeftTurningEncoderReversed = true;
                 public static final boolean kFrontRightTurningEncoderReversed = true;
                 public static final boolean kBackRightTurningEncoderReversed = true;
 
