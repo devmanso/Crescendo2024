@@ -35,7 +35,7 @@ public class Feeder extends SubsystemBase {
 
   /* sets feeder motor to -35% */
   public void reverseFeeder() {
-    feederMotor.set(-045);
+    feederMotor.set(-0.45);
   }
 
   /**
