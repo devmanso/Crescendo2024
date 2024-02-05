@@ -37,6 +37,8 @@ public class SwerveModule {
         absoluteEncoder = new CoreCANcoder(absoluteEncoderId);
 
         driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
+
+        // changed to brush to use SRX Mag Encoder, configure the turn motors in REV Client
         turningMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
 
         driveMotor.setInverted(driveMotorReversed);
