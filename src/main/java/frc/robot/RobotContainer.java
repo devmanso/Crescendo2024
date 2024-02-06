@@ -76,10 +76,10 @@ public class RobotContainer {
     
     
     swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
-     () -> controller.getRawAxis(1)*-1,
+     () -> controller.getRawAxis(1),
       () -> controller.getRawAxis(0),
        () -> controller.getRawAxis(4),
-        () -> false));
+        () -> false)); // turn FOC off for now
     
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
@@ -116,6 +116,7 @@ public class RobotContainer {
     //xboxController.a().onTrue(new InstantCommand( () -> driveTrain.shifterOff()));
     // TODO: implement shooting w/ feeder command. PLS USE COMMMAND COMPOSITION!!!
 
+    controller.a().onTrue(new InstantCommand( () -> swerveDrive.resetModuleEncoders()));
     //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
     
     //xboxController.a().onTrue(new SpinUpShooter(shooter));

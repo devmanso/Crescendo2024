@@ -92,7 +92,9 @@ public class SwerveModule {
     // dirty hack
     public double getAbsoluteEncoderPosition() {
         // USED TO BE CANCoder ABS ENC
-        return turningEncoder.getPosition();
+        double rotations = turningEncoder.getPosition();
+        double radians = rotations * 2 * Math.PI;
+        return rotations;
     }
 
     // uh, maybe try using getAbsoluteEncoderPosition() instead of getAbsoluteEncoderRad()??
@@ -100,6 +102,7 @@ public class SwerveModule {
         driveEncoder.setPosition(0);
         //turningEncoder.setPosition(getAbsoluteEncoderRad());
         turningEncoder.setPosition(getAbsoluteEncoderPosition());
+        //turningEncoder.setPosition(0);
     }
 
     public SwerveModuleState getState() {

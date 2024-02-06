@@ -88,10 +88,10 @@ public final class Constants {
                 public static final boolean kFrontRightTurningEncoderReversed = true;
                 public static final boolean kBackRightTurningEncoderReversed = true;
 
-                public static final boolean kFrontLeftDriveEncoderReversed = false;
+                public static final boolean kFrontLeftDriveEncoderReversed = true;
                 public static final boolean kBackLeftDriveEncoderReversed = true;
                 public static final boolean kFrontRightDriveEncoderReversed = true;
-                public static final boolean kBackRightDriveEncoderReversed = false;
+                public static final boolean kBackRightDriveEncoderReversed = true;
 
                 // TODO: ask mechanical about these
                 public static final int kFrontLeftDriveAbsoluteEncoderPort = 11;
@@ -113,7 +113,7 @@ public final class Constants {
                 public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0;
 
                 // if robot drives too slow, try increasing this
-                public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
+                public static final double kPhysicalMaxSpeedMetersPerSecond = 10; // 5
                 public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
                 public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;

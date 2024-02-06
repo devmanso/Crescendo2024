@@ -93,6 +93,7 @@ public class SwerveDrive extends SubsystemBase {
   } 
 
   public void resetModuleEncoders() {
+    System.out.println("RESETTING ENCODERS");
     frontLeft.resetEncoders();
     frontRight.resetEncoders();
     backLeft.resetEncoders();
