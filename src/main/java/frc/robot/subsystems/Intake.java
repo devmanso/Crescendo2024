@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
 
   private CANSparkMax intakeMotor = new CANSparkMax(1, MotorType.kBrushless);
-  private DigitalInput noteSwitch = new DigitalInput(0);
+  private DigitalInput noteSwitch = new DigitalInput(1);
   /**
    * returns the state of the limit switch
    * @return
@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase {
    * sets motors to 50 percent
    */
   public void grabNote() {
-    intakeMotor.set(-0.85); // 50 percent
+    intakeMotor.set(-0.95); // 50 percent
   }
 
   /**
@@ -53,6 +53,8 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     displayIntakeData();
+    boolean switchStatus = getNoteSwitch();
+    SmartDashboard.putBoolean("Limit Switch", switchStatus);
     // This method will be called once per scheduler run
   }
 }

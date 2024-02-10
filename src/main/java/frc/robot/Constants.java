@@ -43,15 +43,17 @@ public final class Constants {
                 public static final int ReverseFeederBtn = 4;
                 public static final int ReleaseNoteBtn = 2;
                 public static final int StopAllBtn = 6;
-
-                // public static final int IntakeFeederBtn = 0;
+                // public static final int GrabNoteNoOverride = 7;
+                public static final int ShootOnPressBtn = 8;
                 // public static final int ShootFeedBtn = 0;
+                public static final int GrabNoteOnPressBtn = 7;
 
         }
 
         public static class ShooterAndFeeder {
                 public static final int SHOOTER_ID = 22;
                 public static final int FEEDER_ID = 4;// Spark Motor
+                public static final int FeederSwitchPort = 0;
         }
 
         public static class IntakeConstants {

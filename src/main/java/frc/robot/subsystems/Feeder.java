@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterAndFeeder;
@@ -18,13 +19,22 @@ public class Feeder extends SubsystemBase {
   public Feeder() {}
 
   private Spark feederMotor = new Spark(ShooterAndFeeder.FEEDER_ID);
+  //private DigitalInput feederSwitch = new DigitalInput(ShooterAndFeeder.FeederSwitchPort);
 
   /**
    * sets feeder motor to -50% speed
    */
   public void feed() {
-    feederMotor.set(-0.35);
+    feederMotor.set(-0.5);
   }
+
+  public void feederSetSpeed(double speed) {
+    feederMotor.set(speed);
+  }
+
+  // public boolean getFeederSwitch() {
+  //   return feederSwitch.get();
+  // }
 
   /**
    * stops feeder motor

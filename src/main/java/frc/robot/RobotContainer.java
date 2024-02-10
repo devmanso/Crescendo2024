@@ -14,11 +14,16 @@ import frc.robot.commands.driveTrains.SparkDrive;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
 import frc.robot.commands.feeder.ReverseFeeder;
 import frc.robot.commands.feeder.RunFeeder;
+import frc.robot.commands.feeder.FeedWithTimer;
+import frc.robot.commands.feeder.StopFeeder;
 import frc.robot.commands.intake.ReverseIntake;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.intake.StopIntake;
 import frc.robot.commands.pneumatics.RunCompressor;
+import frc.robot.commands.shooter.ShootWithFeeder;
+import frc.robot.commands.shooter.ShootWithTimer;
 import frc.robot.commands.shooter.SpinUpShooter;
+import frc.robot.commands.shooter.StopShooter;
 import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
@@ -67,7 +72,8 @@ public class RobotContainer {
   // Button Board Buttons
   private JoystickButton feedBtn, grabNoteBtn, shootBtn, 
                         reverseFeederBtn, releaseNoteBtn, stopAllBtn,
-                        shootFeedBtn, intakeFeederBtn;
+                        shootOnPressBtn, grabNotOnPressBtn;
+                    
 
   //private final Shooter shooter = new Shooter()Feederprivate final Feeder feeder = new Feeder();
 
@@ -77,7 +83,9 @@ public class RobotContainer {
     // Button Board Button Objects
     feedBtn = new JoystickButton(buttonBoard, OperatorConstants.FeedBtn);
     grabNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteBtn);
+    grabNotOnPressBtn = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteOnPressBtn);
     shootBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootBtn);
+    shootOnPressBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootOnPressBtn);
     reverseFeederBtn = new JoystickButton(buttonBoard, OperatorConstants.ReverseFeederBtn);
     releaseNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.ReleaseNoteBtn);
     stopAllBtn = new JoystickButton(buttonBoard, OperatorConstants.StopAllBtn);
@@ -150,12 +158,19 @@ public class RobotContainer {
 
     // Intake
     //grabNoteBtn.whileTrue(new RunIntake(intake).alongWith(new RunFeeder(feeder)));
-    grabNoteBtn.whileTrue(new RunIntake(intake));
+    grabNoteBtn.onTrue(new RunIntake(intake));
+    grabNotOnPressBtn.onTrue(new RunIntake(intake).alongWith(new RunFeeder(feeder)).until(() -> intake.getNoteSwitch() == false));//type casting(explicit conversion)
+
     //releaseNoteBtn.whileTrue(new ReverseIntake(intake).alongWith(new ReverseFeeder(feeder)));
     releaseNoteBtn.whileTrue(new ReverseIntake(intake));
 
     // Shooter
-    shootBtn.whileTrue(new SpinUpShooter(shooter));
+    // shootBtn.whileTrue(new SpinUpShooter(shooter));
+    shootBtn.onTrue(new ShootWithTimer(shooter));
+    shootOnPressBtn.onTrue(new ShootWithTimer(shooter).andThen(new FeedWithTimer(feeder, -0.35)).andThen(new StopFeeder(feeder).alongWith(new StopShooter(shooter))));
+    // shootOnPressBtn.onTrue(new ShootWithFeeder(shooter, feeder).withTimeout(7).andThen(new StopShooter(shooter).alongWith(new StopFeeder(feeder))));
+    // shootOnPressBtn.onTrue(new SpinUpShooter(shooter).withTimeout(3).andThen(new RunFeeder(feeder)).withTimeout(2.5).andThen(new StopShooter(shooter)));
+
 
     // Shooter and Feeder
     //shootFeedBtn.whileTrue(new SpinUpShooter(shooter).withTimeout(0.35)

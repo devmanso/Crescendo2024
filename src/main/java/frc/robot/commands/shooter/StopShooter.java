@@ -4,13 +4,14 @@
 
 package frc.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class StopShooter extends InstantCommand {
+public class StopShooter extends Command {
   Shooter shooter;
   public StopShooter(Shooter shooter) {
     this.shooter = shooter;
@@ -18,9 +19,26 @@ public class StopShooter extends InstantCommand {
     addRequirements(shooter);
   }
 
+  private boolean end = false;
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     shooter.stopShooter();
+  }
+
+  @Override
+  public void execute(){
+    SmartDashboard.putBoolean("Ended", end);
+  }
+
+  @Override 
+  public void end(boolean interrupted){
+    end = true;
+  }
+
+  @Override
+  public boolean isFinished() {
+    return end;
   }
 }
