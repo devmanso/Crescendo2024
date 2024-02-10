@@ -41,7 +41,8 @@ public class ShootWithTimer extends Command {
     if (currentTime <= 3) {
       shooter.shoot(-0.95);
     } else {
-      timer.restart();
+      timer.stop();
+      timer.reset();
       end = true;
       currentTime = 0;
     }
@@ -52,8 +53,9 @@ public class ShootWithTimer extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    timer.restart();
-
+    timer.stop();
+    timer.reset();
+    end = true;
     // SmartDashboard.putNumber("TShooter", Timer.getFPGATimestamp());
 
   }

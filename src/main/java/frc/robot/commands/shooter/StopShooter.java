@@ -30,6 +30,7 @@ public class StopShooter extends Command {
   @Override
   public void execute(){
     SmartDashboard.putBoolean("Ended", end);
+    end = true;
   }
 
   @Override 

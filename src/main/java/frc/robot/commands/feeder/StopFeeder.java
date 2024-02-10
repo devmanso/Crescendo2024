@@ -4,12 +4,13 @@
 
 package frc.robot.commands.feeder;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
 
-public class StopFeeder extends InstantCommand {
+public class StopFeeder extends Command {
 
   private Feeder feeder;
+  private boolean end = true;
   /** Creates a new StopFeeder. */
   public StopFeeder(Feeder feeder) {
     this.feeder = feeder;
@@ -27,16 +28,18 @@ public class StopFeeder extends InstantCommand {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    end = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    end = true;
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return end;
   }
 }

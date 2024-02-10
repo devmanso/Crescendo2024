@@ -28,19 +28,21 @@ public class FeedWithTimer extends Command {
 
   @Override
   public void initialize() {
-    startTime = Timer.getFPGATimestamp();
+    startTime = timer.getFPGATimestamp();
     timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    currentTime = Timer.getFPGATimestamp() - startTime;
+    
+    currentTime = timer.getFPGATimestamp() - startTime;
     if (currentTime <= 3) {
       feeder.setFeederSpeed(speed);
     } else {
       end = true;
+      timer.stop();
+      timer.restart();
     }
 
   }
@@ -50,6 +52,7 @@ public class FeedWithTimer extends Command {
   public void end(boolean interrupted) {
     timer.stop();
     timer.reset();
+    end = true;
   }
 
   // Returns true when the command should end.

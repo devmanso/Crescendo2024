@@ -167,8 +167,8 @@ public class RobotContainer {
     // Shooter
     // shootBtn.whileTrue(new SpinUpShooter(shooter));
     shootBtn.onTrue(new ShootWithTimer(shooter));
-    shootOnPressBtn.onTrue(new ShootWithTimer(shooter).andThen(new FeedWithTimer(feeder, -0.35)).andThen(new StopFeeder(feeder).alongWith(new StopShooter(shooter))));
-    // shootOnPressBtn.onTrue(new ShootWithFeeder(shooter, feeder).withTimeout(7).andThen(new StopShooter(shooter).alongWith(new StopFeeder(feeder))));
+    // shootOnPressBtn.onTrue(new ShootWithTimer(shooter).andThen(new FeedWithTimer(feeder, -0.35)).andThen(new StopFeeder(feeder).alongWith(new StopShooter(shooter))));
+    shootOnPressBtn.onTrue(new ShootWithFeeder(shooter, feeder).withTimeout(7).andThen(new StopShooter(shooter).alongWith(new StopFeeder(feeder))));
     // shootOnPressBtn.onTrue(new SpinUpShooter(shooter).withTimeout(3).andThen(new RunFeeder(feeder)).withTimeout(2.5).andThen(new StopShooter(shooter)));
 
 
