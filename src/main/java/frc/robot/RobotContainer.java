@@ -55,7 +55,6 @@ public class RobotContainer {
   private final CommandXboxController controller =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   
-  //private final SwerveDrive swerveDrive = new SwerveDrive();
   //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
   private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
 
@@ -75,8 +74,6 @@ public class RobotContainer {
                         shootOnPressBtn, grabNotOnPressBtn;
                     
 
-  //private final Shooter shooter = new Shooter()Feederprivate final Feeder feeder = new Feeder();
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
@@ -89,23 +86,7 @@ public class RobotContainer {
     reverseFeederBtn = new JoystickButton(buttonBoard, OperatorConstants.ReverseFeederBtn);
     releaseNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.ReleaseNoteBtn);
     stopAllBtn = new JoystickButton(buttonBoard, OperatorConstants.StopAllBtn);
-    // intakeFeederBtn = new JoystickButton(buttonBoard, OperatorConstants.IntakeFeederBtn);
-    // shootFeedBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootFeedBtn);
-
-    // Configure the trigger bindings
     configureBindings();
-
-    // driveTrain.setupInstruments();
-    // driveTrain.loadSong("CRANK_DAT");
-    // driveTrain.playSong();
-    
-    // TODO: UNCOMMENT ME FOR SWERVE
-    
-    // swerveDrive.setDefaultCommand(new ControlSwerve(swerveDrive,
-    //  () -> controller.getRawAxis(1),
-    //   () -> controller.getRawAxis(2),
-    //    () -> controller.getRawAxis(4),
-    //     () -> true));
         
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
@@ -129,62 +110,22 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //xboxController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    
-    //xboxController.a().onTrue(new RunIntakeAndFeeder(intake, feeder)
-    //.until( () -> intake.getNoteSwitch() ) ); // if .until doesn't work, try inversing it with !
-    // or use .unless
-
-    //xboxController.x().onTrue(new InstantCommand( () -> driveTrain.highGear()));
-    //xboxController.b().onTrue(new InstantCommand( () -> driveTrain.lowGear()));
-    //xboxController.a().onTrue(new InstantCommand( () -> driveTrain.shifterOff()));
-    // TODO: implement shooting w/ feeder command. PLS USE COMMMAND COMPOSITION!!!
-
-    //xboxController.a().onTrue(new SpinUpShooter(shooter).andThen(new Feed(feeder)));
-    
-    //xboxController.a().onTrue(new SpinUpShooter(shooter));
-    //xboxController.b().onTrue(new Feed(feeder));
-  
-    // Xbox controller commands
-    // controller.a().onTrue(new RunIntake(intake));
-    // controller.b().onTrue(new StopIntake(intake));
-    // controller.y().onTrue(new ReverseIntake(intake));
-
-    // Feeder
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
 
-    // Intake
-    //grabNoteBtn.whileTrue(new RunIntake(intake).alongWith(new RunFeeder(feeder)));
     grabNoteBtn.onTrue(new RunIntake(intake));
     grabNotOnPressBtn.onTrue(new RunIntake(intake).alongWith(new RunFeeder(feeder)).until(() -> intake.getNoteSwitch() == false));//type casting(explicit conversion)
 
-    //releaseNoteBtn.whileTrue(new ReverseIntake(intake).alongWith(new ReverseFeeder(feeder)));
     releaseNoteBtn.whileTrue(new ReverseIntake(intake));
 
-    // Shooter
-    // shootBtn.whileTrue(new SpinUpShooter(shooter));
     shootBtn.onTrue(new ShootWithTimer(shooter));
-    // shootOnPressBtn.onTrue(new ShootWithTimer(shooter).andThen(new FeedWithTimer(feeder, -0.35)).andThen(new StopFeeder(feeder).alongWith(new StopShooter(shooter))));
-    shootOnPressBtn.onTrue(new ShootWithFeeder(shooter, feeder).withTimeout(7).andThen(new StopShooter(shooter).alongWith(new StopFeeder(feeder))));
-    // shootOnPressBtn.onTrue(new SpinUpShooter(shooter).withTimeout(3).andThen(new RunFeeder(feeder)).withTimeout(2.5).andThen(new StopShooter(shooter)));
 
+    shootOnPressBtn.onTrue(new ShootWithFeeder(shooter, feeder)
+    .withTimeout(7)
+    .andThen(new StopShooter(shooter)
+    .alongWith(new StopFeeder(feeder))));
 
-    // Shooter and Feeder
-    //shootFeedBtn.whileTrue(new SpinUpShooter(shooter).withTimeout(0.35)
-    //                            .alongWith(new RunFeeder(feeder)));
-
-    // Stop Subsystems
     stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
-
-    // xboxController.rightBumper().onTrue(new HighGear(driveTrain));
-    // TODO: UNCOMMENT ME FOR SWERVE
-    /* 
-    new JoystickButton(controller, 1)
-    .onTrue(new InstantCommand(() -> swerveDrive.zeroHeading()));
-    */
   }
 
   /**

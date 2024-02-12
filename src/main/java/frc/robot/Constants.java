@@ -21,9 +21,12 @@ public final class Constants {
         // all motor id's are placeholders and are subject to change
 
         public static final int COMPRESSOR_ID = 20;
-        /**
-         * These are correct now
-         */
+
+        public static class ClimberConstants {
+                public static final int CLIMBER_LEFT = 30;
+                public static final int CLIMBER_RIGHT = 31;
+        }
+
         public static class WestCoastDriveTrain {
                 public static final int MASTER_LEFT = 1;
                 public static final int FOLLOWER_LEFT = 2;
