@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimeLightCamera extends SubsystemBase {
   /** Creates a new LimeLightCamera. */
-  public LimeLightCamera() {}
+  public LimeLightCamera() {
+    setToAprilTagPipeline();
+  }
 
   public double getDistanceFromAprilTag(double limelightMountAngleDegrees, 
   double goalHeightInches, double limelightLensHeightInches) {
@@ -112,8 +114,8 @@ public class LimeLightCamera extends SubsystemBase {
   public void periodic() {
     
     if(hasValidTargets() == 1) {
-      System.out.println(
-        autoEstimateDistance()
+      System.out.println( "TEST " +
+        estimateDistance(0, 21, 29)
       );
       
     }
