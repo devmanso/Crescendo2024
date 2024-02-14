@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
@@ -74,7 +75,7 @@ public class RobotContainer {
   // Button Board Buttons
   private JoystickButton feedBtn, grabNoteBtn, shootBtn, 
                         reverseFeederBtn, releaseNoteBtn, stopAllBtn,
-                        shootOnPressBtn, grabNotOnPressBtn;
+                        automaticShoot, automaticIntake;
                     
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -83,9 +84,9 @@ public class RobotContainer {
     // Button Board Button Objects
     feedBtn = new JoystickButton(buttonBoard, OperatorConstants.FeedBtn);
     grabNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteBtn);
-    grabNotOnPressBtn = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteOnPressBtn);
+    automaticIntake = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteOnPressBtn); // "retract"
     shootBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootBtn);
-    shootOnPressBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootOnPressBtn);
+    automaticShoot = new JoystickButton(buttonBoard, OperatorConstants.ShootOnPressBtn); // "extend"
     reverseFeederBtn = new JoystickButton(buttonBoard, OperatorConstants.ReverseFeederBtn);
     releaseNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.ReleaseNoteBtn);
     stopAllBtn = new JoystickButton(buttonBoard, OperatorConstants.StopAllBtn);
@@ -117,16 +118,24 @@ public class RobotContainer {
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
 
     grabNoteBtn.onTrue(new RunIntake(intake));
-    grabNotOnPressBtn.onTrue(new RunIntake(intake).alongWith(new RunFeeder(feeder)).until(() -> intake.getNoteSwitch() == false));//type casting(explicit conversion)
+
+    automaticIntake.onTrue(new RunIntake(intake)
+    .alongWith(new RunFeeder(feeder))
+    .until(() -> intake.getNoteSwitch() == false));
 
     releaseNoteBtn.whileTrue(new ReverseIntake(intake));
 
     shootBtn.onTrue(new ShootWithTimer(shooter));
 
-    shootOnPressBtn.onTrue(new ShootWithFeeder(shooter, feeder)
-    .withTimeout(7)
-    .andThen(new StopShooter(shooter)
-    .alongWith(new StopFeeder(feeder))));
+    // straight up awful code
+    // automaticShoot.onTrue(new ShootWithFeeder(shooter, feeder)
+    // .withTimeout(7)
+    // .andThen(new StopShooter(shooter)
+    // .alongWith(new StopFeeder(feeder))));
+
+    automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(3)
+    .andThen(new AutoShoot(shooter, feeder).withTimeout(3))
+    );
 
     stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
   }

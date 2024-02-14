@@ -25,7 +25,7 @@ public class Feeder extends SubsystemBase {
    * sets feeder motor to -50% speed
    */
   public void feed() {
-    feederMotor.set(-0.5);
+    feederMotor.set(-0.70);
   }
 
   public void feederSetSpeed(double speed) {

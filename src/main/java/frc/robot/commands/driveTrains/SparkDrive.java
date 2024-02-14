@@ -30,7 +30,7 @@ public class SparkDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.arcadeDrive(xbox.getRawAxis(1) * 0.8, xbox.getRawAxis(4));
+    driveTrain.arcadeDrive(xbox.getRawAxis(1), xbox.getRawAxis(4));
   }
 
   // Called once the command ends or is interrupted.
