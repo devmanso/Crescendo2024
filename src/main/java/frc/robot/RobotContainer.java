@@ -67,9 +67,6 @@ public class RobotContainer {
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
 
-  GetInRangeSpark getInRangeSpark = new GetInRangeSpark(sparkDriveTrain, camera);
-  
-
   // Button Board
   private Joystick buttonBoard = new Joystick(OperatorConstants.ButtonBoardPort);
 
@@ -148,6 +145,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return getInRangeSpark;
+    return new GetInRangeSpark(sparkDriveTrain, camera);
   }
 }

@@ -29,16 +29,15 @@ public class GetInRangeSpark extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("AUTO RUNNING");
+    System.out.println("GETTING IN RANGE");
     System.out.println(camera.estimateDistance(0, 21, 23));
 
     if(camera.hasValidTargets() == 1) {
       // go back until we're in range
       if(camera.estimateDistance(0, 21, 29) < 40) {
         driveTrain.arcadeDrive(-.3, 0);
-      } else {
-        //end(true);
-      }
+      } 
+
     }
   }
 
