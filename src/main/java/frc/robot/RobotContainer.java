@@ -16,6 +16,7 @@ import frc.robot.commands.driveTrains.SparkDrive;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
 import frc.robot.commands.feeder.ReverseFeeder;
 import frc.robot.commands.feeder.RunFeeder;
+import frc.robot.commands.feeder.ContainNote;
 import frc.robot.commands.feeder.FeedWithTimer;
 import frc.robot.commands.feeder.StopFeeder;
 import frc.robot.commands.intake.ReverseIntake;
@@ -120,7 +121,7 @@ public class RobotContainer {
     grabNoteBtn.onTrue(new RunIntake(intake));
 
     automaticIntake.onTrue(new RunIntake(intake)
-    .alongWith(new RunFeeder(feeder))
+    .alongWith(new ContainNote(feeder))
     .until(() -> intake.getNoteSwitch() == false));
 
     releaseNoteBtn.whileTrue(new ReverseIntake(intake));
