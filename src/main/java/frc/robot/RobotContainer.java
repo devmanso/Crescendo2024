@@ -73,7 +73,7 @@ public class RobotContainer {
   // Button Board Buttons
   private JoystickButton feedBtn, grabNoteBtn, shootBtn, 
                         reverseFeederBtn, releaseNoteBtn, stopAllBtn,
-                        automaticShoot, automaticIntake;
+                        automaticShoot, automaticIntake, getInRange;
                     
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -88,6 +88,7 @@ public class RobotContainer {
     reverseFeederBtn = new JoystickButton(buttonBoard, OperatorConstants.ReverseFeederBtn);
     releaseNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.ReleaseNoteBtn);
     stopAllBtn = new JoystickButton(buttonBoard, OperatorConstants.StopAllBtn);
+    getInRange = new JoystickButton(buttonBoard, OperatorConstants.GetInRangeBtn);
     configureBindings();
         
     
@@ -111,6 +112,8 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+    
+    getInRange.onTrue(new GetInRangeSpark(sparkDriveTrain, camera));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));

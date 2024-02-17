@@ -5,18 +5,17 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.SparkDriveTrain;
 
 public class GetInRangeSpark extends Command {
 
   private SparkDriveTrain driveTrain;
-  private LimeLightCamera camera;
 
   /** Creates a new GetInRangeSpark. */
   public GetInRangeSpark(SparkDriveTrain driveTrain, LimeLightCamera camera) {
     this.driveTrain = driveTrain;
-    this.camera = camera;
     addRequirements(driveTrain, camera);
   }
 
@@ -30,12 +29,20 @@ public class GetInRangeSpark extends Command {
   @Override
   public void execute() {
     System.out.println("GETTING IN RANGE");
-    System.out.println(camera.estimateDistance(0, 21, 23));
+    System.out.println(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
 
-    if(camera.hasValidTargets() == 1) {
+    if(LimeLightCamera.hasValidTargets() == 1) {
+      System.out.println("VALID TARGET");
       // go back until we're in range
-      if(camera.estimateDistance(50, 24.5, 52) < 40) {
-        driveTrain.arcadeDrive(-.3, 0);
+      while(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 65) {
+
+        if(LimeLightCamera.hasValidTargets() == 1) {
+          driveTrain.drive(.5);
+        }
+        
+        System.out.println("MOVING");
       } 
 
     }

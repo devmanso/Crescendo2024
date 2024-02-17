@@ -50,6 +50,7 @@ public final class Constants {
                 public static final int ShootOnPressBtn = 8;
                 // public static final int ShootFeedBtn = 0;
                 public static final int GrabNoteOnPressBtn = 7;
+                public static final int GetInRangeBtn = 9;
 
         }
 
@@ -175,7 +176,7 @@ public final class Constants {
         }
 
         public static class LimelightConstants {
-                public static final double MountAngelDegrees = 43;
+                public static final double MountAngleDegrees = 43;
                 public static final double LensHeightInches = 24.5;
                 public static final double GoalHeightInches = 52;
         }
