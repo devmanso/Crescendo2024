@@ -9,12 +9,12 @@ import frc.robot.Constants.LimelightConstants;
 import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.SparkDriveTrain;
 
-public class GetInRangeSpark extends Command {
+public class BackUpInRangeSpark extends Command {
 
   private SparkDriveTrain driveTrain;
 
   /** Creates a new GetInRangeSpark. */
-  public GetInRangeSpark(SparkDriveTrain driveTrain, LimeLightCamera camera) {
+  public BackUpInRangeSpark(SparkDriveTrain driveTrain, LimeLightCamera camera) {
     this.driveTrain = driveTrain;
     addRequirements(driveTrain, camera);
   }
@@ -28,30 +28,33 @@ public class GetInRangeSpark extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("GETTING IN RANGE");
+    //System.out.println("GETTING IN RANGE");
     System.out.println(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
 
-    if(LimeLightCamera.hasValidTargets() == 1) {
-      System.out.println("VALID TARGET");
+    while(LimeLightCamera.hasValidTargets() == 1) {
+      //.out.println("VALID TARGET");
       // go back until we're in range
-      while(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+      if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 65) {
 
+        // Redundant check lmao, but code works so idc
         if(LimeLightCamera.hasValidTargets() == 1) {
           driveTrain.drive(.5);
         }
-        
-        System.out.println("MOVING");
-      } 
+
+        //System.out.println("MOVING");
+      }
 
     }
+    //System.out.println("IN RANGE; STILL RUNNING");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     driveTrain.stopDriveTrain();
+    //System.out.println("IN RANGE; END");
   }
 
   // Returns true when the command should end.

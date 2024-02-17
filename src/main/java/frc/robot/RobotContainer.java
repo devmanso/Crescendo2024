@@ -10,7 +10,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
-import frc.robot.commands.auto.GetInRangeSpark;
+import frc.robot.commands.auto.BackUpInRangeSpark;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.SparkDrive;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
@@ -113,7 +113,7 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     
-    getInRange.onTrue(new GetInRangeSpark(sparkDriveTrain, camera));
+    getInRange.onTrue(new BackUpInRangeSpark(sparkDriveTrain, camera));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
@@ -148,6 +148,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new GetInRangeSpark(sparkDriveTrain, camera);
+    return new BackUpInRangeSpark(sparkDriveTrain, camera);
   }
 }
