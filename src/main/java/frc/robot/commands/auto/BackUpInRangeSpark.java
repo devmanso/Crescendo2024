@@ -35,12 +35,13 @@ public class BackUpInRangeSpark extends Command {
     while(LimeLightCamera.hasValidTargets() == 1) {
       //.out.println("VALID TARGET");
       // go back until we're in range
+      // original distance to travel was 65
       if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
-       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 65) {
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 70) {
 
         // Redundant check lmao, but code works so idc
         if(LimeLightCamera.hasValidTargets() == 1) {
-          driveTrain.drive(.5);
+          driveTrain.drive(.3);
         }
 
         //System.out.println("MOVING");

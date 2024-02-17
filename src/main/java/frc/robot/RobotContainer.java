@@ -148,6 +148,12 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new BackUpInRangeSpark(sparkDriveTrain, camera);
+    //return new BackUpInRangeSpark(sparkDriveTrain, camera);
+    return new SpinUpShooter(shooter).withTimeout(3)
+    .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+    .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
+      .alongWith(new RunIntake(intake)
+        .alongWith(new ContainNote(feeder))
+        .until(() -> intake.getNoteSwitch() == false)));
   }
 }

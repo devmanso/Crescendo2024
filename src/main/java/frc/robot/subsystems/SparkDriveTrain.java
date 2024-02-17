@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SparkDriveTrain extends SubsystemBase {
   private Spark leftMaster = new Spark(2);
   private Spark rightMaster = new Spark(0);
-  private Spark leftFollower = new Spark(3);
+  private Spark leftFollower = new Spark(5); // DO NOT USE 3 AS IT GOT BURNT LMAO
   private Spark rightFollower = new Spark(1);
 
   private MotorControllerGroup leftSide = new MotorControllerGroup(leftMaster, leftFollower);
@@ -26,7 +26,7 @@ public class SparkDriveTrain extends SubsystemBase {
     leftMaster.addFollower(leftFollower);
     rightMaster.addFollower(rightFollower);
 
-    rightMaster.setInverted(true);
+    rightMaster.setInverted(false); // might actually be set to true
     rightFollower.setInverted(false);
   
   }
@@ -41,7 +41,7 @@ public class SparkDriveTrain extends SubsystemBase {
 
   public void drive(double xSpd) {
     leftSide.set(xSpd);
-    rightSide.set(xSpd);
+    rightSide.set(-xSpd);
   }
 
   public void stopDriveTrain() {

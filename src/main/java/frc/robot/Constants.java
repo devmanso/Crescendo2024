@@ -178,6 +178,6 @@ public final class Constants {
         public static class LimelightConstants {
                 public static final double MountAngleDegrees = 43;
                 public static final double LensHeightInches = 24.5;
-                public static final double GoalHeightInches = 52;
+                public static final double GoalHeightInches = 69;
         }
 }
