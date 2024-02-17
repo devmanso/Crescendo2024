@@ -173,4 +173,10 @@ public final class Constants {
                 public static final String name = "Logitech Cam";
                 public static final int USBPort = 1;
         }
+
+        public static class LimelightConstants {
+                public static final double MountAngelDegrees = 43;
+                public static final double LensHeightInches = 24.5;
+                public static final double GoalHeightInches = 52;
+        }
 }

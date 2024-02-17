@@ -10,6 +10,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.LimelightConstants;
 
 public class LimeLightCamera extends SubsystemBase {
   /** Creates a new LimeLightCamera. */
@@ -69,7 +71,7 @@ public class LimeLightCamera extends SubsystemBase {
    * @return - vertical offset of crosshair to target
    */
   public double getVerticalOffset() {
-     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
   }
 
   /**
@@ -115,7 +117,7 @@ public class LimeLightCamera extends SubsystemBase {
     
     if(hasValidTargets() == 1) {
       System.out.println( "TEST " +
-        estimateDistance(0, 21, 29)
+        estimateDistance(LimelightConstants.MountAngelDegrees, LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches)
       );
       
     }

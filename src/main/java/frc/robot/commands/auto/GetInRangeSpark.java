@@ -34,7 +34,7 @@ public class GetInRangeSpark extends Command {
 
     if(camera.hasValidTargets() == 1) {
       // go back until we're in range
-      if(camera.estimateDistance(0, 21, 29) < 40) {
+      if(camera.estimateDistance(50, 24.5, 52) < 40) {
         driveTrain.arcadeDrive(-.3, 0);
       } 
 
