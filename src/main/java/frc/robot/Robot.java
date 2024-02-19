@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.hyperdrive.hyperlib.AprilTagFinder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.apriltag.AprilTagPoseEstimate;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
@@ -27,6 +29,7 @@ import frc.robot.subsystems.WCPDriveTrain;
 public class Robot extends TimedRobot {
 
   //TalonFX testingMotor = new TalonFX(3);
+  //CANSparkMax testmotor = new CANSparkMax(8, MotorType.kBrushless);
   
   private Command m_autonomousCommand;
   
@@ -56,6 +59,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    //testmotor.set(.5);
     //testingMotor.set(.5);
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
@@ -100,7 +104,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    
+  }
 
   @Override
   public void testInit() {

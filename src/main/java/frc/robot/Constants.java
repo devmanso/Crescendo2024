@@ -93,12 +93,12 @@ public final class Constants {
                 public static final int kFrontLeftDriveMotorPort = 10;
                 public static final int kBackLeftDriveMotorPort = 9;
                 public static final int kFrontRightDriveMotorPort = 5;
-                public static final int kBackRightDriveMotorPort = 3;
+                public static final int kBackRightDriveMotorPort = 15;
 
                 public static final int kFrontLeftTurningMotorPort = 11;
                 public static final int kBackLeftTurningMotorPort = 16;
                 public static final int kFrontRightTurningMotorPort = 8;
-                public static final int kBackRightTurningMotorPort = 15;
+                public static final int kBackRightTurningMotorPort = 3;
 
                 // TODO: all turning encoders are reversed
                 // TODO: front and back right drive encoders are NOT reversed
@@ -110,8 +110,8 @@ public final class Constants {
 
                 public static final boolean kFrontLeftDriveEncoderReversed = true;
                 public static final boolean kBackLeftDriveEncoderReversed = true;
-                public static final boolean kFrontRightDriveEncoderReversed = false;
-                public static final boolean kBackRightDriveEncoderReversed = false;
+                public static final boolean kFrontRightDriveEncoderReversed = true;
+                public static final boolean kBackRightDriveEncoderReversed = true;
 
                 // TODO: ask mechanical about these
                 public static final int kFrontLeftDriveAbsoluteEncoderPort = 11;
@@ -127,13 +127,13 @@ public final class Constants {
 
                 // TODO: if you dont know, ask mechanical or something, try to have them align it perfectly as possible
                 // if this is all to difficult, then just set it to 0 and pray to Allah the code works
-                public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -0.254;
-                public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = -1.252;
-                public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.816;
-                public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -4.811;
+                public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0;
+                public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0;
+                public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0;
+                public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0;
 
                 // if robot drives too slow, try increasing this
-                public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
+                public static final double kPhysicalMaxSpeedMetersPerSecond = 10; // 5
                 public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
                 public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;

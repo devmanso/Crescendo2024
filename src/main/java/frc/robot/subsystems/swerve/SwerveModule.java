@@ -37,6 +37,8 @@ public class SwerveModule {
         absoluteEncoder = new CoreCANcoder(absoluteEncoderId);
 
         driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
+
+        // changed to brush to use SRX Mag Encoder, configure the turn motors in REV Client
         turningMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
 
         driveMotor.setInverted(driveMotorReversed);
@@ -89,7 +91,10 @@ public class SwerveModule {
 
     // dirty hack
     public double getAbsoluteEncoderPosition() {
-        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+        // USED TO BE CANCoder ABS ENC
+        double rotations = turningEncoder.getPosition();
+        double radians = rotations * 2 * Math.PI;
+        return rotations;
     }
 
     // uh, maybe try using getAbsoluteEncoderPosition() instead of getAbsoluteEncoderRad()??
@@ -97,6 +102,7 @@ public class SwerveModule {
         driveEncoder.setPosition(0);
         //turningEncoder.setPosition(getAbsoluteEncoderRad());
         turningEncoder.setPosition(getAbsoluteEncoderPosition());
+        //turningEncoder.setPosition(0);
     }
 
     public SwerveModuleState getState() {
