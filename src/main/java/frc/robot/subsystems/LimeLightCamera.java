@@ -10,12 +10,16 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.LimelightConstants;
 
 public class LimeLightCamera extends SubsystemBase {
   /** Creates a new LimeLightCamera. */
-  public LimeLightCamera() {}
+  public LimeLightCamera() {
+    setToAprilTagPipeline();
+  }
 
-  public double getDistanceFromAprilTag(double limelightMountAngleDegrees, 
+  public static double getDistanceFromAprilTag(double limelightMountAngleDegrees, 
   double goalHeightInches, double limelightLensHeightInches) {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry ty = table.getEntry("ty");
@@ -58,7 +62,7 @@ public class LimeLightCamera extends SubsystemBase {
    * 
    * @return - 1 if there is a valid target, 0 if not
    */
-  public double hasValidTargets() {
+  public static double hasValidTargets() {
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
   }
 
@@ -66,22 +70,22 @@ public class LimeLightCamera extends SubsystemBase {
    * 
    * @return - vertical offset of crosshair to target
    */
-  public double getVerticalOffset() {
-     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+  public static double getVerticalOffset() {
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
   }
 
   /**
    * 
    * @return - horizontal offset of crosshair to target
    */
-  public double getHorizontalOffset() {
+  public static double getHorizontalOffset() {
      return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
   }
 
   /**
    * changes pipeline to 0 (AprilTag pipeline), be sure that the name of the limelight is set to "limelight"
    */
-  public void setToAprilTagPipeline() {
+  public static void setToAprilTagPipeline() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
   }
 
@@ -89,7 +93,7 @@ public class LimeLightCamera extends SubsystemBase {
    * 
    * @return - AprilTag ID as double array
    */
-  public double[] getTagID() {
+  public static double[] getTagID() {
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDoubleArray(new double[6]);
   }
 
@@ -100,7 +104,7 @@ public class LimeLightCamera extends SubsystemBase {
    * @param goalheightInches - how high is your target?
    * @return - distance as double
    */
-  public double estimateDistance(double mountAngleDegrees, double lensHeightInches, double goalheightInches) {
+  public static double estimateDistance(double mountAngleDegrees, double lensHeightInches, double goalheightInches) {
     double verticalOffset = getVerticalOffset();
     double angleToGoalDegrees = mountAngleDegrees + verticalOffset;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159/ 180);
@@ -108,14 +112,18 @@ public class LimeLightCamera extends SubsystemBase {
     return distance;
   }
 
+  public static double getDistance() {
+    return estimateDistance(LimelightConstants.MountAngleDegrees, 
+    LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches);
+  }
+
   @Override
   public void periodic() {
     
-    if(hasValidTargets() == 1) {
-      System.out.println(
-        autoEstimateDistance()
-      );
-      
-    }
+    // if(hasValidTargets() == 1) {
+    //   System.out.println( "TEST " +
+    //     estimateDistance(LimelightConstants.MountAngelDegrees, LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches)
+    //   );
+    // }
   }
 }

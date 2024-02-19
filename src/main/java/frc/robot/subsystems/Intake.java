@@ -9,14 +9,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
   private CANSparkMax intakeMotor = new CANSparkMax(1, MotorType.kBrushless);
-  private DigitalInput noteSwitch = new DigitalInput(0);
-
+  private DigitalInput noteSwitch = new DigitalInput(1);
   /**
    * returns the state of the limit switch
    * @return
@@ -29,14 +28,14 @@ public class Intake extends SubsystemBase {
    * sets motors to 50 percent
    */
   public void grabNote() {
-    intakeMotor.set(-0.75); // 50 percent
+    intakeMotor.set(-0.95); // 50 percent
   }
 
   /**
    * sets motors to -50 percent
    */
   public void spitNote() {
-    intakeMotor.set(0.5);
+    intakeMotor.set(0.95);
   }
 
   public void stop() {
@@ -46,8 +45,16 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {}
 
+  public void displayIntakeData() {
+    SmartDashboard.putNumber("INTAKE AMPS", intakeMotor.getOutputCurrent());
+    SmartDashboard.putNumber("INTAKE TEMP", (intakeMotor.getMotorTemperature() * 1.8) + 32);
+  }
+
   @Override
   public void periodic() {
+    displayIntakeData();
+    boolean switchStatus = getNoteSwitch();
+    SmartDashboard.putBoolean("Limit Switch", switchStatus);
     // This method will be called once per scheduler run
   }
 }

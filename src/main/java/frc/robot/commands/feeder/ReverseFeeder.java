@@ -4,29 +4,28 @@
 
 package frc.robot.commands.feeder;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
 
-public class Feed extends Command {
-  Feeder feeder;
-  /** Creates a new Feed. */
-  public Feed(Feeder feeder) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(feeder);
+public class ReverseFeeder extends Command {
+  private Feeder feeder;
+
+  /** Creates a new ReverseFeeder. */
+  public ReverseFeeder(Feeder feeder) {
     this.feeder = feeder;
+    
+    addRequirements(feeder);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    feeder.feed();
+    feeder.reverseFeeder();
   }
 
   // Called once the command ends or is interrupted.
@@ -35,9 +34,8 @@ public class Feed extends Command {
     feeder.stopFeeder();
   }
 
-  // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished(){
     return false;
   }
 }

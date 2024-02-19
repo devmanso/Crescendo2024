@@ -14,17 +14,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SparkDriveTrain extends SubsystemBase {
   private Spark leftMaster = new Spark(2);
   private Spark rightMaster = new Spark(0);
-  private Spark leftFollower = new Spark(3);
+  private Spark leftFollower = new Spark(5); // DO NOT USE 3 AS IT GOT BURNT LMAO
   private Spark rightFollower = new Spark(1);
 
-  private DifferentialDrive diffDrive = new DifferentialDrive(rightMaster, leftMaster);
+  private MotorControllerGroup leftSide = new MotorControllerGroup(leftMaster, leftFollower);
+  private MotorControllerGroup rightSide = new MotorControllerGroup(rightMaster, rightFollower);
+  private DifferentialDrive diffDrive = new DifferentialDrive(rightSide, leftSide);
 
   /** Creates a new SparkDriveTrain. */
   public SparkDriveTrain() {
     leftMaster.addFollower(leftFollower);
     rightMaster.addFollower(rightFollower);
 
-    rightMaster.setInverted(true);
+    rightMaster.setInverted(false); // might actually be set to true
     rightFollower.setInverted(false);
   
   }
@@ -34,8 +36,13 @@ public class SparkDriveTrain extends SubsystemBase {
   // }
 
   public void arcadeDrive(double xSpd, double ySpd) {
-    diffDrive.arcadeDrive(xSpd * 0.75, ySpd * 0.75);
-  } 
+    diffDrive.arcadeDrive(xSpd, ySpd);
+  }
+
+  public void drive(double xSpd) {
+    leftSide.set(xSpd);
+    rightSide.set(-xSpd);
+  }
 
   public void stopDriveTrain() {
     leftMaster.stopMotor();

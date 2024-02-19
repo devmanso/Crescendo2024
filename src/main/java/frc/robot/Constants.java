@@ -21,9 +21,12 @@ public final class Constants {
         // all motor id's are placeholders and are subject to change
 
         public static final int COMPRESSOR_ID = 20;
-        /**
-         * These are correct now
-         */
+
+        public static class ClimberConstants {
+                public static final int CLIMBER_LEFT = 30;
+                public static final int CLIMBER_RIGHT = 31;
+        }
+
         public static class WestCoastDriveTrain {
                 public static final int MASTER_LEFT = 1;
                 public static final int FOLLOWER_LEFT = 2;
@@ -32,12 +35,29 @@ public final class Constants {
         }
 
         public static class OperatorConstants {
+                // controllers
                 public static final int kDriverControllerPort = 0;
+                public static final int ButtonBoardPort = 1;
+
+                // joystick buttons
+                public static final int GrabNoteBtn = 1;
+                public static final int FeedBtn = 3;
+                public static final int ShootBtn = 5;
+                public static final int ReverseFeederBtn = 4;
+                public static final int ReleaseNoteBtn = 2;
+                public static final int StopAllBtn = 6;
+                // public static final int GrabNoteNoOverride = 7;
+                public static final int ShootOnPressBtn = 8;
+                // public static final int ShootFeedBtn = 0;
+                public static final int GrabNoteOnPressBtn = 7;
+                public static final int GetInRangeBtn = 9;
+
         }
 
         public static class ShooterAndFeeder {
                 public static final int SHOOTER_ID = 22;
-                public static final int FEEDER_ID = 22;
+                public static final int FEEDER_ID = 4;// Spark Motor
+                public static final int FeederSwitchPort = 0;
         }
 
         public static class IntakeConstants {
@@ -153,5 +173,11 @@ public final class Constants {
                 public static final int height = 1080;
                 public static final String name = "Logitech Cam";
                 public static final int USBPort = 1;
+        }
+
+        public static class LimelightConstants {
+                public static final double MountAngleDegrees = 43;
+                public static final double LensHeightInches = 24.5;
+                public static final double GoalHeightInches = 69;
         }
 }
