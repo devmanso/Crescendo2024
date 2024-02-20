@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.subsystems.LimeLightCamera;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -176,8 +177,9 @@ public final class Constants {
         }
 
         public static class LimelightConstants {
-                public static final double MountAngleDegrees = 43;
-                public static final double LensHeightInches = 24.5;
+                public static final double MountAngleDegrees = 48.5;
+                public static final double LensHeightInches = 14;
                 public static final double GoalHeightInches = 69;
+                public static double StartingDistanceFromSpeaker = LimeLightCamera.estimateDistance(MountAngleDegrees, LensHeightInches, GoalHeightInches);
         }
 }

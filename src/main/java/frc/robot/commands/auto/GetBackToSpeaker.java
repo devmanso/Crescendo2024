@@ -10,61 +10,53 @@ import frc.robot.Constants.LimelightConstants;
 import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.SparkDriveTrain;
 
-public class BackUpInRangeSpark extends Command {
+public class GetBackToSpeaker extends Command {
 
   private SparkDriveTrain driveTrain;
 
-  /** Creates a new GetInRangeSpark. */
-  public BackUpInRangeSpark(SparkDriveTrain driveTrain, LimeLightCamera camera) {
+  /** Creates a new GetBackToSpeaker. */
+  public GetBackToSpeaker(SparkDriveTrain driveTrain, LimeLightCamera camera) {
     this.driveTrain = driveTrain;
+
     addRequirements(driveTrain, camera);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    //driveTrain.stopDriveTrain();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //System.out.println("GETTING IN RANGE");
+    
     System.out.println(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
 
     SmartDashboard.putNumber("Limelight Distance: ", LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
 
-    while(LimeLightCamera.hasValidTargets() >= 1) {
-      //.out.println("VALID TARGET");
-      // go back until we're in range
-      // original distance to travel was 65
-      if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
-       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 70) {
-
-        // Redundant check lmao, but code works so idc
-        if(LimeLightCamera.hasValidTargets() >= 1) {
-          driveTrain.drive(.3);
+    while (LimeLightCamera.hasValidTargets() >= 1) {
+      if (LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+      LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) > LimelightConstants.StartingDistanceFromSpeaker) {
+        if (LimeLightCamera.hasValidTargets() >= 1) {
+          // Negative is backward, positive is forwards
+          driveTrain.drive(-.3);
         }
-
-        //System.out.println("MOVING");
       }
-
     }
-    //System.out.println("IN RANGE; STILL RUNNING");
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     driveTrain.stopDriveTrain();
-    //System.out.println("IN RANGE; END");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

@@ -11,6 +11,7 @@ import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.BackUpInRangeSpark;
+import frc.robot.commands.auto.GetBackToSpeaker;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.SparkDrive;
@@ -151,11 +152,38 @@ public class RobotContainer {
     // An example command will be run in autonomous
     //return new BackUpInRangeSpark(sparkDriveTrain, camera);
     return new SpinUpShooter(shooter).withTimeout(3)
-    .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-    // running for two seconds was originally not here
-    .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
-      .alongWith(new autoRunIntake(intake)
-      .alongWith(new ContainNote(feeder))
-        .until(() -> intake.getNoteSwitch() == false)));
+      .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+      .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
+        .alongWith(new autoRunIntake(intake)
+          .alongWith(new ContainNote(feeder))
+          .until(
+            () -> intake.getNoteSwitch() == false
+          )
+        )
+      );
+    /*
+     * andThen GetBackToSpeaker
+     * andThen SpinUpShooter with a 3 second timeout
+     * andThen finish AutoShoot
+     * 
+     */
+
+     /*
+    return new SpinUpShooter(shooter).withTimeout(3)
+      .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+      .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
+        .alongWith(new autoRunIntake(intake)
+          .alongWith(new ContainNote(feeder))
+          .until(
+            () -> intake.getNoteSwitch() == false
+          )
+        )
+      )
+      .andThe(new GetBackToSpeaker(sparkDriveTrain)
+        .andThen(new SpinUpShooter(shooter).withTimeout(3)
+        .andThen(new AutoShoot(shooter, feeder))
+        )
+      );
+      */
   }
 }
