@@ -31,6 +31,10 @@ public class Intake extends SubsystemBase {
     intakeMotor.set(-0.95); // 50 percent
   }
 
+  public void autoGrabNote() {
+    intakeMotor.set(-.70);
+  }
+
   /**
    * sets motors to -50 percent
    */

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.subsystems.LimeLightCamera;
@@ -43,6 +44,9 @@ public class BackUpInRangeSpark extends Command {
         if(LimeLightCamera.hasValidTargets() == 1) {
           driveTrain.drive(.3);
         }
+      
+      SmartDashboard.putNumber("Limelight Distance: ", LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
 
         //System.out.println("MOVING");
       }
