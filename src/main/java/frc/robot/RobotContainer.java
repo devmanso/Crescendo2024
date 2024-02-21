@@ -11,6 +11,7 @@ import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.BackUpInRangeSpark;
+import frc.robot.commands.auto.DriveForwardSpark;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.SparkDrive;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
@@ -154,6 +155,7 @@ public class RobotContainer {
     .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
       .alongWith(new RunIntake(intake)
         .alongWith(new ContainNote(feeder))
-        .until(() -> intake.getNoteSwitch() == false)));
+        .until(() -> intake.getNoteSwitch() == false)))
+          .andThen(new DriveForwardSpark(sparkDriveTrain).withTimeout(2));
   }
 }
