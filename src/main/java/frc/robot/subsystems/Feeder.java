@@ -32,6 +32,10 @@ public class Feeder extends SubsystemBase {
     feederMotor.set(-0.8);
   }
 
+  public void grabInAuto() {
+    feederMotor.set(-.44);
+  }
+
   public void feederSetSpeed(double speed) {
     feederMotor.set(speed);
   }

@@ -12,6 +12,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.BackUpInRangeSpark;
 import frc.robot.commands.auto.GetBackToSpeaker;
+import frc.robot.commands.auto.Nothing;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.SparkDrive;
@@ -19,6 +20,7 @@ import frc.robot.commands.driveTrains.WCPTeleopDrive;
 import frc.robot.commands.feeder.ReverseFeeder;
 import frc.robot.commands.feeder.RunFeeder;
 import frc.robot.commands.feeder.ContainNote;
+import frc.robot.commands.feeder.ContainNoteAuto;
 import frc.robot.commands.feeder.FeedWithTimer;
 import frc.robot.commands.feeder.StopFeeder;
 import frc.robot.commands.intake.ReverseIntake;
@@ -42,6 +44,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -151,11 +155,37 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     //return new BackUpInRangeSpark(sparkDriveTrain, camera);
-    return new SpinUpShooter(shooter).withTimeout(3)
+    // return new SpinUpShooter(shooter).withTimeout(3)
+    //   .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+    //   .andThen(new autoRunIntake(intake))
+    //     .alongWith(new ContainNote(feeder))
+    //     .until(() -> !intake.getNoteSwitch())
+    //       .alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera));
+
+    // this routine also works and is pretty ok
+    // return new SpinUpShooter(shooter).withTimeout(3)
+    //   .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+    //   .andThen(new autoRunIntake(intake)
+    //       .alongWith(new ContainNote(feeder))
+    //           .alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera))
+    //           .until( () -> intake.getNoteSwitch() == false)
+    //     );
+
+    //intake.setDefaultCommand(new autoRunIntake(intake).until(() -> !intake.getNoteSwitch()));
+
+    // return new autoRunIntake(intake)
+    //   .alongWith(new SpinUpShooter(shooter).withTimeout(2))
+    //         .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5)
+    //         .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera))
+    //         .andThen(new ContainNote(feeder)).withTimeout(1.5));
+
+
+      //best working auton routine so far.
+      return new SpinUpShooter(shooter).withTimeout(3)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
       .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
         .alongWith(new autoRunIntake(intake)
-          .alongWith(new ContainNote(feeder))
+          .alongWith(new ContainNoteAuto(feeder))
           .until(
             () -> intake.getNoteSwitch() == false
           )
