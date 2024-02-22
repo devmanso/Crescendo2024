@@ -41,7 +41,7 @@ public class SparkDriveTrain extends SubsystemBase {
 
   public void drive(double xSpd) {
     leftSide.set(xSpd);
-    rightSide.set(-xSpd);
+    rightSide.set(-xSpd -.5);
   }
 
   public void stopDriveTrain() {

@@ -11,7 +11,7 @@ import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.BackUpInRangeSpark;
-import frc.robot.commands.auto.GetBackToSpeaker;
+import frc.robot.commands.auto.ForwardInRangeSpark;
 import frc.robot.commands.auto.Nothing;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.driveTrains.HighGear;
@@ -190,7 +190,7 @@ public class RobotContainer {
             () -> intake.getNoteSwitch() == false
           )
         )
-      );
+      ).andThen(new ForwardInRangeSpark(sparkDriveTrain, camera));
     /*
      * andThen GetBackToSpeaker
      * andThen SpinUpShooter with a 3 second timeout
