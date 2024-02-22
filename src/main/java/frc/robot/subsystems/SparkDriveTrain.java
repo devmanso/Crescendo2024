@@ -39,9 +39,14 @@ public class SparkDriveTrain extends SubsystemBase {
     diffDrive.arcadeDrive(xSpd, ySpd);
   }
 
-  public void drive(double xSpd) {
+  public void driveForward(double xSpd) {
     leftSide.set(xSpd);
-    rightSide.set(-xSpd -.5);
+    rightSide.set(-xSpd -.05);
+  }
+
+  public void driveBackward(double xSpd) {
+    leftSide.set(xSpd +0.05);
+    rightSide.set(xSpd);
   }
 
   public void stopDriveTrain() {

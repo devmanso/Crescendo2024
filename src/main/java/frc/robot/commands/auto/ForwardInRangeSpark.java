@@ -43,7 +43,7 @@ public class ForwardInRangeSpark extends Command {
 
         // Redundant check lmao, but code works so idc
         if(LimeLightCamera.hasValidTargets() >= 1) {
-          driveTrain.drive(-.30); //.25
+          driveTrain.driveBackward(-.3); //.25
         }
 
         //System.out.println("MOVING");

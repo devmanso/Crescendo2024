@@ -11,6 +11,7 @@ import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.BackUpInRangeSpark;
+import frc.robot.commands.auto.DriveForwardSpark;
 import frc.robot.commands.auto.ForwardInRangeSpark;
 import frc.robot.commands.auto.Nothing;
 import frc.robot.commands.auto.autoRunIntake;
@@ -181,16 +182,29 @@ public class RobotContainer {
 
 
       //best working auton routine so far.
-      return new SpinUpShooter(shooter).withTimeout(3)
-      .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-      .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
-        .alongWith(new autoRunIntake(intake)
-          .alongWith(new ContainNoteAuto(feeder))
-          .until(
-            () -> intake.getNoteSwitch() == false
-          )
-        )
-      ).andThen(new ForwardInRangeSpark(sparkDriveTrain, camera));
+      // return new SpinUpShooter(shooter).withTimeout(3)
+      // .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+      // .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
+      //   .alongWith(new autoRunIntake(intake)
+      //     .alongWith(new ContainNoteAuto(feeder))
+      //     .until(
+      //       () -> intake.getNoteSwitch() == false
+      //     )
+      //   )
+      // )
+      // .andThen(new DriveForwardSpark(sparkDriveTrain).withTimeout(1));
+
+      // return new BackUpInRangeSpark(sparkDriveTrain, camera).
+      // alongWith(new autoRunIntake(intake)
+      //     .alongWith(new ContainNoteAuto(feeder))
+      //     .until(
+      //       () -> intake.getNoteSwitch() == false
+      //     )
+      //   );
+
+      return new autoRunIntake(intake).alongWith(new ContainNoteAuto(feeder)).until( () -> !intake.getNoteSwitch() )
+      .alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera));
+
     /*
      * andThen GetBackToSpeaker
      * andThen SpinUpShooter with a 3 second timeout

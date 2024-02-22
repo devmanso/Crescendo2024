@@ -120,9 +120,10 @@ public class LimeLightCamera extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Limelight Distance: ", LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+    SmartDashboard.putNumber("Limelight Distance: ", estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
     
+    SmartDashboard.putNumber("Limelight Targets: ", hasValidTargets());
     // if(hasValidTargets() == 1) {
     //   System.out.println( "TEST " +
     //     estimateDistance(LimelightConstants.MountAngelDegrees, LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches)
