@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void autoGrabNote() {
-    intakeMotor.set(-.8);
+    intakeMotor.set(-0.95); // .8 before
   }
 
   /**

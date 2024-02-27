@@ -14,6 +14,8 @@ import frc.robot.commands.auto.BackUpInRangeSpark;
 import frc.robot.commands.auto.DriveForwardSpark;
 import frc.robot.commands.auto.ForwardInRangeSpark;
 import frc.robot.commands.auto.Nothing;
+import frc.robot.commands.auto.TimeBasedBackUp;
+import frc.robot.commands.auto.TimeBasedGoForward;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.SparkDrive;
@@ -32,6 +34,8 @@ import frc.robot.commands.shooter.ShootWithFeeder;
 import frc.robot.commands.shooter.ShootWithTimer;
 import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.commands.shooter.StopShooter;
+import frc.robot.commands.shooter.TeleOpAutoShooter;
+import frc.robot.commands.shooter.TeleOpAutoShooter;
 import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
@@ -64,6 +68,7 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController controller =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final Trigger teleopAutoShoot = controller.y();
   
   //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
   private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
@@ -119,6 +124,8 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+
+    teleopAutoShoot.onTrue(new TeleOpAutoShooter(camera));
     
     getInRange.onTrue(new BackUpInRangeSpark(sparkDriveTrain, camera));
 
@@ -141,8 +148,10 @@ public class RobotContainer {
     // .andThen(new StopShooter(shooter)
     // .alongWith(new StopFeeder(feeder))));
 
+
     automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(3)
     .andThen(new AutoShoot(shooter, feeder).withTimeout(3))
+    .andThen(new StopAll(shooter, feeder, intake))
     );
 
     stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
@@ -202,15 +211,25 @@ public class RobotContainer {
       //     )
       //   );
 
-      return new autoRunIntake(intake).alongWith(new ContainNoteAuto(feeder)).until( () -> !intake.getNoteSwitch() )
-      .alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera));
+      //return new autoRunIntake(intake).alongWith(new ContainNoteAuto(feeder)).until( () -> !intake.getNoteSwitch() )
+      //.alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera));
 
-    /*
-     * andThen GetBackToSpeaker
-     * andThen SpinUpShooter with a 3 second timeout
-     * andThen finish AutoShoot
-     * 
-     */
+      // return new autoRunIntake(intake)
+      //         .alongWith(new ContainNoteAuto(feeder))
+      //         .until( () -> !intake.getNoteSwitch() )
+      //   .alongWith(new TimeBasedBackUp(sparkDriveTrain));
+
+      // 95% auton routine, haven't tested yet - MQ
+      // after this we just have to move back again to get leave point
+      return new SpinUpShooter(shooter).withTimeout(2)
+        .andThen(new AutoShoot(shooter, feeder)).withTimeout(1.5)
+          .andThen(new TimeBasedBackUp(sparkDriveTrain))
+          .alongWith(new autoRunIntake(intake))
+          .alongWith(new ContainNote(feeder))
+          .until( () -> !intake.getNoteSwitch() )
+            .andThen(new TimeBasedGoForward(sparkDriveTrain))
+              .andThen(new SpinUpShooter(shooter)).withTimeout(2)
+                .andThen(new AutoShoot(shooter, feeder)).withTimeout(1.5);
 
      /*
     return new SpinUpShooter(shooter).withTimeout(3)
@@ -223,7 +242,7 @@ public class RobotContainer {
           )
         )
       )
-      .andThe(new GetBackToSpeaker(sparkDriveTrain)
+      .andThen(new GetBackToSpeaker(sparkDriveTrain)
         .andThen(new SpinUpShooter(shooter).withTimeout(3)
         .andThen(new AutoShoot(shooter, feeder))
         )

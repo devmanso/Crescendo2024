@@ -4,34 +4,49 @@
 
 package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.Timer;
 
-public class autoRunIntake extends Command {
-  private Intake intake;
-  
-  /** Creates a new autoRunIntake. */
-  public autoRunIntake(Intake intake) {
-    this.intake = intake;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.SparkDriveTrain;
+
+public class TimeBasedBackUp extends Command {
+  /** Creates a new TimeBasedBackUp. */
+
+  private SparkDriveTrain driveTrain;
+
+  private double startTime;
+
+  public TimeBasedBackUp(SparkDriveTrain driveTrain) {
+    this.driveTrain = driveTrain;
+
+    addRequirements(driveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    startTime = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.autoGrabNote();
+    double time = Timer.getFPGATimestamp();
+    System.out.println(time - startTime);
+
+    if (time - startTime < 1.5) {
+      driveTrain.driveForward(.4);
+    } else {
+      driveTrain.stopDriveTrain();
+    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stop();
+    driveTrain.stopDriveTrain();
   }
 
   // Returns true when the command should end.
