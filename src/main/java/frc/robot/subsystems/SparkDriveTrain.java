@@ -45,8 +45,8 @@ public class SparkDriveTrain extends SubsystemBase {
   }
 
   public void driveToSpeaker() {
-    leftSide.set(-.4);
-    rightSide.set(.45);
+    leftSide.set(-.35);// 0.40
+    rightSide.set(.4);// 0.45
   }
 
   public void driveBackward(double xSpd) {

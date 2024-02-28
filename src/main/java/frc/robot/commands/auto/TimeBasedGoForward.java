@@ -36,7 +36,7 @@ public class TimeBasedGoForward extends Command {
     System.out.println(time - startTime);
 
     if (time - startTime < 1.5) {
-      driveTrain.driveBackward(-.4);
+      driveTrain.driveBackward(-.4); // -.4
     } else {
       driveTrain.stopDriveTrain();
     }

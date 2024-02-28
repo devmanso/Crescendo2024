@@ -42,9 +42,10 @@ public class AutoMovement extends Command {
     System.out.println(time - startTime);
 
     if (time - startTime < 1.5) {
-      driveTrain.driveForward(.5);
+      driveTrain.driveForward(0.5); 
+      // { speed: 0.77, time: 0.75 -> good match }
     } 
-    else if(time - startTime > 2 && time - startTime <4 ) {
+    else if(time - startTime > 2 && time - startTime < 4.3 ) {
       driveTrain.driveToSpeaker();
     } 
 

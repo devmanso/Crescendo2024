@@ -27,7 +27,7 @@ public class SpinUpShooter extends Command {
   @Override
   public void execute() {
     System.out.println("SHOOTING");
-    shooter.shoot(-.01); // -1
+    shooter.shoot(-0.01); // -1, changed to .01 when spacers didn't wanna stick
   }
 
   // Called once the command ends or is interrupted.

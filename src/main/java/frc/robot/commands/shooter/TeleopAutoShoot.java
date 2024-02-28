@@ -4,41 +4,26 @@
 
 package frc.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.LimelightConstants;
-import frc.robot.commands.feeder.RunFeeder;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.Shooter;
-import java.util.Timer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TeleopAutoShoot extends ParallelCommandGroup {
+public class TeleopAutoShoot extends SequentialCommandGroup {
 
-  private Shooter shooter;
-  private Feeder feeder;
-  private double startTime;
   private LimeLightCamera limelight;
+  private Feeder feeder;
+  private Shooter shooter;
 
-  /** Creates a new KelvinIsBalding. */
-  public TeleopAutoShoot(Shooter shooter, Feeder feeder, LimeLightCamera limelight) {
+  /** Creates a new TeleopAutoShoot. */
+  public TeleopAutoShoot() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    if (LimeLightCamera.hasValidTargets() == 1) {
-      System.out.println("APRILTAG DETECTED!!!!!!!!");
-      if(Math.floor(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
-        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches)) <= 25) {
-          System.out.println("IN RANGE!");
-          System.out.println("SHOOTING!");
-          addCommands(new SpinUpShooter(shooter), new RunFeeder(feeder));
-        } else {
-      System.out.println("NOT IN RANGE! GET BACK TO WORK!");
-    } 
-    } else {
-      System.out.println("NO APRILTAG DETECTED! GET BETTER!");
-    }
-  } 
+    addCommands();
+  }
 }

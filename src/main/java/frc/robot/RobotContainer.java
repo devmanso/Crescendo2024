@@ -131,7 +131,7 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
+    //teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
 
     getInRange.onTrue(new BackUpInRangeSpark(sparkDriveTrain, camera));
 
@@ -227,6 +227,7 @@ public class RobotContainer {
 
       // 95% auton routine, haven't tested yet - MQ
       // after this we just have to move back again to get leave point
+      ///////////////////////////////////////////////////////////////
        return new SpinUpShooter(shooter).withTimeout(3)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
       .andThen(new AutoMovement(sparkDriveTrain)
@@ -236,8 +237,8 @@ public class RobotContainer {
             () -> intake.getNoteSwitch() == false
           )
         )
-      ).andThen(new SpinUpShooter(shooter)).andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-      .andThen(new DriveBackward(sparkDriveTrain).withTimeout(2));
+      ).andThen(new SpinUpShooter(shooter)).andThen(new AutoShoot(shooter, feeder).withTimeout(1.5));
+      //.andThen(new DriveBackward(sparkDriveTrain).withTimeout(2));
 
      /*
     return new SpinUpShooter(shooter).withTimeout(3)
@@ -255,6 +256,9 @@ public class RobotContainer {
         .andThen(new AutoShoot(shooter, feeder))
         )
       );
+      /////////////////////////////////////////////////////////////
       */
+      // return new AutoMovement(sparkDriveTrain);
   }
 }
+// make a code for a banana pls ;-; 
