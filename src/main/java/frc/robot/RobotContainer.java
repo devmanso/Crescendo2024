@@ -15,7 +15,7 @@ import frc.robot.commands.auto.DriveBackward;
 import frc.robot.commands.auto.DriveForwardSpark;
 import frc.robot.commands.auto.ForwardInRangeSpark;
 import frc.robot.commands.auto.Nothing;
-import frc.robot.commands.auto.TimeBasedBackUp;
+import frc.robot.commands.auto.AutoMovement;
 import frc.robot.commands.auto.TimeBasedGoForward;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.driveTrains.HighGear;
@@ -70,7 +70,7 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final Trigger teleopAutoShoot = controller.y();  
   
-  //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
+  private final WCPDriveTrain driveTrain = new WCPDriveTrain();
   private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
 
   private final Intake intake = new Intake();
@@ -106,8 +106,8 @@ public class RobotContainer {
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
-    // driveTrain.setDefaultCommand(new WCPTeleopDrive(xboxController, driveTrain));
-    sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
+    driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
+    //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
 
   }
 
@@ -127,7 +127,7 @@ public class RobotContainer {
 
     teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
 
-    getInRange.onTrue(new BackUpInRangeSpark(sparkDriveTrain, camera));
+    //getInRange.onTrue(new BackUpInRangeSpark(driveTrain, camera));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
@@ -223,15 +223,15 @@ public class RobotContainer {
       // after this we just have to move back again to get leave point
        return new SpinUpShooter(shooter).withTimeout(3)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-      .andThen(new TimeBasedBackUp(sparkDriveTrain)
+      .andThen(new AutoMovement(driveTrain)
         .alongWith(new autoRunIntake(intake)
           .alongWith(new ContainNoteAuto(feeder))
           .until(
             () -> intake.getNoteSwitch() == false
           )
         )
-      ).andThen(new SpinUpShooter(shooter)).andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-      .andThen(new DriveBackward(sparkDriveTrain).withTimeout(2));
+      )
+      .andThen(new SpinUpShooter(shooter)).andThen(new AutoShoot(shooter, feeder).withTimeout(1.5));
 
      /*
     return new SpinUpShooter(shooter).withTimeout(3)

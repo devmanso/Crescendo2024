@@ -14,15 +14,16 @@ import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
+import frc.robot.subsystems.WCPDriveTrain;
 
-public class TimeBasedBackUp extends Command {
+public class AutoMovement extends Command {
   /** Creates a new TimeBasedBackUp. */
 
-  private SparkDriveTrain driveTrain;
+  private WCPDriveTrain driveTrain;
 
   private double startTime;
 
-  public TimeBasedBackUp(SparkDriveTrain driveTrain) {
+  public AutoMovement(WCPDriveTrain driveTrain) {
     this.driveTrain = driveTrain;
 
     addRequirements(driveTrain);
@@ -44,7 +45,7 @@ public class TimeBasedBackUp extends Command {
     if (time - startTime < 1.5) {
       driveTrain.driveForward(.5);
     } 
-    else if(time - startTime > 3 && time - startTime <6 ) {
+    else if(time - startTime > 2 && time - startTime <4 ) {
       driveTrain.driveToSpeaker();
     } 
 
@@ -53,7 +54,7 @@ public class TimeBasedBackUp extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stopDriveTrain();
+    driveTrain.stop();
   }
 
   // Returns true when the command should end.

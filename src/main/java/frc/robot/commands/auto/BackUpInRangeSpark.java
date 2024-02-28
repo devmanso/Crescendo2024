@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.SparkDriveTrain;
+import frc.robot.subsystems.WCPDriveTrain;
 
 public class BackUpInRangeSpark extends Command {
 
-  private SparkDriveTrain driveTrain;
+  private WCPDriveTrain driveTrain;
 
   /** Creates a new GetInRangeSpark. */
-  public BackUpInRangeSpark(SparkDriveTrain driveTrain, LimeLightCamera camera) {
+  public BackUpInRangeSpark(WCPDriveTrain driveTrain, LimeLightCamera camera) {
     this.driveTrain = driveTrain;
     addRequirements(driveTrain, camera);
   }
@@ -55,7 +56,7 @@ public class BackUpInRangeSpark extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stopDriveTrain();
+    driveTrain.stop();
     //System.out.println("IN RANGE; END");
   }
 
