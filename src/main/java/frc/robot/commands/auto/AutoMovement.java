@@ -15,14 +15,14 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
 
-public class TimeBasedBackUp extends Command {
+public class AutoMovement extends Command {
   /** Creates a new TimeBasedBackUp. */
 
   private SparkDriveTrain driveTrain;
 
   private double startTime;
 
-  public TimeBasedBackUp(SparkDriveTrain driveTrain) {
+  public AutoMovement(SparkDriveTrain driveTrain) {
     this.driveTrain = driveTrain;
 
     addRequirements(driveTrain);
@@ -44,7 +44,7 @@ public class TimeBasedBackUp extends Command {
     if (time - startTime < 1.5) {
       driveTrain.driveForward(.5);
     } 
-    else if(time - startTime > 3 && time - startTime <6 ) {
+    else if(time - startTime > 2 && time - startTime <4 ) {
       driveTrain.driveToSpeaker();
     } 
 

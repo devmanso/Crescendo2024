@@ -15,7 +15,7 @@ import frc.robot.commands.auto.DriveBackward;
 import frc.robot.commands.auto.DriveForwardSpark;
 import frc.robot.commands.auto.ForwardInRangeSpark;
 import frc.robot.commands.auto.Nothing;
-import frc.robot.commands.auto.TimeBasedBackUp;
+import frc.robot.commands.auto.AutoMovement;
 import frc.robot.commands.auto.TimeBasedGoForward;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.driveTrains.HighGear;
@@ -79,6 +79,12 @@ public class RobotContainer {
   private final Feeder feeder = new Feeder();
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
+
+  public void stopAllSubsystemsMotors() {
+    intake.stop();
+    shooter.stopShooter();
+    feeder.stopFeeder();
+  }
 
   // Button Board
   private Joystick buttonBoard = new Joystick(OperatorConstants.ButtonBoardPort);
@@ -224,7 +230,7 @@ public class RobotContainer {
       // after this we just have to move back again to get leave point
        return new SpinUpShooter(shooter).withTimeout(3)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-      .andThen(new TimeBasedBackUp(sparkDriveTrain)
+      .andThen(new AutoMovement(sparkDriveTrain)
         .alongWith(new autoRunIntake(intake)
           .alongWith(new ContainNoteAuto(feeder))
           .until(
