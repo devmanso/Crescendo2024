@@ -6,36 +6,21 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoShoot;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
-import frc.robot.commands.auto.BackUpInRangeSpark;
-import frc.robot.commands.auto.DriveBackward;
-import frc.robot.commands.auto.DriveForwardSpark;
-import frc.robot.commands.auto.ForwardInRangeSpark;
-import frc.robot.commands.auto.Nothing;
 import frc.robot.commands.auto.AutoMovement;
-import frc.robot.commands.auto.TimeBasedGoForward;
 import frc.robot.commands.auto.autoRunIntake;
-import frc.robot.commands.driveTrains.HighGear;
-import frc.robot.commands.driveTrains.SparkDrive;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
 import frc.robot.commands.feeder.ReverseFeeder;
 import frc.robot.commands.feeder.RunFeeder;
 import frc.robot.commands.feeder.ContainNote;
 import frc.robot.commands.feeder.ContainNoteAuto;
-import frc.robot.commands.feeder.FeedWithTimer;
-import frc.robot.commands.feeder.StopFeeder;
 import frc.robot.commands.intake.ReverseIntake;
 import frc.robot.commands.intake.RunIntake;
-import frc.robot.commands.intake.StopIntake;
 import frc.robot.commands.pneumatics.RunCompressor;
 import frc.robot.commands.shooter.TeleopAutoShoot;
-import frc.robot.commands.shooter.ShootWithFeeder;
 import frc.robot.commands.shooter.ShootWithTimer;
 import frc.robot.commands.shooter.SpinUpShooter;
-import frc.robot.commands.shooter.StopShooter;
 import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
@@ -44,13 +29,8 @@ import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
 import frc.robot.subsystems.WCPDriveTrain;
-import frc.robot.subsystems.swerve.SwerveDrive;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -78,6 +58,12 @@ public class RobotContainer {
   private final Feeder feeder = new Feeder();
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
+
+  public void stopAllSubsystemsMotors() {
+    intake.stop();
+    shooter.stopShooter();
+    feeder.stopFeeder();
+  }
 
   // Button Board
   private Joystick buttonBoard = new Joystick(OperatorConstants.ButtonBoardPort);
