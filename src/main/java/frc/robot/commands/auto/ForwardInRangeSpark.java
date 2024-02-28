@@ -4,19 +4,17 @@
 
 package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.SparkDriveTrain;
-import frc.robot.subsystems.WCPDriveTrain;
 
-public class BackUpInRangeSpark extends Command {
+public class ForwardInRangeSpark extends Command {
 
-  private WCPDriveTrain driveTrain;
+  private SparkDriveTrain driveTrain;
 
   /** Creates a new GetInRangeSpark. */
-  public BackUpInRangeSpark(WCPDriveTrain driveTrain, LimeLightCamera camera) {
+  public ForwardInRangeSpark(SparkDriveTrain driveTrain, LimeLightCamera camera) {
     this.driveTrain = driveTrain;
     addRequirements(driveTrain, camera);
   }
@@ -35,28 +33,30 @@ public class BackUpInRangeSpark extends Command {
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
 
     while(LimeLightCamera.hasValidTargets() >= 1) {
-      System.out.println(" BACK UP DISTANCE " + LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+      System.out.println(" FORWARD COMMAND " + LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
       //.out.println("VALID TARGET");
       // go back until we're in range
       // original distance to travel was 65
       if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
-       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 40) {
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) > 25) {
 
-        driveTrain.driveForward(.50); //.25
-        
+        // Redundant check lmao, but code works so idc
+        if(LimeLightCamera.hasValidTargets() >= 1) {
+          driveTrain.driveBackward(-.3); //.25
+        }
 
-        System.out.println("MOVING");
-      } else {System.out.println("NOT MOVING");}
+        //System.out.println("MOVING");
+      }
 
     }
-    System.out.println("IN RANGE; STILL RUNNING. NO VALID TARGET");
+    //System.out.println("IN RANGE; STILL RUNNING");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stop();
+    driveTrain.stopDriveTrain();
     //System.out.println("IN RANGE; END");
   }
 

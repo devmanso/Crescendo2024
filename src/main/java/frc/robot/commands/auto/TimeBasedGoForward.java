@@ -2,41 +2,51 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.driveTrains;
+package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.WCPDriveTrain;
+import frc.robot.subsystems.SparkDriveTrain;
 
-public class WCPTeleopDrive extends Command {
-  CommandXboxController controller;
-  WCPDriveTrain driveTrain;
-  /** Creates a new WCPTeleopDrive. */
-  public WCPTeleopDrive(CommandXboxController controller, WCPDriveTrain driveTrain) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.controller = controller;
+public class TimeBasedGoForward extends Command {
+  /** Creates a new TimeBasedBackUp. */
+
+  private SparkDriveTrain driveTrain;
+
+  private double startTime;
+
+  public TimeBasedGoForward(SparkDriveTrain driveTrain) {
     this.driveTrain = driveTrain;
+
     addRequirements(driveTrain);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveTrain.stop();
+    startTime = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.arcadeDrive(controller.getRawAxis(1), controller.getRawAxis(4));
+    double time = Timer.getFPGATimestamp();
+    System.out.println(time - startTime);
+
+    if (time - startTime < 1.5) {
+      driveTrain.driveBackward(-.4);
+    } else {
+      driveTrain.stopDriveTrain();
+    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stop();
+    driveTrain.stopDriveTrain();
   }
 
   // Returns true when the command should end.

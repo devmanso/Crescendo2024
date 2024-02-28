@@ -34,6 +34,30 @@ public class WCPDriveTrain extends SubsystemBase {
 
   DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 7, 6);
 
+  public void arcadeDrive(double xSpd, double zRot) {
+    drive.arcadeDrive(xSpd, zRot);
+  }
+
+  public void driveForward(double xSpd) {
+    leftSide.set(xSpd);
+    rightSide.set(-xSpd);
+  }
+
+  public void driveBackward(double xSpd) {
+    leftSide.set(-xSpd);
+    rightSide.set(xSpd);
+  }
+
+  public void drive(double xSpd) {
+    leftSide.set(xSpd);
+    rightSide.set(-xSpd);
+  }
+
+  public void driveToSpeaker() {
+    leftSide.set(.4);
+    rightSide.set(-.5);
+  }
+
   public void highGear() {
     shifter.set(Value.kForward);
   }
@@ -95,25 +119,28 @@ public class WCPDriveTrain extends SubsystemBase {
   // over here we'd tupically use MotorControllerGroup, but it's been deprecated
   // please look at the constructor of this class to see how to set follower motors
 
+  MotorControllerGroup leftSide = new MotorControllerGroup(leftMaster, leftFollower);
+  MotorControllerGroup rightSide = new MotorControllerGroup(rightMaster, rightFollower);
+
   /** Creates a new WCPDriveTrain. */
   public WCPDriveTrain() {
     // Ensure follower motors mimic master motors
-    leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
-    rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));
+    //leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
+    //rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));
     
     //rightMaster.addFollower(rightFollower);
     //leftMaster.addFollower(leftFollower);
 
     // set the right motors to be inverted
-    rightMaster.setInverted(true);
+    //rightMaster.setInverted(true);
     //rightFollower.setInverted(false); // technician wired this wierdly, this quick hack
     // should fix this ^^ - Mansour Quddus, if your going w/ TalonFX's then invert the right again
-    rightFollower.setInverted(true);
+    //rightFollower.setInverted(true);
     // ensure left motors are not inverted
-    leftMaster.setInverted(false);
-    leftFollower.setInverted(false);
-
-    // please work it would be so funny
+    //leftMaster.setInverted(false);
+    //leftFollower.setInverted(false);
+    
+    rightSide.setInverted(true);
 
     //setupInstruments();
     //loadSong("ninmusic.chrp");
@@ -146,15 +173,6 @@ public class WCPDriveTrain extends SubsystemBase {
     rightFollower.stopMotor();
     leftMaster.stopMotor();
     leftFollower.stopMotor();
-  }
-
-  /**
-   * Drives the robot using arcade drive.
-   * @param speed - speed on x axis
-   * @param rotation - rotation on y axis
-   */
-  public void drive(double speed, double rotation) {
-    drive.arcadeDrive(speed, rotation);
   }
   
   // public void displayDriveTrainData() {

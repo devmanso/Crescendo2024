@@ -9,6 +9,7 @@ import com.hyperdrive.hyperlib.LimeLight;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.LimelightConstants;
@@ -119,7 +120,10 @@ public class LimeLightCamera extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Limelight Distance: ", estimateDistance(LimelightConstants.MountAngleDegrees,
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
     
+    SmartDashboard.putNumber("Limelight Targets: ", hasValidTargets());
     // if(hasValidTargets() == 1) {
     //   System.out.println( "TEST " +
     //     estimateDistance(LimelightConstants.MountAngelDegrees, LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches)
