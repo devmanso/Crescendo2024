@@ -7,6 +7,12 @@ package frc.robot.commands.auto;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.AutoShoot;
+import frc.robot.commands.shooter.SpinUpShooter;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
 
 public class TimeBasedBackUp extends Command {
@@ -36,10 +42,11 @@ public class TimeBasedBackUp extends Command {
     System.out.println(time - startTime);
 
     if (time - startTime < 1.5) {
-      driveTrain.driveForward(.4);
-    } else {
-      driveTrain.stopDriveTrain();
-    }
+      driveTrain.driveForward(.5);
+    } 
+    else if(time - startTime > 3 && time - startTime <6 ) {
+      driveTrain.driveToSpeaker();
+    } 
 
   }
 
@@ -52,6 +59,6 @@ public class TimeBasedBackUp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Timer.getFPGATimestamp() - startTime > 7;
   }
 }

@@ -26,7 +26,8 @@ public class SpinUpShooter extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.shoot(-1);
+    System.out.println("SHOOTING");
+    shooter.shoot(-.01); // -1
   }
 
   // Called once the command ends or is interrupted.

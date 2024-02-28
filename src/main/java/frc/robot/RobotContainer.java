@@ -11,6 +11,7 @@ import frc.robot.commands.ControlSwerve;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.BackUpInRangeSpark;
+import frc.robot.commands.auto.DriveBackward;
 import frc.robot.commands.auto.DriveForwardSpark;
 import frc.robot.commands.auto.ForwardInRangeSpark;
 import frc.robot.commands.auto.Nothing;
@@ -221,15 +222,17 @@ public class RobotContainer {
 
       // 95% auton routine, haven't tested yet - MQ
       // after this we just have to move back again to get leave point
-      return new SpinUpShooter(shooter).withTimeout(2)
-        .andThen(new AutoShoot(shooter, feeder)).withTimeout(1.5)
-          .andThen(new TimeBasedBackUp(sparkDriveTrain))
-          .alongWith(new autoRunIntake(intake))
-          .alongWith(new ContainNote(feeder))
-          .until( () -> !intake.getNoteSwitch() )
-            .andThen(new TimeBasedGoForward(sparkDriveTrain))
-              .andThen(new SpinUpShooter(shooter)).withTimeout(2)
-                .andThen(new AutoShoot(shooter, feeder)).withTimeout(1.5);
+       return new SpinUpShooter(shooter).withTimeout(3)
+      .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+      .andThen(new TimeBasedBackUp(sparkDriveTrain)
+        .alongWith(new autoRunIntake(intake)
+          .alongWith(new ContainNoteAuto(feeder))
+          .until(
+            () -> intake.getNoteSwitch() == false
+          )
+        )
+      ).andThen(new SpinUpShooter(shooter)).andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+      .andThen(new DriveBackward(sparkDriveTrain).withTimeout(2));
 
      /*
     return new SpinUpShooter(shooter).withTimeout(3)

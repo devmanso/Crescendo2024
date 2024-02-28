@@ -4,50 +4,32 @@
 
 package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj.Timer;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SparkDriveTrain;
 
-public class TimeBasedGoForward extends Command {
-  /** Creates a new TimeBasedBackUp. */
-
+/**
+ * Use .withTimeout() on this command to control when to stop (based on time)
+ */
+public class DriveBackward extends Command {
   private SparkDriveTrain driveTrain;
-
-  private double startTime;
-
-  public TimeBasedGoForward(SparkDriveTrain driveTrain) {
+  /** Creates a new DriveForward. */
+  public DriveBackward(SparkDriveTrain driveTrain) {
     this.driveTrain = driveTrain;
-
-    addRequirements(driveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(driveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    startTime = Timer.getFPGATimestamp();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    double time = Timer.getFPGATimestamp();
-    System.out.println(time - startTime);
-
-    if (time - startTime < 1.5) {
-      driveTrain.driveBackward(-.4);
-    } else {
-      driveTrain.stopDriveTrain();
-    }
-
-  }
+  public void execute() {driveTrain.driveForward(.4);}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    driveTrain.stopDriveTrain();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
