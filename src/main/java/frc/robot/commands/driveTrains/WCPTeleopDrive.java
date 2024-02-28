@@ -30,7 +30,7 @@ public class WCPTeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.arcadeDrive(controller.getRawAxis(1), controller.getRawAxis(4));
+    driveTrain.arcadeDrive(controller.getRawAxis(1) * .8, controller.getRawAxis(4)* .8);
   }
 
   // Called once the command ends or is interrupted.

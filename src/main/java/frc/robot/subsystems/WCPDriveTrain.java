@@ -114,13 +114,12 @@ public class WCPDriveTrain extends SubsystemBase {
         break;
     }
   }
-
-  DifferentialDrive drive = new DifferentialDrive(leftMaster, rightMaster);
   // over here we'd tupically use MotorControllerGroup, but it's been deprecated
   // please look at the constructor of this class to see how to set follower motors
 
   MotorControllerGroup leftSide = new MotorControllerGroup(leftMaster, leftFollower);
   MotorControllerGroup rightSide = new MotorControllerGroup(rightMaster, rightFollower);
+  DifferentialDrive drive = new DifferentialDrive(leftSide, rightSide);
 
   /** Creates a new WCPDriveTrain. */
   public WCPDriveTrain() {
