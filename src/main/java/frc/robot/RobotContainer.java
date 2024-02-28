@@ -31,12 +31,11 @@ import frc.robot.commands.intake.ReverseIntake;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.intake.StopIntake;
 import frc.robot.commands.pneumatics.RunCompressor;
+import frc.robot.commands.shooter.TeleopAutoShoot;
 import frc.robot.commands.shooter.ShootWithFeeder;
 import frc.robot.commands.shooter.ShootWithTimer;
 import frc.robot.commands.shooter.SpinUpShooter;
 import frc.robot.commands.shooter.StopShooter;
-import frc.robot.commands.shooter.TeleOpAutoShooter;
-import frc.robot.commands.shooter.TeleOpAutoShooter;
 import frc.robot.subsystems.AirCompressor;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
@@ -69,7 +68,7 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController controller =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final Trigger teleopAutoShoot = controller.y();
+  private final Trigger teleopAutoShoot = controller.y();  
   
   //private final WCPDriveTrain driveTrain = new WCPDriveTrain();
   private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
@@ -132,8 +131,8 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    teleopAutoShoot.onTrue(new TeleOpAutoShooter(camera));
-    
+    teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
+
     getInRange.onTrue(new BackUpInRangeSpark(sparkDriveTrain, camera));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
