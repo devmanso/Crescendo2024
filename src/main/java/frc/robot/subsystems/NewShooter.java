@@ -10,7 +10,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase {
+public class NewShooter extends SubsystemBase {
 
   private TalonFX topShooterMotor = new TalonFX(6);
   private TalonFX bottomShooterMotor = new TalonFX(7);
@@ -20,7 +20,7 @@ public class Shooter extends SubsystemBase {
 
 
   /** Creates a new Shooter. */
-  public Shooter() {
+  public NewShooter() {
 
   }
 

@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.NewShootCommand;
+import frc.robot.commands.NewShooterStop;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.AutoMovement;
 import frc.robot.commands.auto.autoRunIntake;
@@ -26,10 +28,12 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimeLightCamera;
+import frc.robot.subsystems.NewShooter;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
 import frc.robot.subsystems.WCPDriveTrain;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -59,9 +63,13 @@ public class RobotContainer {
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
 
+  private final XboxController xbox = new XboxController(0);
+
+  private final NewShooter newShooter = new NewShooter();
+
   public void stopAllSubsystemsMotors() {
     intake.stop();
-    shooter.stopShooter();
+    shooter.stopMotors();
     feeder.stopFeeder();
   }
 
@@ -74,8 +82,13 @@ public class RobotContainer {
                         automaticShoot, automaticIntake, getInRange;
                     
 
+
+  private JoystickButton xboxShoot, xboxStop;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    xboxShoot = new JoystickButton(xbox, 0);
+    xboxStop = new JoystickButton(xbox, 1);
 
     // Button Board Button Objects
     feedBtn = new JoystickButton(buttonBoard, OperatorConstants.FeedBtn);
@@ -118,6 +131,8 @@ public class RobotContainer {
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
 
+    
+
     grabNoteBtn.onTrue(new RunIntake(intake));
 
     automaticIntake.onTrue(new RunIntake(intake)
@@ -127,7 +142,6 @@ public class RobotContainer {
     releaseNoteBtn.whileTrue(new ReverseIntake(intake));
 
     shootBtn.onTrue(new ShootWithTimer(shooter));
-
     // straight up awful code
     // automaticShoot.onTrue(new ShootWithFeeder(shooter, feeder)
     // .withTimeout(7)
@@ -141,6 +155,10 @@ public class RobotContainer {
     );
 
     stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
+
+    // new shooter commands
+    xboxShoot.onTrue(new NewShootCommand(newShooter));
+    xboxStop.onTrue(new NewShooterStop(newShooter));
   }
 
   /**

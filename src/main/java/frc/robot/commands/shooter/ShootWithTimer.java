@@ -39,7 +39,7 @@ public class ShootWithTimer extends Command {
     // double time = Timer.getFPGATimestamp();
     currentTime = timer.getFPGATimestamp() - startTime;
     if (currentTime <= 3) {
-      shooter.shoot(-0.95);
+      shooter.shoot();// -0.95
     } else {
       timer.stop();
       timer.reset();
