@@ -131,8 +131,6 @@ public class RobotContainer {
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
 
-    
-
     grabNoteBtn.onTrue(new RunIntake(intake));
 
     automaticIntake.onTrue(new RunIntake(intake)
