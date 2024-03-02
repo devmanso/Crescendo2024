@@ -10,6 +10,8 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.AutoMovement;
 import frc.robot.commands.auto.autoRunIntake;
+import frc.robot.commands.driveTrains.HighGear;
+import frc.robot.commands.driveTrains.LowGear;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
 import frc.robot.commands.feeder.ReverseFeeder;
 import frc.robot.commands.feeder.RunFeeder;
@@ -19,8 +21,13 @@ import frc.robot.commands.intake.ReverseIntake;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pneumatics.RunCompressor;
 import frc.robot.commands.shooter.TeleopAutoShoot;
+import frc.robot.commands.testingCommands.NewStopAll;
+import frc.robot.commands.testingCommands.feeder.NewFeederReverse;
 import frc.robot.commands.testingCommands.feeder.NewFeederRun;
 import frc.robot.commands.testingCommands.feeder.NewFeederStop;
+import frc.robot.commands.testingCommands.intake.NewIntakeReverse;
+import frc.robot.commands.testingCommands.intake.NewIntakeRun;
+import frc.robot.commands.testingCommands.intake.NewIntakeStop;
 import frc.robot.commands.testingCommands.shooter.NewShoot;
 import frc.robot.commands.testingCommands.shooter.NewShooterStop;
 import frc.robot.commands.shooter.ShootWithTimer;
@@ -34,6 +41,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
 import frc.robot.subsystems.WCPDriveTrain;
 import frc.robot.subsystems.TestingSubsystems.NewFeeder;
+import frc.robot.subsystems.TestingSubsystems.NewIntake;
 import frc.robot.subsystems.TestingSubsystems.NewShooter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -60,7 +68,7 @@ public class RobotContainer {
   private final WCPDriveTrain driveTrain = new WCPDriveTrain();
   //private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
 
-  private final Intake intake = new Intake();
+  //private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
   private final Feeder feeder = new Feeder();
   private final LimeLightCamera camera = new LimeLightCamera();
@@ -69,9 +77,10 @@ public class RobotContainer {
 
   private final NewShooter newShooter = new NewShooter();
   private final NewFeeder newFeeder = new NewFeeder();
+  private final NewIntake newIntake = new NewIntake();
 
   public void stopAllSubsystemsMotors() {
-    intake.stop();
+    //intake.stop();
     shooter.stopShooter();
     feeder.stopFeeder();
   }
@@ -105,7 +114,11 @@ public class RobotContainer {
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
+
+    /***************************************************************************
     driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
+    ***************************************************************************/
+
     //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
 
   }
@@ -128,16 +141,19 @@ public class RobotContainer {
 
     //getInRange.onTrue(new BackUpInRangeSpark(driveTrain, camera));
 
-    feedBtn.whileTrue(new RunFeeder(feeder));
-    reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
+     //feedBtn.whileTrue(new RunFeeder(feeder));
+     //reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
 
-    grabNoteBtn.onTrue(new RunIntake(intake));
+     //grabNoteBtn.onTrue(new RunIntake(intake));
 
+
+    /********************************************************
     automaticIntake.onTrue(new RunIntake(intake)
     .alongWith(new ContainNote(feeder))
     .until(() -> intake.getNoteSwitch() == false));
+    ********************************************************/
 
-    releaseNoteBtn.whileTrue(new ReverseIntake(intake));
+    // releaseNoteBtn.whileTrue(new ReverseIntake(intake));
 
     shootBtn.onTrue(new ShootWithTimer(shooter));
     // straight up awful code
@@ -146,20 +162,63 @@ public class RobotContainer {
     // .andThen(new StopShooter(shooter)
     // .alongWith(new StopFeeder(feeder))));
 
-
+    /***********************************************************
     automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(3)
     .andThen(new AutoShoot(shooter, feeder).withTimeout(3))
     .andThen(new StopAll(shooter, feeder, intake))
     );
 
-    stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
-
+    // stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
+    ************************************************************/
 
     // newShooter and newFeeder test bindings
-    xbox.a().onTrue(new NewShoot(newShooter));
-    xbox.b().onTrue(new NewShooterStop(newShooter));
-    xbox.y().onTrue(new NewFeederRun(newFeeder));
-    xbox.x().onTrue(new NewFeederStop(newFeeder));
+    // xbox
+    xbox.a().onTrue(new LowGear(driveTrain));
+    xbox.y().onTrue(new HighGear(driveTrain));
+
+    xbox.b().onTrue(new NewStopAll(newIntake, newFeeder, newShooter));
+
+    xbox.x().onTrue(
+      new NewShoot(newShooter)
+      .withTimeout(3)
+      .andThen(new NewShoot(newShooter)
+        .alongWith(new NewFeederRun(newFeeder))
+        .withTimeout(3)
+      )
+      .andThen(
+        new NewFeederStop(newFeeder)
+        .alongWith(new NewShooterStop(newShooter))
+      )
+    );
+
+    // buttonBoard
+    grabNoteBtn.onTrue(
+      new NewIntakeRun(newIntake)
+      .alongWith(new NewFeederRun(newFeeder))
+      .withTimeout(3)
+    );
+
+    automaticShoot.onTrue(
+      new NewShoot(newShooter)
+      .withTimeout(3)
+      .andThen(new NewShoot(newShooter)
+        .alongWith(new NewFeederRun(newFeeder))
+        .withTimeout(3)
+      )
+      .andThen(
+        new NewFeederStop(newFeeder)
+        .alongWith(new NewShooterStop(newShooter))
+      )
+    );
+
+
+    releaseNoteBtn.onTrue(new NewIntakeReverse(newIntake));
+    reverseFeederBtn.onTrue(new NewFeederReverse(newFeeder));
+
+    feedBtn.onTrue(new NewFeederRun(newFeeder));
+
+    stopAllBtn.onTrue(new NewStopAll(newIntake, newFeeder, newShooter));
+
 
   }
 
@@ -227,6 +286,10 @@ public class RobotContainer {
 
       // 95% auton routine, haven't tested yet - MQ
       // after this we just have to move back again to get leave point
+
+
+      return null;// actual command is commented below
+      /********************************************************************************************** 
        return new SpinUpShooter(shooter).withTimeout(3)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
       .andThen(new AutoMovement(driveTrain)
@@ -238,7 +301,9 @@ public class RobotContainer {
         )
       )
       .andThen(new SpinUpShooter(shooter)).andThen(new AutoShoot(shooter, feeder).withTimeout(1.5));
+      ************************************************************************************************/
 
+      
      /*
     return new SpinUpShooter(shooter).withTimeout(3)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))

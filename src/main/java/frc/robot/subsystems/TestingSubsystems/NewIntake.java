@@ -7,17 +7,26 @@ package frc.robot.subsystems.TestingSubsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.TestingMotorIds;
 
 public class NewIntake extends SubsystemBase {
 
   private CANSparkMax intakeMotor = new CANSparkMax(TestingMotorIds.NEW_INTAKE_ID, MotorType.kBrushless);
+  private DigitalInput noteSwitch = new DigitalInput(IntakeConstants.LIMITSWITCH_ID);
+
   /** Creates a new NewIntake. */
   public NewIntake() {}
 
+  public boolean getNoteSwitchStatus(){
+    return noteSwitch.get();
+  }
+
   public void runIntake(){
     intakeMotor.set(-0.95);
+
   }
 
   public void reverseIntake(){

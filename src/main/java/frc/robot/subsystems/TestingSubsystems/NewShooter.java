@@ -36,19 +36,8 @@ public class NewShooter extends SubsystemBase {
     shooterBottom.stopMotor();
   }
 
-  private XboxController xbox = new XboxController(1);
-
   @Override
   public void periodic() {
-    if (xbox.getAButtonPressed() == true ){
-      shooterTop.set(-0.95);
-      shooterBottom.set(-0.95);
-    } 
-    
-    if (xbox.getBButtonPressed() == true){
-      shooterTop.stopMotor();
-      shooterBottom.stopMotor();
-    }
     // This method will be called once per scheduler run
   }
 }

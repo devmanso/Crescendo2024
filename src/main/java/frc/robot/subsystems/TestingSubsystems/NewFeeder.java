@@ -23,6 +23,10 @@ public class NewFeeder extends SubsystemBase {
     feeder.set(0.95);
   }
 
+  public void reverseFeeder(){
+    feeder.set(-0.95);
+  }
+
   public void stopFeeder(){
     feeder.stopMotor();
   }

@@ -33,6 +33,8 @@ public final class Constants {
                 public static final int NEW_SHOOTER_BOTTOM_ID = 22;
 
                 public static final int NEW_FEEDER_ID = 62;
+
+                public static final int NEW_INTAKE_ID = 1;
         }
 
         public static class WestCoastDriveTrain {
