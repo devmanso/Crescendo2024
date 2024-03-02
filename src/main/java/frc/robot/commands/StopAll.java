@@ -27,7 +27,7 @@ public class StopAll extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.stopMotors();
+    shooter.stopShooter();
     feeder.stopFeeder();
     intake.stop();
   }

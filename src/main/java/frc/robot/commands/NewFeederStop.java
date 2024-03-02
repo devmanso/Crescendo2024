@@ -5,14 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.NewShooter;
+import frc.robot.subsystems.NewFeeder;
 
-public class NewShootCommand extends Command {
-  /** Creates a new NewShootCommand. */
-  private NewShooter shooter;
-  public NewShootCommand(NewShooter shooter) {
-    this.shooter = shooter;
-    addRequirements(shooter);
+public class NewFeederStop extends Command {
+  private NewFeeder feeder;
+
+  /** Creates a new NewFeed. */
+  public NewFeederStop(NewFeeder feeder) {
+    this.feeder = feeder;
+
+    addRequirements(feeder);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -23,13 +25,13 @@ public class NewShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.shoot();
+    feeder.stopFeeder();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopMotors();
+    feeder.stopFeeder();
   }
 
   // Returns true when the command should end.

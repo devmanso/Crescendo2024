@@ -7,7 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.NewShootCommand;
+import frc.robot.commands.NewFeederRun;
+import frc.robot.commands.NewFeederStop;
+import frc.robot.commands.NewShoot;
 import frc.robot.commands.NewShooterStop;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.AutoMovement;
@@ -28,6 +30,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimeLightCamera;
+import frc.robot.subsystems.NewFeeder;
 import frc.robot.subsystems.NewShooter;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
@@ -55,7 +58,7 @@ public class RobotContainer {
   private final Trigger teleopAutoShoot = controller.y();  
   
   private final WCPDriveTrain driveTrain = new WCPDriveTrain();
-  private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
+  //private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
 
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
@@ -63,18 +66,20 @@ public class RobotContainer {
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
 
-  private final XboxController xbox = new XboxController(0);
 
   private final NewShooter newShooter = new NewShooter();
+  private final NewFeeder newFeeder = new NewFeeder();
 
   public void stopAllSubsystemsMotors() {
     intake.stop();
-    shooter.stopMotors();
+    shooter.stopShooter();
     feeder.stopFeeder();
   }
 
   // Button Board
   private Joystick buttonBoard = new Joystick(OperatorConstants.ButtonBoardPort);
+  private final CommandXboxController xbox = new CommandXboxController(OperatorConstants.XboxControllerPort);
+
 
   // Button Board Buttons
   private JoystickButton feedBtn, grabNoteBtn, shootBtn, 
@@ -82,13 +87,8 @@ public class RobotContainer {
                         automaticShoot, automaticIntake, getInRange;
                     
 
-
-  private JoystickButton xboxShoot, xboxStop;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
-    xboxShoot = new JoystickButton(xbox, 0);
-    xboxStop = new JoystickButton(xbox, 1);
 
     // Button Board Button Objects
     feedBtn = new JoystickButton(buttonBoard, OperatorConstants.FeedBtn);
@@ -156,9 +156,13 @@ public class RobotContainer {
 
     stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
 
-    // new shooter commands
-    xboxShoot.onTrue(new NewShootCommand(newShooter));
-    xboxStop.onTrue(new NewShooterStop(newShooter));
+
+    // newShooter and newFeeder test bindings
+    xbox.a().onTrue(new NewShoot(newShooter));
+    xbox.b().onTrue(new NewShooterStop(newShooter));
+    xbox.y().onTrue(new NewFeederRun(newFeeder));
+    xbox.x().onTrue(new NewFeederStop(newFeeder));
+
   }
 
   /**

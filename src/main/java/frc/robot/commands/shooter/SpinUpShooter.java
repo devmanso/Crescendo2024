@@ -27,13 +27,13 @@ public class SpinUpShooter extends Command {
   @Override
   public void execute() {
     System.out.println("SHOOTING");
-    shooter.shoot(); // -1
+    shooter.shoot(-1); // -1
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopMotors();
+    shooter.stopShooter();
   }
 
 }

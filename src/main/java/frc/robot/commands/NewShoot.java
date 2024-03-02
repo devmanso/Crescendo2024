@@ -7,10 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.NewShooter;
 
-public class NewShooterStop extends Command {
+public class NewShoot extends Command {
   private NewShooter newShooter;
-  /** Creates a new NewShooterStop. */
-  public NewShooterStop(NewShooter newShooter) {
+
+  /** Creates a new NewShoot. */
+  public NewShoot(NewShooter newShooter) {
     this.newShooter = newShooter;
 
     addRequirements(newShooter);
@@ -24,16 +25,18 @@ public class NewShooterStop extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    newShooter.stopMotors();
+    newShooter.newShoot();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    newShooter.stopMotors();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

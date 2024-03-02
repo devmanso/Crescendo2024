@@ -28,8 +28,15 @@ public final class Constants {
                 public static final int CLIMBER_RIGHT = 31;
         }
 
+        public static class NewFeederAndShooter {
+                public static final int NEW_SHOOTER_TOP_ID = 1;
+                public static final int NEW_SHOOTER_BOTTOM_ID = 22;
+
+                public static final int NEW_FEEDER_ID = 62;
+        }
+
         public static class WestCoastDriveTrain {
-                public static final int MASTER_LEFT = 1;
+                public static final int MASTER_LEFT = 0;// 1
                 public static final int FOLLOWER_LEFT = 2;
                 public static final int MASTER_RIGHT = 3;
                 public static final int FOLLOWER_RIGHT = 4;
@@ -39,6 +46,7 @@ public final class Constants {
                 // controllers
                 public static final int kDriverControllerPort = 0;
                 public static final int ButtonBoardPort = 1;
+                public static final int XboxControllerPort = 0;
 
                 // joystick buttons
                 public static final int GrabNoteBtn = 1;
@@ -56,8 +64,8 @@ public final class Constants {
         }
 
         public static class ShooterAndFeeder {
-                public static final int SHOOTER_ID = 22;
-                public static final int FEEDER_ID = 4;// Spark Motor
+                public static final int SHOOTER_ID = 0;// 22
+                public static final int FEEDER_ID = 0;// 4 // Spark Motor
                 public static final int FeederSwitchPort = 0;
         }
 
