@@ -28,7 +28,7 @@ public final class Constants {
                 public static final int CLIMBER_RIGHT = 31;
         }
 
-        public static class NewFeederAndShooter {
+        public static class TestingMotorIds {
                 public static final int NEW_SHOOTER_TOP_ID = 1;
                 public static final int NEW_SHOOTER_BOTTOM_ID = 22;
 

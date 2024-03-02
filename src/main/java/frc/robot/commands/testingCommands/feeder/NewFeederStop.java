@@ -2,18 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.testingCommands.feeder;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.NewShooter;
+import frc.robot.subsystems.TestingSubsystems.NewFeeder;
 
-public class NewShooterStop extends Command {
-  private NewShooter newShooter;
-  /** Creates a new NewShooterStop. */
-  public NewShooterStop(NewShooter newShooter) {
-    this.newShooter = newShooter;
+public class NewFeederStop extends Command {
+  private NewFeeder feeder;
 
-    addRequirements(newShooter);
+  /** Creates a new NewFeed. */
+  public NewFeederStop(NewFeeder feeder) {
+    this.feeder = feeder;
+
+    addRequirements(feeder);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -24,12 +25,14 @@ public class NewShooterStop extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    newShooter.stopMotors();
+    feeder.stopFeeder();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    feeder.stopFeeder();
+  }
 
   // Returns true when the command should end.
   @Override

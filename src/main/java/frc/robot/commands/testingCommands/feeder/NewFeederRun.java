@@ -2,16 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.testingCommands.feeder;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.NewFeeder;
+import frc.robot.subsystems.TestingSubsystems.NewFeeder;
 
-public class NewFeederStop extends Command {
+public class NewFeederRun extends Command {
+
   private NewFeeder feeder;
 
-  /** Creates a new NewFeed. */
-  public NewFeederStop(NewFeeder feeder) {
+  /** Creates a new NewFeederRun. */
+  public NewFeederRun(NewFeeder feeder) {
     this.feeder = feeder;
 
     addRequirements(feeder);
@@ -25,7 +26,8 @@ public class NewFeederStop extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    feeder.stopFeeder();
+    feeder.runFeeder();
+
   }
 
   // Called once the command ends or is interrupted.
