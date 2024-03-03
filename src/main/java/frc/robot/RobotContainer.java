@@ -153,64 +153,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    //return new BackUpInRangeSpark(sparkDriveTrain, camera);
-    // return new SpinUpShooter(shooter).withTimeout(3)
-    //   .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-    //   .andThen(new autoRunIntake(intake))
-    //     .alongWith(new ContainNote(feeder))
-    //     .until(() -> !intake.getNoteSwitch())
-    //       .alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera));
-
-    // this routine also works and is pretty ok
-    // return new SpinUpShooter(shooter).withTimeout(3)
-    //   .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-    //   .andThen(new autoRunIntake(intake)
-    //       .alongWith(new ContainNote(feeder))
-    //           .alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera))
-    //           .until( () -> intake.getNoteSwitch() == false)
-    //     );
-
-    //intake.setDefaultCommand(new autoRunIntake(intake).until(() -> !intake.getNoteSwitch()));
-
-    // return new autoRunIntake(intake)
-    //   .alongWith(new SpinUpShooter(shooter).withTimeout(2))
-    //         .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5)
-    //         .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera))
-    //         .andThen(new ContainNote(feeder)).withTimeout(1.5));
-
-
-      //best working auton routine so far.
-      // return new SpinUpShooter(shooter).withTimeout(3)
-      // .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-      // .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
-      //   .alongWith(new autoRunIntake(intake)
-      //     .alongWith(new ContainNoteAuto(feeder))
-      //     .until(
-      //       () -> intake.getNoteSwitch() == false
-      //     )
-      //   )
-      // )
-      // .andThen(new DriveForwardSpark(sparkDriveTrain).withTimeout(1));
-
-      // return new BackUpInRangeSpark(sparkDriveTrain, camera).
-      // alongWith(new autoRunIntake(intake)
-      //     .alongWith(new ContainNoteAuto(feeder))
-      //     .until(
-      //       () -> intake.getNoteSwitch() == false
-      //     )
-      //   );
-
-      //return new autoRunIntake(intake).alongWith(new ContainNoteAuto(feeder)).until( () -> !intake.getNoteSwitch() )
-      //.alongWith(new BackUpInRangeSpark(sparkDriveTrain, camera));
-
-      // return new autoRunIntake(intake)
-      //         .alongWith(new ContainNoteAuto(feeder))
-      //         .until( () -> !intake.getNoteSwitch() )
-      //   .alongWith(new TimeBasedBackUp(sparkDriveTrain));
-
-      // 95% auton routine, haven't tested yet - MQ
-      // after this we just have to move back again to get leave point
+      // 100 % working auton when testing with Smokey JR, must refactor when programming new robot
        return new SpinUpShooter(shooter).withTimeout(3)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
       .andThen(new AutoMovement(driveTrain)
@@ -222,23 +165,5 @@ public class RobotContainer {
         )
       )
       .andThen(new SpinUpShooter(shooter)).andThen(new AutoShoot(shooter, feeder).withTimeout(1.5));
-
-     /*
-    return new SpinUpShooter(shooter).withTimeout(3)
-      .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
-      .andThen(new BackUpInRangeSpark(sparkDriveTrain, camera)
-        .alongWith(new autoRunIntake(intake)
-          .alongWith(new ContainNote(feeder))
-          .until(
-            () -> intake.getNoteSwitch() == false
-          )
-        )
-      )
-      .andThen(new GetBackToSpeaker(sparkDriveTrain)
-        .andThen(new SpinUpShooter(shooter).withTimeout(3)
-        .andThen(new AutoShoot(shooter, feeder))
-        )
-      );
-      */
   }
 }
