@@ -132,12 +132,6 @@ public class RobotContainer {
 
     shootBtn.onTrue(new ShootWithTimer(shooter));
 
-    // straight up awful code
-    // automaticShoot.onTrue(new ShootWithFeeder(shooter, feeder)
-    // .withTimeout(7)
-    // .andThen(new StopShooter(shooter)
-    // .alongWith(new StopFeeder(feeder))));
-
 
     automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(3)
     .andThen(new AutoShoot(shooter, feeder).withTimeout(3))

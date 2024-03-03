@@ -23,6 +23,19 @@ public class Climber extends SubsystemBase {
     right.setNeutralMode(NeutralModeValue.Brake);
   }
 
+  public void stopLeft() {
+    left.stopMotor();
+  }
+
+  public void stopRight() {
+    right.stopMotor();
+  }
+
+  public void stopBoth() {
+    left.stopMotor();
+    right.stopMotor();
+  }
+
   public void coupledUp() {
     left.set(.3);
     right.set(.3);
