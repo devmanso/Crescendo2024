@@ -5,8 +5,11 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterAndFeeder;
 
@@ -16,9 +19,11 @@ import frc.robot.Constants.ShooterAndFeeder;
  */
 public class Feeder extends SubsystemBase {
   /** Creates a new Feeder. */
-  public Feeder() {}
+  public Feeder() {
+    feederMotor.setInverted(true);
+  }
 
-  private Spark feederMotor = new Spark(ShooterAndFeeder.FEEDER_ID);
+  private TalonFX feederMotor = new TalonFX(ShooterAndFeeder.FEEDER_ID);
   //private DigitalInput feederSwitch = new DigitalInput(ShooterAndFeeder.FeederSwitchPort);
 
   /**

@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RunAllSubsystems;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.AutoMovement;
 import frc.robot.commands.auto.autoRunIntake;
@@ -69,9 +70,9 @@ public class RobotContainer {
   private Joystick buttonBoard = new Joystick(OperatorConstants.ButtonBoardPort);
 
   // Button Board Buttons
-  private JoystickButton feedBtn, grabNoteBtn, shootBtn, 
+  private JoystickButton feedBtn, RunIntake, shootBtn, 
                         reverseFeederBtn, releaseNoteBtn, stopAllBtn,
-                        automaticShoot, automaticIntake, getInRange;
+                        automaticShoot, automaticIntake, getInRange, runAll;
                     
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -79,7 +80,7 @@ public class RobotContainer {
 
     // Button Board Button Objects
     feedBtn = new JoystickButton(buttonBoard, OperatorConstants.FeedBtn);
-    grabNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteBtn);
+    RunIntake = new JoystickButton(buttonBoard, OperatorConstants.RunIntake);
     automaticIntake = new JoystickButton(buttonBoard, OperatorConstants.GrabNoteOnPressBtn); // "retract"
     shootBtn = new JoystickButton(buttonBoard, OperatorConstants.ShootBtn);
     automaticShoot = new JoystickButton(buttonBoard, OperatorConstants.ShootOnPressBtn); // "extend"
@@ -87,6 +88,8 @@ public class RobotContainer {
     releaseNoteBtn = new JoystickButton(buttonBoard, OperatorConstants.ReleaseNoteBtn);
     stopAllBtn = new JoystickButton(buttonBoard, OperatorConstants.StopAllBtn);
     getInRange = new JoystickButton(buttonBoard, OperatorConstants.GetInRangeBtn);
+    runAll = new JoystickButton(buttonBoard, OperatorConstants.RunAllSubsystems);
+
     configureBindings();
         
     
@@ -111,14 +114,15 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
+    //teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
 
     //getInRange.onTrue(new BackUpInRangeSpark(driveTrain, camera));
+    runAll.whileTrue(new RunAllSubsystems(intake, feeder, shooter));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
 
-    grabNoteBtn.onTrue(new RunIntake(intake));
+    RunIntake.onTrue(new RunIntake(intake));
 
     automaticIntake.onTrue(new RunIntake(intake)
     .alongWith(new ContainNote(feeder))

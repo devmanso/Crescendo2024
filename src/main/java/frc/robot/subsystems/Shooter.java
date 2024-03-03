@@ -15,33 +15,34 @@ public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   // private WPI_TalonFX shooterMotor = new WPI_TalonFX(); Falcon500 is no longer WPI_TalonFX
 
-  private TalonFX shooterMotor = new TalonFX(ShooterAndFeeder.SHOOTER_ID);
+  private TalonFX bottomShooter = new TalonFX(ShooterAndFeeder.BOTTOM_SHOOTER_ID);
+  private TalonFX topShooter = new TalonFX(ShooterAndFeeder.TOP_SHOOTER_ID);
 
-  public Shooter() {}
+  public Shooter() {
+    bottomShooter.setInverted(true);
+    topShooter.setInverted(true);
+  }
 
   /**
    * spins both motors at desired speed, however feeder motor only spins at 1/4 of that speed
    * @param speed - from -1 to 1 representing -100% to 100%
    */
   public void shoot(double speed) {
-    shooterMotor.set(speed);
+    bottomShooter.set(speed);
+    topShooter.set(speed);
   }
 
   /**
    * stops feeder and shooter motor
    */
   public void stopShooter() {
-    shooterMotor.stopMotor();
+    bottomShooter.stopMotor();
+    topShooter.stopMotor();;
   }
 
   public void displayShooterData() {
-    SmartDashboard.putNumber("SHOOTER ACCEL", shooterMotor.getAcceleration().getValueAsDouble());
-    SmartDashboard.putNumber("SHOOTER VEL", shooterMotor.getVelocity().getValueAsDouble());
-  }
-
-  public double rpm_velocity(double motorVelocity, double wheelRadius) {
-
-    return 0;
+    SmartDashboard.putNumber("SHOOTER ACCEL", bottomShooter.getAcceleration().getValueAsDouble());
+    SmartDashboard.putNumber("SHOOTER VEL", bottomShooter.getVelocity().getValueAsDouble());
   }
 
   @Override

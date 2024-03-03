@@ -11,10 +11,11 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
 
-  private CANSparkMax intakeMotor = new CANSparkMax(1, MotorType.kBrushless);
+  private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_ID, MotorType.kBrushless);
   private DigitalInput noteSwitch = new DigitalInput(1);
   /**
    * returns the state of the limit switch
@@ -28,18 +29,18 @@ public class Intake extends SubsystemBase {
    * sets motors to 50 percent
    */
   public void grabNote() {
-    intakeMotor.set(-0.95); // 50 percent
+    intakeMotor.set(-1); // 95 percent
   }
 
   public void autoGrabNote() {
-    intakeMotor.set(-0.95); // .8 before
+    intakeMotor.set(-1); // -.95 then .8 before
   }
 
   /**
    * sets motors to -50 percent
    */
   public void spitNote() {
-    intakeMotor.set(0.95);
+    intakeMotor.set(1);
   }
 
   public void stop() {

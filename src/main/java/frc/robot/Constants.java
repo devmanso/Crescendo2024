@@ -41,7 +41,7 @@ public final class Constants {
                 public static final int ButtonBoardPort = 1;
 
                 // joystick buttons
-                public static final int GrabNoteBtn = 1;
+                public static final int RunIntake = 1;
                 public static final int FeedBtn = 3;
                 public static final int ShootBtn = 5;
                 public static final int ReverseFeederBtn = 4;
@@ -52,17 +52,20 @@ public final class Constants {
                 // public static final int ShootFeedBtn = 0;
                 public static final int GrabNoteOnPressBtn = 7;
                 public static final int GetInRangeBtn = 9;
+                
+                public static final int RunAllSubsystems = 10;
 
         }
 
         public static class ShooterAndFeeder {
-                public static final int SHOOTER_ID = 22;
-                public static final int FEEDER_ID = 4;// Spark Motor
+                public static final int BOTTOM_SHOOTER_ID = 22;
+                public static final int TOP_SHOOTER_ID = 23;
+                public static final int FEEDER_ID = 25;
                 public static final int FeederSwitchPort = 0;
         }
 
         public static class IntakeConstants {
-                public static final int INTAKE_ID = 20;
+                public static final int INTAKE_ID = 30;
                 public static final int LIMITSWITCH_ID = 0;
         }
 
