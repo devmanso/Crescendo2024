@@ -29,12 +29,11 @@ public final class Constants {
         }
 
         public static class TestingMotorIds {
-                public static final int NEW_SHOOTER_TOP_ID = 1;
-                public static final int NEW_SHOOTER_BOTTOM_ID = 22;
+                public static final int NEW_SHOOTER_TOP_ID = 40;
+                public static final int NEW_SHOOTER_BOTTOM_ID = 41;
 
-                public static final int NEW_FEEDER_ID = 62;
-
-                public static final int NEW_INTAKE_ID = 1;
+                public static final int NEW_FEEDER_ID = 42;
+                public static final int NEW_INTAKE_ID = 43;
         }
 
         public static class WestCoastDriveTrain {
@@ -66,8 +65,8 @@ public final class Constants {
         }
 
         public static class ShooterAndFeeder {
-                public static final int SHOOTER_ID = 0;// 22
-                public static final int FEEDER_ID = 0;// 4 // Spark Motor
+                public static final int SHOOTER_ID = 22;// 22
+                public static final int FEEDER_ID = 19;// 4 // Spark Motor
                 public static final int FeederSwitchPort = 0;
         }
 

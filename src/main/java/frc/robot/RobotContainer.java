@@ -22,6 +22,7 @@ import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pneumatics.RunCompressor;
 import frc.robot.commands.shooter.TeleopAutoShoot;
 import frc.robot.commands.testingCommands.NewStopAll;
+import frc.robot.commands.testingCommands.combinedCommands.NewAutoShoot;
 import frc.robot.commands.testingCommands.feeder.NewFeederReverse;
 import frc.robot.commands.testingCommands.feeder.NewFeederRun;
 import frc.robot.commands.testingCommands.feeder.NewFeederStop;
@@ -69,8 +70,8 @@ public class RobotContainer {
   //private final SparkDriveTrain sparkDriveTrain = new SparkDriveTrain();
 
   //private final Intake intake = new Intake();
-  private final Shooter shooter = new Shooter();
-  private final Feeder feeder = new Feeder();
+  // private final Shooter shooter = new Shooter();
+  // private final Feeder feeder = new Feeder();
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
 
@@ -81,8 +82,9 @@ public class RobotContainer {
 
   public void stopAllSubsystemsMotors() {
     //intake.stop();
-    shooter.stopShooter();
-    feeder.stopFeeder();
+    /********************shooter.stopShooter();**********************/
+    
+    /*******************feeder.stopFeeder();*************************/
   }
 
   // Button Board
@@ -137,7 +139,7 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
+    /**************teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));****************/
 
     //getInRange.onTrue(new BackUpInRangeSpark(driveTrain, camera));
 
@@ -155,7 +157,7 @@ public class RobotContainer {
 
     // releaseNoteBtn.whileTrue(new ReverseIntake(intake));
 
-    shootBtn.onTrue(new ShootWithTimer(shooter));
+    /************shootBtn.onTrue(new ShootWithTimer(shooter));******************/
     // straight up awful code
     // automaticShoot.onTrue(new ShootWithFeeder(shooter, feeder)
     // .withTimeout(7)
@@ -183,7 +185,7 @@ public class RobotContainer {
       .withTimeout(3)
       .andThen(new NewShoot(newShooter)
         .alongWith(new NewFeederRun(newFeeder))
-        .withTimeout(3)
+        .until(() -> newIntake.getNoteSwitchStatus() == false)
       )
       .andThen(
         new NewFeederStop(newFeeder)
@@ -191,26 +193,16 @@ public class RobotContainer {
       )
     );
 
-    // buttonBoard
-    grabNoteBtn.onTrue(
-      new NewIntakeRun(newIntake)
-      .alongWith(new NewFeederRun(newFeeder))
-      .withTimeout(3)
-    );
+    // // buttonBoard
+    // grabNoteBtn.onTrue(
+    //   new NewIntakeRun(newIntake)
+    //   .alongWith(new NewFeederRun(newFeeder))
+    //   .withTimeout(3)
+    // );
 
-    automaticShoot.onTrue(
-      new NewShoot(newShooter)
-      .withTimeout(3)
-      .andThen(new NewShoot(newShooter)
-        .alongWith(new NewFeederRun(newFeeder))
-        .withTimeout(3)
-      )
-      .andThen(
-        new NewFeederStop(newFeeder)
-        .alongWith(new NewShooterStop(newShooter))
-      )
-    );
 
+    automaticShoot.onTrue(new NewAutoShoot());
+    grabNoteBtn.onTrue(new NewAutoShoot());
 
     releaseNoteBtn.onTrue(new NewIntakeReverse(newIntake));
     reverseFeederBtn.onTrue(new NewFeederReverse(newFeeder));
