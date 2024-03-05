@@ -88,9 +88,9 @@ public final class Constants {
 
         public static class LimelightConstants {
                 // I'm not sure if these are actually accurate (other than GoalHeightInches ofc)
-                public static final double MountAngleDegrees = 72.5;
+                public static final double MountAngleDegrees = 12; //72.5;
                 public static final double LensHeightInches = 29.5;
-                public static final double GoalHeightInches = 52;
+                public static final double GoalHeightInches = 63 -29; // real is 52
                 //public static double StartingDistanceFromSpeaker = LimeLightCamera.estimateDistance(MountAngleDegrees, LensHeightInches, GoalHeightInches);
         }
 }

@@ -51,7 +51,7 @@ public class TeleopAutoShoot extends Command {
         LimelightConstants.GoalHeightInches))
          >= 25) {
           System.out.println("NOT IN RANGE! MOVING!");
-          driveTrain.driveForward();
+          //driveTrain.driveForward();
          }
     } else {
       System.out.println("NO APRILTAG DETECTED!");
