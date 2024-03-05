@@ -92,7 +92,10 @@ public final class Constants {
                 public static final double LensHeightInches = 14;
                 public static final double GoalHeightInches = 52;
                 // auton movements
-                public static final double startingDistance = 20;
+                public static final double startingDistance = (LimeLightCamera.estimateDistance
+                (LimelightConstants.MountAngleDegrees, 
+                LimelightConstants.LensHeightInches, 
+                LimelightConstants.GoalHeightInches));
                 public static final double secondNoteDistance = 40;
                 public static final double thirdNoteDistance = 60;
         }
