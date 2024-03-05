@@ -30,7 +30,6 @@ public class TeleopAutoShoot extends Command {
   public TeleopAutoShoot( WCPDriveTrain driveTrain) {
     this.driveTrain = driveTrain;
   }
-  
 
   @Override
   public void initialize() {}
