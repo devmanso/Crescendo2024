@@ -20,7 +20,7 @@ import frc.robot.subsystems.LimeLightCamera;
  */
 public final class Constants {
 
-        public static final int COMPRESSOR_ID = 32;
+        public static final int COMPRESSOR_ID = 28;
 
         public static class ClimberConstants {
                 public static final int CLIMBER_LEFT = 30;

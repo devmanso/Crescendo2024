@@ -27,16 +27,17 @@ public class WCPDriveTrain extends SubsystemBase {
   DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 8, 9);
 
   public void arcadeDrive(double xSpd, double zRot) {
-    drive.arcadeDrive(xSpd, zRot);
+    drive.arcadeDrive(xSpd, zRot, true);
   }
   
-  public void driveBackwardsSlant() {
+  public void driveBackwardSlant() {
     leftSide.set(.3);
     rightSide.set(.2);
   }
 
   public void driveForwardSlant() {
-    
+    leftSide.set(-.3);
+    rightSide.set(-.2);
   }
 
   public void driveForward() {

@@ -33,10 +33,10 @@ public class GetThirdNote extends Command {
     System.out.println(time - startTime);
 
     if (time - startTime < 1.5) {
-      driveTrain.driveForward();
+      driveTrain.driveForwardSlant();
     } 
     else if(time - startTime > 2 && time - startTime <4 ) {
-      driveTrain.driveBackward();
+      driveTrain.driveBackwardSlant();
     } 
   }
 

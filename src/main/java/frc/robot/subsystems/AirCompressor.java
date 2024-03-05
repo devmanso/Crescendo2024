@@ -18,6 +18,7 @@ public class AirCompressor extends SubsystemBase {
   
   public void enableCompressor() {
     compressor.enableDigital();
+    compressor.enableHybrid(70, 120);
   }
 
   public void disableCompressor() {
