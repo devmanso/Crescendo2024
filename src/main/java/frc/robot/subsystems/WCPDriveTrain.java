@@ -29,6 +29,15 @@ public class WCPDriveTrain extends SubsystemBase {
   public void arcadeDrive(double xSpd, double zRot) {
     drive.arcadeDrive(xSpd, zRot);
   }
+  
+  public void driveBackwardsSlant() {
+    leftSide.set(.3);
+    rightSide.set(.2);
+  }
+
+  public void driveForwardSlant() {
+    
+  }
 
   public void driveForward() {
     leftSide.set(-.2);
