@@ -34,6 +34,6 @@ public class SpinUpShooter extends Command {
   @Override
   public void end(boolean interrupted) {
     shooter.stopShooter();
-  }
+  } 
 
 }

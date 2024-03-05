@@ -4,8 +4,10 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants.LimelightConstants;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.feeder.RunFeeder;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.LimeLightCamera;
@@ -33,6 +35,8 @@ public class TeleopAutoShoot extends ParallelCommandGroup {
         LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches)) <= 25) {
           System.out.println("IN RANGE!");
           System.out.println("SHOOTING!");
+          // CommandScheduler.getInstance().schedule(new SpinUpShooter(shooter)
+          // .withTimeout(2).andThen(new AutoShoot(shooter, feeder)))
           addCommands(new SpinUpShooter(shooter), new RunFeeder(feeder));
         } else {
       System.out.println("NOT IN RANGE! GET BACK TO WORK!");
