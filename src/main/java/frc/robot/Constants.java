@@ -91,6 +91,9 @@ public final class Constants {
                 public static final double MountAngleDegrees = 48.5;
                 public static final double LensHeightInches = 14;
                 public static final double GoalHeightInches = 52;
-                public static double StartingDistanceFromSpeaker = LimeLightCamera.estimateDistance(MountAngleDegrees, LensHeightInches, GoalHeightInches);
+                // auton movements
+                public static final double startingDistance = 20;
+                public static final double secondNoteDistance = 40;
+                public static final double thirdNoteDistance = 60;
         }
 }
