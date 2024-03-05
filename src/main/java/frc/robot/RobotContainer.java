@@ -10,6 +10,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunAllSubsystems;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.AutoMovement;
+import frc.robot.commands.auto.GetThirdNote;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.LowGear;
@@ -91,6 +92,7 @@ public class RobotContainer {
     stopAllBtn = new JoystickButton(buttonBoard, OperatorConstants.StopAllBtn);
     getInRange = new JoystickButton(buttonBoard, OperatorConstants.GetInRangeBtn);
     runAll = new JoystickButton(buttonBoard, OperatorConstants.RunAllSubsystems);
+    getInRange = new JoystickButton(buttonBoard, OperatorConstants.GetInRangeBtn);
 
     configureBindings();
         
@@ -119,7 +121,9 @@ public class RobotContainer {
     //teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
     new Trigger(controller.leftBumper()).onTrue(new LowGear(driveTrain));
     new Trigger(controller.rightBumper()).onTrue(new HighGear(driveTrain));
-    //getInRange.onTrue(new BackUpInRangeSpark(driveTrain, camera));
+    
+    getInRange.onTrue(new TeleopAutoShoot(driveTrain));
+    
     runAll.whileTrue(new RunAllSubsystems(intake, feeder, shooter));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
@@ -151,19 +155,36 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
       // 100 % working auton when testing with Smokey JR, must refactor when programming new robot
-       return new SpinUpShooter(shooter).withTimeout(3)
+       return new SpinUpShooter(shooter).withTimeout(2)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+
+
       .andThen(new AutoMovement(driveTrain)
         .alongWith(new autoRunIntake(intake)
           .alongWith(new ContainNoteAuto(feeder))
           .until(
-            () -> intake.getNoteSwitch() == false
+            () -> !intake.getNoteSwitch()
           )
         )
       )
+
       .andThen(new SpinUpShooter(shooter)
-      .withTimeout(2))
+        .withTimeout(2))
       .andThen(new AutoShoot(shooter, feeder)
-      .withTimeout(2));
+        .withTimeout(2))
+      
+      .andThen(new GetThirdNote(driveTrain)
+        .alongWith(new autoRunIntake(intake)
+          .alongWith(new ContainNote(feeder))
+          .until(
+            () -> !intake.getNoteSwitch()
+          )
+        )
+      )
+
+      .andThen(new SpinUpShooter(shooter)
+        .withTimeout(2))
+      .andThen(new AutoShoot(shooter, feeder)
+        .withTimeout(2));
   }
 }

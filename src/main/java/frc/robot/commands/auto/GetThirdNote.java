@@ -47,6 +47,6 @@ public class GetThirdNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Timer.getFPGATimestamp() - startTime > 4.5;
   }
 }

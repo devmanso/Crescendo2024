@@ -60,6 +60,6 @@ public class AutoMovement extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() - startTime > 7;
+    return Timer.getFPGATimestamp() - startTime > 4.5;
   }
 }
