@@ -43,10 +43,10 @@ public class AutoMovement extends Command {
     System.out.println(time - startTime);
 
     if (time - startTime < 1.5) {
-      driveTrain.driveForward(.5);
+      driveTrain.driveForward();
     } 
     else if(time - startTime > 2 && time - startTime <4 ) {
-      driveTrain.driveToSpeaker();
+      driveTrain.driveBackward();
     } 
 
   }

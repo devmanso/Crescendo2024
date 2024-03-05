@@ -43,7 +43,7 @@ public class BackUpInRangeSpark extends Command {
       if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 40) {
 
-        driveTrain.driveForward(.50); //.25
+        driveTrain.driveForward(); //.25
         
 
         System.out.println("MOVING");

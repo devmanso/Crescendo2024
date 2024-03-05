@@ -17,30 +17,30 @@ public class AirCompressor extends SubsystemBase {
   private Compressor compressor = new Compressor(Constants.COMPRESSOR_ID, PneumaticsModuleType.REVPH);
   
   public void enableCompressor() {
-    compressor.enableDigital(); 
+    compressor.enableDigital();
   }
 
   public void disableCompressor() {
     compressor.disable();
   }
 
-  // public void displayCompressorData() {
-  //   boolean enabled = compressor.isEnabled();
-  //   boolean pressureSwitch = compressor.getPressureSwitchValue();
-  //   double pressure = compressor.getPressure();
-  //   double current = compressor.getCurrent();
+  public void displayCompressorData() {
+    boolean enabled = compressor.isEnabled();
+    boolean pressureSwitch = compressor.getPressureSwitchValue();
+    double pressure = compressor.getPressure();
+    double current = compressor.getCurrent();
     
-  //   SmartDashboard.putBoolean("Compresser enabled: ", enabled);
-  //   SmartDashboard.putNumber("Compressor Current", current);
-  //   SmartDashboard.putNumber("Pressure: ", pressure);
-  //   SmartDashboard.putBoolean("Pressure Switch: ", pressureSwitch);
-  // }
+    SmartDashboard.putBoolean("Compresser enabled: ", enabled);
+    SmartDashboard.putNumber("Compressor Current", current);
+    SmartDashboard.putNumber("Pressure: ", pressure);
+    SmartDashboard.putBoolean("Pressure Switch: ", pressureSwitch);
+  }
 
   /** Creates a new AirCompressor. */
   public AirCompressor() {}
 
   @Override
   public void periodic() {
-    //displayCompressorData();
+    displayCompressorData();
   }
 }

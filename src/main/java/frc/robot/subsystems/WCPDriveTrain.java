@@ -24,20 +24,20 @@ public class WCPDriveTrain extends SubsystemBase {
   TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
   TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
 
-  DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 7, 6);
+  DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 8, 9);
 
   public void arcadeDrive(double xSpd, double zRot) {
     drive.arcadeDrive(xSpd, zRot);
   }
 
-  public void driveForward(double xSpd) {
-    leftSide.set(xSpd);
-    rightSide.set(-xSpd);
+  public void driveForward() {
+    leftSide.set(-.2);
+    rightSide.set(-.2);
   }
 
-  public void driveBackward(double xSpd) {
-    leftSide.set(-xSpd);
-    rightSide.set(xSpd);
+  public void driveBackward() {
+    leftSide.set(.2);
+    rightSide.set(.2);
   }
 
   public void drive(double xSpd) {

@@ -16,7 +16,7 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase {
 
   private CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_ID, MotorType.kBrushless);
-  private DigitalInput noteSwitch = new DigitalInput(1);
+  private DigitalInput noteSwitch = new DigitalInput(0);
   /**
    * returns the state of the limit switch
    * @return

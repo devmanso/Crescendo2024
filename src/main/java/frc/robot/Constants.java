@@ -19,9 +19,8 @@ import frc.robot.subsystems.LimeLightCamera;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-        // all motor id's are placeholders and are subject to change
 
-        public static final int COMPRESSOR_ID = 20;
+        public static final int COMPRESSOR_ID = 32;
 
         public static class ClimberConstants {
                 public static final int CLIMBER_LEFT = 30;

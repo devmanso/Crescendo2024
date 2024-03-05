@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -21,6 +22,7 @@ public class Feeder extends SubsystemBase {
   /** Creates a new Feeder. */
   public Feeder() {
     feederMotor.setInverted(true);
+    feederMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 
   private TalonFX feederMotor = new TalonFX(ShooterAndFeeder.FEEDER_ID);
@@ -34,7 +36,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public void grabIn() {
-    feederMotor.set(-0.8);
+    feederMotor.set(-0.2);
   }
 
   public void grabInAuto() {
