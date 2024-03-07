@@ -42,10 +42,10 @@ public class AutoMovement extends Command {
     double time = Timer.getFPGATimestamp();
     System.out.println(time - startTime);
 
-    if (time - startTime < 1.5) {
+    if (time - startTime < 2) {
       driveTrain.driveForward();
     } 
-    else if(time - startTime > 2 && time - startTime <4 ) {
+    else if(time - startTime > 2.5 && time - startTime < 4.5 ) {
       driveTrain.driveBackward();
     } 
 
@@ -60,6 +60,6 @@ public class AutoMovement extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() - startTime > 4.5;
+    return Timer.getFPGATimestamp() - startTime > 5.5;
   }
 }

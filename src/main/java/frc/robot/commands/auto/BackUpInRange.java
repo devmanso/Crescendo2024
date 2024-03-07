@@ -11,12 +11,12 @@ import frc.robot.subsystems.LimeLightCamera;
 import frc.robot.subsystems.SparkDriveTrain;
 import frc.robot.subsystems.WCPDriveTrain;
 
-public class BackUpInRangeSpark extends Command {
+public class BackUpInRange extends Command {
 
   private WCPDriveTrain driveTrain;
 
   /** Creates a new GetInRangeSpark. */
-  public BackUpInRangeSpark(WCPDriveTrain driveTrain, LimeLightCamera camera) {
+  public BackUpInRange(WCPDriveTrain driveTrain, LimeLightCamera camera) {
     this.driveTrain = driveTrain;
     addRequirements(driveTrain, camera);
   }
@@ -25,26 +25,24 @@ public class BackUpInRangeSpark extends Command {
   @Override
   public void initialize() {
     //driveTrain.stopDriveTrain();
+    driveTrain.setBrakeMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //System.out.println("GETTING IN RANGE");
+    System.out.println("GETTING IN RANGE");
     System.out.println(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
 
-    while(LimeLightCamera.hasValidTargets() >= 1) {
+    if(LimeLightCamera.hasValidTargets() >= 1) {
       System.out.println(" BACK UP DISTANCE " + LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
        LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches));
-      //.out.println("VALID TARGET");
-      // go back until we're in range
-      // original distance to travel was 65
-      if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
-       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 40) {
 
-        driveTrain.driveForward(); //.25
-        
+      if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) < 100) {
+
+        driveTrain.driveForwardFaster(); //.25
 
         System.out.println("MOVING");
       } else {System.out.println("NOT MOVING");}
@@ -57,12 +55,20 @@ public class BackUpInRangeSpark extends Command {
   @Override
   public void end(boolean interrupted) {
     driveTrain.stop();
+    driveTrain.setCoastMode();
     //System.out.println("IN RANGE; END");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    
+    if(LimeLightCamera.estimateDistance(LimelightConstants.MountAngleDegrees,
+       LimelightConstants.LensHeightInches, LimelightConstants.GoalHeightInches) >= 120) {
+        System.out.println("FINISHED : TRUE");
+        return true;
+    } else {
+      System.out.println("FINISHED : FALSE");
+      return false;}
   }
 }

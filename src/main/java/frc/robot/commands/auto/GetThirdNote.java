@@ -32,10 +32,10 @@ public class GetThirdNote extends Command {
     double time = Timer.getFPGATimestamp();
     System.out.println(time - startTime);
 
-    if (time - startTime < 1.5) {
+    if (time - startTime < 1.75) {
       driveTrain.driveForwardSlant();
     } 
-    else if(time - startTime > 2 && time - startTime <4 ) {
+    else if(time - startTime > 2.25 && time - startTime <3.5 ) {
       driveTrain.driveBackwardSlant();
     } 
   }
@@ -47,6 +47,6 @@ public class GetThirdNote extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() - startTime > 4.5;
+    return Timer.getFPGATimestamp() - startTime > 5.5;
   }
 }

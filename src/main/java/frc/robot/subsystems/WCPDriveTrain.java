@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -29,25 +30,44 @@ public class WCPDriveTrain extends SubsystemBase {
   public void arcadeDrive(double xSpd, double zRot) {
     drive.arcadeDrive(xSpd, zRot, true);
   }
+
+  public void setBrakeMode() {
+    leftMaster.setNeutralMode(NeutralModeValue.Brake);
+    leftFollower.setNeutralMode(NeutralModeValue.Brake);
+    rightMaster.setNeutralMode(NeutralModeValue.Brake);
+    rightFollower.setNeutralMode(NeutralModeValue.Brake);
+  }
+
+  public void setCoastMode() {
+    leftMaster.setNeutralMode(NeutralModeValue.Coast);
+    leftFollower.setNeutralMode(NeutralModeValue.Coast);
+    rightMaster.setNeutralMode(NeutralModeValue.Coast);
+    rightFollower.setNeutralMode(NeutralModeValue.Coast);
+  }
   
   public void driveBackwardSlant() {
-    leftSide.set(.3);
-    rightSide.set(.2);
+    leftSide.set(.25);
+    rightSide.set(.15);
   }
 
   public void driveForwardSlant() {
-    leftSide.set(-.3);
+    leftSide.set(-.4);
     rightSide.set(-.2);
   }
 
   public void driveForward() {
-    leftSide.set(-.2);
-    rightSide.set(-.2);
+    leftSide.set(-.15);
+    rightSide.set(-.15);
+  }
+
+  public void driveForwardFaster() {
+    leftSide.set(-.3);
+    rightSide.set(-.3);
   }
 
   public void driveBackward() {
-    leftSide.set(.2);
-    rightSide.set(.2);
+    leftSide.set(.15);
+    rightSide.set(.15);
   }
 
   public void drive(double xSpd) {

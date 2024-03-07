@@ -25,6 +25,7 @@ public final class Constants {
         public static class ClimberConstants {
                 public static final int CLIMBER_LEFT = 30;
                 public static final int CLIMBER_RIGHT = 31;
+                public static final int CLIMBER_MOTOR_ID = 40;
         }
 
         public static class WestCoastDriveTrain {
@@ -32,6 +33,9 @@ public final class Constants {
                 public static final int FOLLOWER_LEFT = 2;
                 public static final int MASTER_RIGHT = 3;
                 public static final int FOLLOWER_RIGHT = 4;
+
+                public static final int LED_ID = 9;
+                public static final int LED_BUFFER = 60;
         }
 
         public static class OperatorConstants {
@@ -90,7 +94,7 @@ public final class Constants {
                 // I'm not sure if these are actually accurate (other than GoalHeightInches ofc)
                 public static final double MountAngleDegrees = 12; //72.5;
                 public static final double LensHeightInches = 29.5;
-                public static final double GoalHeightInches = 63 -29; // real is 52
+                public static final double GoalHeightInches = 52; // real is 52
                 //public static double StartingDistanceFromSpeaker = LimeLightCamera.estimateDistance(MountAngleDegrees, LensHeightInches, GoalHeightInches);
         }
 }

@@ -5,13 +5,18 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.WestCoastDriveTrain;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunAllSubsystems;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.AutoMovement;
+import frc.robot.commands.auto.BackUpInRange;
+import frc.robot.commands.auto.ForwardInRange;
 import frc.robot.commands.auto.GetThirdNote;
 import frc.robot.commands.auto.autoRunIntake;
+import frc.robot.commands.climber.LowerClimber;
+import frc.robot.commands.climber.RaiseClimber;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.LowGear;
 import frc.robot.commands.driveTrains.WCPTeleopDrive;
@@ -30,9 +35,13 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimeLightCamera;
+import frc.robot.subsystems.NewClimber;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
 import frc.robot.subsystems.WCPDriveTrain;
+import edu.wpi.first.math.proto.Controller;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -62,11 +71,34 @@ public class RobotContainer {
   private final Feeder feeder = new Feeder();
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
+  private final NewClimber climber = new NewClimber();
+
+  private AddressableLED led = new AddressableLED(WestCoastDriveTrain.LED_ID);
+  private AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(WestCoastDriveTrain.LED_BUFFER);
 
   public void stopAllSubsystemsMotors() {
     intake.stop();
     shooter.stopShooter();
     feeder.stopFeeder();
+  }
+
+  public void setupLED() {
+    led.setLength(ledBuffer.getLength());
+    led.setData(ledBuffer);
+    led.start();
+  }
+
+  public void cycleLEDColor() {
+    if (intake.getNoteSwitch()) {
+      for (var i = 0; i < ledBuffer.getLength(); i++) {
+        ledBuffer.setRGB(i, 255, 0, 0);
+      }
+    } else {
+      for (var i = 0; i < ledBuffer.getLength(); i++) {
+        ledBuffer.setRGB(i, 0, 255, 0);
+      }
+    }
+    led.setData(ledBuffer);
   }
 
   // Button Board
@@ -93,6 +125,7 @@ public class RobotContainer {
     getInRange = new JoystickButton(buttonBoard, OperatorConstants.GetInRangeBtn);
     runAll = new JoystickButton(buttonBoard, OperatorConstants.RunAllSubsystems);
     getInRange = new JoystickButton(buttonBoard, OperatorConstants.GetInRangeBtn);
+
 
     configureBindings();
         
@@ -122,9 +155,13 @@ public class RobotContainer {
     new Trigger(controller.leftBumper()).onTrue(new LowGear(driveTrain));
     new Trigger(controller.rightBumper()).onTrue(new HighGear(driveTrain));
     
-    getInRange.onTrue(new TeleopAutoShoot(driveTrain));
-    
-    runAll.whileTrue(new RunAllSubsystems(intake, feeder, shooter));
+    controller.b().whileTrue(new RaiseClimber(climber));
+    controller.x().whileTrue(new LowerClimber(climber));
+
+    //getInRange.onTrue(new TeleopAutoShoot(driveTrain));
+    getInRange.onTrue(new BackUpInRange(driveTrain, camera));
+
+    runAll.onTrue(new ForwardInRange(driveTrain, camera));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
@@ -155,10 +192,12 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
       // 100 % working auton when testing with Smokey JR, must refactor when programming new robot
+
+      // Shoot preloaded note
        return new SpinUpShooter(shooter).withTimeout(2)
       .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
 
-
+      // get other note, and move back to speaker
       .andThen(new AutoMovement(driveTrain)
         .alongWith(new autoRunIntake(intake)
           .alongWith(new ContainNoteAuto(feeder))
@@ -168,23 +207,24 @@ public class RobotContainer {
         )
       )
 
-      .andThen(new SpinUpShooter(shooter)
-        .withTimeout(2))
-      .andThen(new AutoShoot(shooter, feeder)
-        .withTimeout(2))
-      
-      .andThen(new GetThirdNote(driveTrain)
-        .alongWith(new autoRunIntake(intake)
-          .alongWith(new ContainNote(feeder))
-          .until(
-            () -> !intake.getNoteSwitch()
-          )
-        )
-      )
-
+      // shoot that note
       .andThen(new SpinUpShooter(shooter)
         .withTimeout(2))
       .andThen(new AutoShoot(shooter, feeder)
         .withTimeout(2));
+      
+      // .andThen(new GetThirdNote(driveTrain)
+      //   .alongWith(new autoRunIntake(intake)
+      //     .alongWith(new ContainNote(feeder))
+      //     .until(
+      //       () -> !intake.getNoteSwitch()
+      //     )
+      //   )
+      // )
+
+      // .andThen(new SpinUpShooter(shooter)
+      //   .withTimeout(2))
+      // .andThen(new AutoShoot(shooter, feeder)
+      //   .withTimeout(2));
   }
 }

@@ -11,6 +11,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.apriltag.AprilTagPoseEstimate;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -18,6 +20,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.WestCoastDriveTrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.WCPDriveTrain;
 
 /**
@@ -36,6 +40,7 @@ public class Robot extends TimedRobot {
   Timer timer = new Timer();
   private RobotContainer m_robotContainer;
 
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -44,7 +49,14 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+
+    // m_led.setLength(m_ledBuffer.getLength());
+    // m_led.setData(m_ledBuffer);
+    // m_led.start();
+
     m_robotContainer = new RobotContainer();
+    m_robotContainer.setupLED();
+
     //AprilTagDetectorSimulation detectorSimulation = new AprilTagDetectorSimulation();
     //detectorSimulation.startDetection();
   }
@@ -66,6 +78,20 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    // if (intake.getNoteSwitch()) {
+    //   for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+    //     m_ledBuffer.setRGB(i, 255, 0, 0);
+    //   }
+    // } else {
+    //   for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+    //     m_ledBuffer.setRGB(i, 0, 255, 0);
+    //   }
+    // }
+    m_robotContainer.cycleLEDColor();
+    
+    // m_led.setData(m_ledBuffer);
+
     //System.out.println(aprilTagFinder.getTagID());
   }
 
