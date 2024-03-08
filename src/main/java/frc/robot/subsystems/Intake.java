@@ -48,7 +48,9 @@ public class Intake extends SubsystemBase {
   }
 
   /** Creates a new Intake. */
-  public Intake() {}
+  public Intake() {
+    //intakeMotor.setOpenLoopRampRate(2);
+  }
 
   public void displayIntakeData() {
     SmartDashboard.putNumber("INTAKE AMPS", intakeMotor.getOutputCurrent());

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.Orchestra;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -25,7 +26,7 @@ public class WCPDriveTrain extends SubsystemBase {
   TalonFX rightMaster = new TalonFX(WestCoastDriveTrain.MASTER_RIGHT);
   TalonFX rightFollower = new TalonFX(WestCoastDriveTrain.FOLLOWER_RIGHT);
 
-  DoubleSolenoid shifter = new DoubleSolenoid(PneumaticsModuleType.REVPH, 8, 9);
+  DoubleSolenoid shifter = new DoubleSolenoid(28, PneumaticsModuleType.REVPH, 8, 9);
 
   public void arcadeDrive(double xSpd, double zRot) {
     drive.arcadeDrive(xSpd, zRot, true);
@@ -56,6 +57,11 @@ public class WCPDriveTrain extends SubsystemBase {
   }
 
   public void driveForward() {
+    leftSide.set(-.15);
+    rightSide.set(-.15);
+  }
+
+  public void taxiOut() {
     leftSide.set(-.15);
     rightSide.set(-.15);
   }
@@ -161,6 +167,18 @@ public class WCPDriveTrain extends SubsystemBase {
     //leftMaster.setInverted(false);
     //leftFollower.setInverted(false);
     
+    // USE FOR KRAKENS
+    // TalonFXConfiguration config = new TalonFXConfiguration();
+
+    // config.CurrentLimits.StatorCurrentLimit = 60;
+    // config.CurrentLimits.StatorCurrentLimitEnable = true;
+
+    // rightFollower.getConfigurator().apply(config);
+    // rightMaster.getConfigurator().apply(config);
+    // leftMaster.getConfigurator().apply(config);
+    // leftFollower.getConfigurator().apply(config);
+
+
     rightSide.setInverted(true);
 
     //setupInstruments();

@@ -7,13 +7,16 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.WestCoastDriveTrain;
 import frc.robot.commands.AutoShoot;
+import frc.robot.commands.DisableCompressor;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunAllSubsystems;
+import frc.robot.commands.SmoothAutoShoot;
 import frc.robot.commands.StopAll;
 import frc.robot.commands.auto.AutoMovement;
 import frc.robot.commands.auto.BackUpInRange;
 import frc.robot.commands.auto.ForwardInRange;
 import frc.robot.commands.auto.GetThirdNote;
+import frc.robot.commands.auto.Taxi;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.climber.LowerClimber;
 import frc.robot.commands.climber.RaiseClimber;
@@ -131,7 +134,7 @@ public class RobotContainer {
         
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
-    andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
+    andyMarkCompressor.setDefaultCommand(new DisableCompressor(andyMarkCompressor));
     driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
     //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
 
@@ -161,7 +164,7 @@ public class RobotContainer {
     //getInRange.onTrue(new TeleopAutoShoot(driveTrain));
     getInRange.onTrue(new BackUpInRange(driveTrain, camera));
 
-    runAll.onTrue(new ForwardInRange(driveTrain, camera));
+    runAll.onTrue(new DisableCompressor(andyMarkCompressor));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
@@ -177,10 +180,12 @@ public class RobotContainer {
     shootBtn.onTrue(new ShootWithTimer(shooter));
 
 
-    automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(3)
-    .andThen(new AutoShoot(shooter, feeder).withTimeout(3))
+    automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(1)
+    .andThen(new AutoShoot(shooter, feeder).withTimeout(1))
     .andThen(new StopAll(shooter, feeder, intake))
     );
+
+    //automaticShoot.onTrue(new SmoothAutoShoot(shooter, feeder));
 
     stopAllBtn.onTrue(new StopAll(shooter, feeder, intake));
   }
@@ -192,6 +197,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
       // 100 % working auton when testing with Smokey JR, must refactor when programming new robot
+      //return new Taxi(driveTrain);
 
       // Shoot preloaded note
        return new SpinUpShooter(shooter).withTimeout(2)
@@ -211,8 +217,10 @@ public class RobotContainer {
       .andThen(new SpinUpShooter(shooter)
         .withTimeout(2))
       .andThen(new AutoShoot(shooter, feeder)
-        .withTimeout(2));
+        .withTimeout(2))
       
+      // taxi back out to ensure leave point
+      .andThen(new Taxi(driveTrain));
       // .andThen(new GetThirdNote(driveTrain)
       //   .alongWith(new autoRunIntake(intake)
       //     .alongWith(new ContainNote(feeder))
