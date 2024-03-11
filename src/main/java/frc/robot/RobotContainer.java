@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.WestCoastDriveTrain;
 import frc.robot.commands.AutoShoot;
+import frc.robot.commands.CameraStream;
 import frc.robot.commands.DisableCompressor;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunAllSubsystems;
@@ -16,6 +17,8 @@ import frc.robot.commands.auto.AutoMovement;
 import frc.robot.commands.auto.BackUpInRange;
 import frc.robot.commands.auto.ForwardInRange;
 import frc.robot.commands.auto.GetThirdNote;
+import frc.robot.commands.auto.Nothing;
+import frc.robot.commands.auto.RotateAndDriveAuto;
 import frc.robot.commands.auto.Taxi;
 import frc.robot.commands.auto.autoRunIntake;
 import frc.robot.commands.climber.LowerClimber;
@@ -47,6 +50,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -60,6 +64,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+  CameraStream cam = new CameraStream();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController controller =
@@ -115,6 +121,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    cam.streamVideo();
 
     // Button Board Button Objects
     feedBtn = new JoystickButton(buttonBoard, OperatorConstants.FeedBtn);
@@ -135,6 +142,7 @@ public class RobotContainer {
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     andyMarkCompressor.setDefaultCommand(new DisableCompressor(andyMarkCompressor));
+    //andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
     driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
     //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
 
@@ -180,7 +188,7 @@ public class RobotContainer {
     shootBtn.onTrue(new ShootWithTimer(shooter));
 
 
-    automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(1)
+    automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(2)
     .andThen(new AutoShoot(shooter, feeder).withTimeout(1))
     .andThen(new StopAll(shooter, feeder, intake))
     );
@@ -196,12 +204,17 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-      // 100 % working auton when testing with Smokey JR, must refactor when programming new robot
       //return new Taxi(driveTrain);
+      //return new Nothing();
+
+
+
 
       // Shoot preloaded note
        return new SpinUpShooter(shooter).withTimeout(2)
-      .andThen(new AutoShoot(shooter, feeder).withTimeout(1.5))
+      .andThen(new AutoShoot(shooter, feeder).withTimeout(1))
+
+      // .andThen(new Taxi(driveTrain));
 
       // get other note, and move back to speaker
       .andThen(new AutoMovement(driveTrain)
@@ -213,14 +226,32 @@ public class RobotContainer {
         )
       )
 
-      // shoot that note
+      // // // shoot that note
       .andThen(new SpinUpShooter(shooter)
         .withTimeout(2))
       .andThen(new AutoShoot(shooter, feeder)
-        .withTimeout(2))
+        .withTimeout(1));
+
+      // THIRD NOTE
+      
+      // .andThen(new RotateAndDriveAuto(driveTrain)
+      //   .alongWith(new autoRunIntake(intake)
+      //     .alongWith(new ContainNoteAuto(feeder))
+      //     .until(
+      //       () -> !intake.getNoteSwitch()
+      //     )
+      //   )
+      // )
+      
+      // .andThen(new SpinUpShooter(shooter)
+      //   .withTimeout(2))
+      // .andThen(new AutoShoot(shooter, feeder)
+      //   .withTimeout(2));
       
       // taxi back out to ensure leave point
-      .andThen(new Taxi(driveTrain));
+      //.andThen(new Taxi(driveTrain));
+
+
       // .andThen(new GetThirdNote(driveTrain)
       //   .alongWith(new autoRunIntake(intake)
       //     .alongWith(new ContainNote(feeder))

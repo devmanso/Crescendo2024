@@ -8,9 +8,11 @@ import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -18,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.WestCoastDriveTrain;
 
 public class WCPDriveTrain extends SubsystemBase {
+  //AHRS navx;
 
   Orchestra orchestra = new Orchestra();
 
@@ -57,13 +60,18 @@ public class WCPDriveTrain extends SubsystemBase {
   }
 
   public void driveForward() {
-    leftSide.set(-.15);
-    rightSide.set(-.15);
+    leftSide.set(-.16);
+    rightSide.set(-.16);
   }
 
   public void taxiOut() {
-    leftSide.set(-.15);
-    rightSide.set(-.15);
+    leftSide.set(-.2);
+    rightSide.set(-.2);
+  }
+
+  public void rotate() {
+    leftSide.set(.1);
+    rightSide.set(-.1);
   }
 
   public void driveForwardFaster() {
@@ -72,8 +80,8 @@ public class WCPDriveTrain extends SubsystemBase {
   }
 
   public void driveBackward() {
-    leftSide.set(.15);
-    rightSide.set(.15);
+    leftSide.set(.16);
+    rightSide.set(.16);
   }
 
   public void drive(double xSpd) {
@@ -151,6 +159,7 @@ public class WCPDriveTrain extends SubsystemBase {
 
   /** Creates a new WCPDriveTrain. */
   public WCPDriveTrain() {
+    //navx = new AHRS(SPI.Port.kMXP);
     // Ensure follower motors mimic master motors
     //leftFollower.setControl(new Follower(leftMaster.getDeviceID(), false));
     //rightFollower.setControl(new Follower(rightMaster.getDeviceID(), false));

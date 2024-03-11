@@ -32,8 +32,10 @@ public class Taxi extends Command {
     double time = Timer.getFPGATimestamp();
     System.out.println(time - startTime);
 
-    if (time - startTime < 2) {
-      driveTrain.driveForward();
+    // 1.5 at 20 percent before
+    if (time - startTime < 1.5) {
+      //driveTrain.driveForward();
+      driveTrain.taxiOut();
     } else {
       driveTrain.stop();
     }
