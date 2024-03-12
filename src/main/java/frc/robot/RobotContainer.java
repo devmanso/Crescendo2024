@@ -10,6 +10,7 @@ import frc.robot.commands.AutoShoot;
 import frc.robot.commands.CameraStream;
 import frc.robot.commands.DisableCompressor;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RotateToAngle;
 import frc.robot.commands.RunAllSubsystems;
 import frc.robot.commands.SmoothAutoShoot;
 import frc.robot.commands.StopAll;
@@ -41,6 +42,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimeLightCamera;
+import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.NewClimber;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SparkDriveTrain;
@@ -81,6 +83,8 @@ public class RobotContainer {
   private final LimeLightCamera camera = new LimeLightCamera();
   private final AirCompressor andyMarkCompressor = new AirCompressor();
   private final NewClimber climber = new NewClimber();
+
+  public final NavX robotNavX = new NavX();
 
   private AddressableLED led = new AddressableLED(WestCoastDriveTrain.LED_ID);
   private AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(WestCoastDriveTrain.LED_BUFFER);
@@ -166,6 +170,7 @@ public class RobotContainer {
     new Trigger(controller.leftBumper()).onTrue(new LowGear(driveTrain));
     new Trigger(controller.rightBumper()).onTrue(new HighGear(driveTrain));
     
+    controller.a().onTrue(new RotateToAngle(driveTrain, robotNavX, 0));
     controller.b().whileTrue(new RaiseClimber(climber));
     controller.x().whileTrue(new LowerClimber(climber));
 

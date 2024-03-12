@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer = new RobotContainer();
     m_robotContainer.setupLED();
+    m_robotContainer.robotNavX.connectionTest();
 
     //AprilTagDetectorSimulation detectorSimulation = new AprilTagDetectorSimulation();
     //detectorSimulation.startDetection();
@@ -88,6 +89,9 @@ public class Robot extends TimedRobot {
     //     m_ledBuffer.setRGB(i, 0, 255, 0);
     //   }
     // }
+
+    m_robotContainer.robotNavX.displayNavXData();
+
     m_robotContainer.cycleLEDColor();
     
     // m_led.setData(m_ledBuffer);

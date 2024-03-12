@@ -74,6 +74,11 @@ public class WCPDriveTrain extends SubsystemBase {
     rightSide.set(-.1);
   }
 
+  public void rotateOtherWay() {
+    leftSide.set(-.1);
+    rightSide.set(.1);
+  }
+
   public void driveForwardFaster() {
     leftSide.set(-.3);
     rightSide.set(-.3);
