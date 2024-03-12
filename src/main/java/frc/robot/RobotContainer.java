@@ -145,8 +145,8 @@ public class RobotContainer {
         
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
-    andyMarkCompressor.setDefaultCommand(new DisableCompressor(andyMarkCompressor));
-    //andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
+    // andyMarkCompressor.setDefaultCommand(new DisableCompressor(andyMarkCompressor));
+    andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
     driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
     //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
 
@@ -169,7 +169,7 @@ public class RobotContainer {
     //teleopAutoShoot.onTrue(new TeleopAutoShoot(shooter, feeder, camera));
     new Trigger(controller.leftBumper()).onTrue(new LowGear(driveTrain));
     new Trigger(controller.rightBumper()).onTrue(new HighGear(driveTrain));
-    
+    // mansour when you come back can you eh-to uhm make banana code ^^-^^
     controller.a().onTrue(new RotateToAngle(driveTrain, robotNavX, 0));
     controller.b().whileTrue(new RaiseClimber(climber));
     controller.x().whileTrue(new LowerClimber(climber));
