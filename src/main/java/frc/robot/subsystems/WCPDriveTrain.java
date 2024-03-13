@@ -187,6 +187,14 @@ public class WCPDriveTrain extends SubsystemBase {
     // leftMaster.getConfigurator().apply(config);
     // leftFollower.getConfigurator().apply(config);
 
+    TalonFXConfiguration drivetrainConfig = new TalonFXConfiguration();
+    drivetrainConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 1;
+
+    rightFollower.getConfigurator().apply(drivetrainConfig);
+    rightMaster.getConfigurator().apply(drivetrainConfig);
+    leftMaster.getConfigurator().apply(drivetrainConfig);
+    leftFollower.getConfigurator().apply(drivetrainConfig);
+
 
     rightSide.setInverted(true);
 
