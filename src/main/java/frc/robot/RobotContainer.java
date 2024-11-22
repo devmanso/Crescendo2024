@@ -25,7 +25,7 @@ import frc.robot.commands.climber.LowerClimber;
 import frc.robot.commands.climber.RaiseClimber;
 import frc.robot.commands.driveTrains.HighGear;
 import frc.robot.commands.driveTrains.LowGear;
-import frc.robot.commands.driveTrains.WCPTeleopDrive;
+import frc.robot.commands.driveTrains.WCPTeleopFieldDrive;
 import frc.robot.commands.feeder.ReverseFeeder;
 import frc.robot.commands.feeder.RunFeeder;
 import frc.robot.commands.feeder.ContainNote;
@@ -143,7 +143,11 @@ public class RobotContainer {
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
     //andyMarkCompressor.setDefaultCommand(new DisableCompressor(andyMarkCompressor));
     //andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
-    driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
+    // This command below is for regular driving (aka always works)
+    //driveTrain.setDefaultCommand(new WCPTeleopFieldDrive(controller, driveTrain));
+    // This command below is for field oriented (idk if it works)
+    driveTrain.setDefaultCommand(new WCPTeleopFieldDrive(controller, driveTrain) );
+
     //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
 
   }

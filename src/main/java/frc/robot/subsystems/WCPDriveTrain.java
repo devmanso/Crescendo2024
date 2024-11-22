@@ -11,6 +11,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -20,7 +21,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.WestCoastDriveTrain;
 
 public class WCPDriveTrain extends SubsystemBase {
-  //AHRS navx;
+  
+  AHRS navx;
 
   Orchestra orchestra = new Orchestra();
 
@@ -33,6 +35,18 @@ public class WCPDriveTrain extends SubsystemBase {
 
   public void arcadeDrive(double xSpd, double zRot) {
     drive.arcadeDrive(xSpd, zRot, true);
+  }
+
+  public double getGyroAngle() {
+    return navx.getAngle();
+  }
+
+  public double getGyroYaw() {
+    return navx.getYaw();
+  }
+
+  public double getGyroPitch() {
+    return navx.getPitch();
   }
 
   public void setBrakeMode() {
@@ -197,6 +211,12 @@ public class WCPDriveTrain extends SubsystemBase {
 
 
     rightSide.setInverted(true);
+    try {
+      navx = new AHRS(SPI.Port.kMXP);
+    } catch (RuntimeException NavXConfigurationException) {
+      DriverStation.reportError("Error installing and configuring NavX-MXP >>>" + 
+      NavXConfigurationException.getMessage(), true);
+    }
 
     //setupInstruments();
     //loadSong("ninmusic.chrp");
