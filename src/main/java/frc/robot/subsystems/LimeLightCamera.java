@@ -110,7 +110,7 @@ public class LimeLightCamera extends SubsystemBase {
     double angleToGoalDegrees = mountAngleDegrees + verticalOffset;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159/ 180);
     double distance = (goalheightInches - lensHeightInches) / Math.tan(angleToGoalRadians);
-    return distance;
+    return distance; 
   }
 
   public static double getDistance() {

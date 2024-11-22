@@ -141,7 +141,7 @@ public class RobotContainer {
         
     
     //andyMarkCompressor.setDefaultCommand(new InstantCommand(() -> andyMarkCompressor.enableCompressor()));
-    andyMarkCompressor.setDefaultCommand(new DisableCompressor(andyMarkCompressor));
+    //andyMarkCompressor.setDefaultCommand(new DisableCompressor(andyMarkCompressor));
     //andyMarkCompressor.setDefaultCommand(new RunCompressor(andyMarkCompressor));
     driveTrain.setDefaultCommand(new WCPTeleopDrive(controller, driveTrain));
     //sparkDriveTrain.setDefaultCommand(new SparkDrive(sparkDriveTrain, controller));
@@ -166,13 +166,16 @@ public class RobotContainer {
     new Trigger(controller.leftBumper()).onTrue(new LowGear(driveTrain));
     new Trigger(controller.rightBumper()).onTrue(new HighGear(driveTrain));
     
-    controller.b().whileTrue(new RaiseClimber(climber));
-    controller.x().whileTrue(new LowerClimber(climber));
+    //controller.b().whileTrue(new RaiseClimber(climber));
+    //controller.x().whileTrue(new LowerClimber(climber));
 
     //getInRange.onTrue(new TeleopAutoShoot(driveTrain));
     getInRange.onTrue(new BackUpInRange(driveTrain, camera));
 
     runAll.onTrue(new DisableCompressor(andyMarkCompressor));
+
+    controller.y().onTrue(new RunCompressor(andyMarkCompressor));
+    controller.a().onTrue(new DisableCompressor(andyMarkCompressor));
 
     feedBtn.whileTrue(new RunFeeder(feeder));
     reverseFeederBtn.whileTrue(new ReverseFeeder(feeder));
@@ -188,7 +191,7 @@ public class RobotContainer {
     shootBtn.onTrue(new ShootWithTimer(shooter));
 
 
-    automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(2)
+    automaticShoot.onTrue( new SpinUpShooter(shooter).withTimeout(3)
     .andThen(new AutoShoot(shooter, feeder).withTimeout(1))
     .andThen(new StopAll(shooter, feeder, intake))
     );

@@ -50,6 +50,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
     //intakeMotor.setOpenLoopRampRate(2);
+    intakeMotor.setInverted(true);
   }
 
   public void displayIntakeData() {

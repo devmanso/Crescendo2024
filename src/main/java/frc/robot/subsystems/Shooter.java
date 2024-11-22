@@ -46,6 +46,15 @@ public class Shooter extends SubsystemBase {
   }
 
   public void displayShooterData() {
+    
+    double topShooterRPM = 6380 * (1);
+    SmartDashboard.putNumber("TOPSHOOTER RPM", topShooterRPM);
+
+    // double bottomSensorVelocity = bottomShooter.getVelocity().getValueAsDouble();
+    // double bottomMotorVelocityToRPM = bottomSensorVelocity * 600.0/2048.0;
+    // double bottomShooterRPM = bottomMotorVelocityToRPM / 5.0;
+    // SmartDashboard.putNumber("BOTTOMSHOOTER RPM", bottomShooterRPM);
+
     SmartDashboard.putNumber("SHOOTER ACCEL", bottomShooter.getAcceleration().getValueAsDouble());
     SmartDashboard.putNumber("SHOOTER VEL", bottomShooter.getVelocity().getValueAsDouble());
   }
